@@ -1,0 +1,90 @@
+services:
+  db:
+    image: postgres:18.4-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    ports:
+      - "127.0.0.1:${DB_PORT:-5434}:5432"
+    volumes:
+      - siglum-postgres-data:/var/lib/postgresql
+      - ./prisma/init/01-create-test-database.sql:/docker-entrypoint-initdb.d/01-create-test-database.sql:ro
+
+  migrate:
+    build:
+      context: .
+      target: migrator
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      DIRECT_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+    env_file:
+      - path: .env.local
+        required: true
+    restart: "no"
+
+  web:
+    build:
+      context: .
+      target: runner
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:3000}
+      APP_ENV: ${APP_ENV:-local}
+      AUTH_ABSOLUTE_SESSION_MAX_AGE_SECONDS: ${AUTH_ABSOLUTE_SESSION_MAX_AGE_SECONDS:-604800}
+      AUTH_BOOTSTRAP_ENABLED: ${AUTH_BOOTSTRAP_ENABLED:-false}
+      AUTH_FAILED_LOGIN_LOCK_SECONDS: ${AUTH_FAILED_LOGIN_LOCK_SECONDS:-900}
+      AUTH_FAILED_LOGIN_MAX_ATTEMPTS: ${AUTH_FAILED_LOGIN_MAX_ATTEMPTS:-10}
+      AUTH_FAILED_LOGIN_WINDOW_SECONDS: ${AUTH_FAILED_LOGIN_WINDOW_SECONDS:-900}
+      AUTH_IDENTIFIER_HASH_KEY:
+        ${AUTH_IDENTIFIER_HASH_KEY:?AUTH_IDENTIFIER_HASH_KEY is required}
+      AUTH_IP_ADDRESS_HEADER: ${AUTH_IP_ADDRESS_HEADER:-}
+      AUTH_SESSION_EXPIRES_SECONDS: ${AUTH_SESSION_EXPIRES_SECONDS:-43200}
+      AUTH_SESSION_UPDATE_AGE_SECONDS: ${AUTH_SESSION_UPDATE_AGE_SECONDS:-3600}
+      AUTH_TRUSTED_ORIGINS: ${AUTH_TRUSTED_ORIGINS:-http://localhost:3000}
+      AUTH_TRUSTED_PROXY_CIDRS: ${AUTH_TRUSTED_PROXY_CIDRS:-}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET is required}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      DIRECT_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+    env_file:
+      - path: .env.local
+        required: true
+    ports:
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
+
+  bootstrap-owner:
+    build:
+      context: .
+      target: migrator
+    command: ["corepack", "pnpm", "auth:bootstrap-owner"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      AUTH_BOOTSTRAP_ENABLED: ${AUTH_BOOTSTRAP_ENABLED:-false}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+      DIRECT_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
+    env_file:
+      - path: .env.local
+        required: true
+    profiles: ["operators"]
+    restart: "no"
+    stdin_open: true
+    tty: true
+
+volumes:
+  siglum-postgres-data:

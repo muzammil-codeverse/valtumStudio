@@ -1,0 +1,30 @@
+# Dependencies and framework output
+node_modules/
+.next/
+.next-playwright/
+out/
+src/generated/prisma/
+
+# Test and coverage artifacts
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Local environment configuration
+.env
+.env.*
+!.env.example
+
+# Local tooling and operating-system noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Runtime and package-manager artifacts
+*.log
+.pnpm-store/
+*.tsbuildinfo

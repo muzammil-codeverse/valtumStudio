@@ -1,0 +1,19 @@
+overrides:
+  # Security remediation for the transitive Next.js PostCSS dependency.
+  postcss: 8.5.17
+  # Security remediation for Prisma's transitive development server dependency.
+  "@hono/node-server": 1.19.13
+
+allowBuilds:
+  # Prisma CLI needs its reviewed engine packages for generate and migrations.
+  "@prisma/engines": true
+  prisma: true
+  # The deterministic TypeScript seed runner uses esbuild's platform binary.
+  esbuild: true
+  # Next.js uses sharp for optional production image optimization.
+  sharp: true
+  # This indirect resolver is not needed by the configured toolchain's runtime.
+  unrs-resolver: false
+
+minimumReleaseAgeExclude:
+  - postcss@8.5.17

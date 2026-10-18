@@ -1,0 +1,11 @@
+# ASVS Level 2-aligned Phase 3 baseline
+
+| Control                        | Status               | Implementation                                                             | Test evidence                         | Residual limitation / future phase                              |
+| ------------------------------ | -------------------- | -------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------- |
+| Password authentication        | Implemented          | Better Auth credentials, minimum 14 characters, contextual checks          | Credential and HTTP integration tests | No breach-password service yet.                                 |
+| MFA                            | Implemented          | Mandatory TOTP and recovery acknowledgement, no trusted devices            | API and UI flow review                | Hardware keys/passkeys deferred.                                |
+| Session management             | Implemented          | DB sessions, secure cookie policy, expiry/refresh/absolute age, revocation | Integration and container tests       | Device anomaly detection deferred.                              |
+| Access control                 | Implemented          | Static role parser and matrix; server layout/routes                        | Exhaustive matrix test                | Content-specific ownership rules come with Phase 4 modules.     |
+| Validation/CSRF                | Implemented          | Zod, origin allowlist, safe redirects                                      | Environment/HTTP tests                | Future provider callbacks need review.                          |
+| Secret management              | Implemented baseline | Fail-fast env, independent high-entropy values, blank examples             | Build/container checks                | Managed secrets backend is deployment work.                     |
+| Logging/errors/data protection | Implemented baseline | Generic errors, redacted metadata, audit events                            | Static security/integration tests     | Retention duration and DLP integration await production policy. |
