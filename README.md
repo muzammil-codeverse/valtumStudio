@@ -1,4 +1,4 @@
-# Siglum Studio
+# Valtum Studio
 
 ## Current phase
 
