@@ -6,6 +6,34 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
+      react:
+        patterns:
+          - react
+          - react-dom
+          - "@types/react"
+          - "@types/react-dom"
+        update-types: [minor, patch]
+      prisma:
+        patterns:
+          - prisma
+          - "@prisma/client"
+          - "@prisma/adapter-*"
+        update-types: [minor, patch]
+      better-auth:
+        patterns:
+          - auth
+          - better-auth
+          - "@better-auth/*"
+        update-types: [minor, patch]
+      next:
+        patterns:
+          - next
+          - eslint-config-next
+        update-types: [minor, patch]
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/*"
+        update-types: [minor, patch]
       development-dependencies:
         dependency-type: development
         update-types: [minor, patch]
