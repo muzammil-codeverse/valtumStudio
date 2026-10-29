@@ -257,21 +257,30 @@ jobs:
 
       - name: Verify the full Compose stack
         run: |
+          docker rm --force siglum-studio-ci
           cp .env.example .env.local
           secret() { openssl rand -base64 48 | tr '+/' '-_' | tr -d '='; }
           export BETTER_AUTH_SECRET="$(secret)"
           export AUTH_IDENTIFIER_HASH_KEY="$(secret)"
-          docker compose --env-file .env.local up --build --detach --wait --wait-timeout 240
+          export BETTER_AUTH_URL="http://127.0.0.1:3000"
+          export AUTH_TRUSTED_ORIGINS="http://127.0.0.1:3000"
+          if ! docker compose --env-file .env.local up --build --detach --wait --wait-timeout 240; then
+            docker compose --env-file .env.local ps || true
+            docker compose --env-file .env.local logs --no-color --tail=100 || true
+            exit 1
+          fi
           curl --fail --silent --show-error http://127.0.0.1:3000/api/ready
 
       - name: Print container diagnostics
         if: failure()
         run: |
           docker logs siglum-studio-ci || true
-          docker compose --env-file .env.local logs || true
+          BETTER_AUTH_SECRET=ci_diagnostics AUTH_IDENTIFIER_HASH_KEY=ci_diagnostics \
+            docker compose --env-file .env.local logs --no-color || true
 
       - name: Stop production container
         if: always()
         run: |
           docker rm --force siglum-studio-ci || true
-          docker compose --env-file .env.local down --remove-orphans || true
+          BETTER_AUTH_SECRET=ci_cleanup AUTH_IDENTIFIER_HASH_KEY=ci_cleanup \
+            docker compose --env-file .env.local down --remove-orphans || true
