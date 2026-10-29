@@ -21,7 +21,7 @@ env:
   DIRECT_URL: postgresql://siglum_app:siglum_ci_password@127.0.0.1:5432/siglum?schema=public
   LOG_LEVEL: info
   NODE_VERSION: 24.18.0
-  PNPM_VERSION: 11.12.0
+  PNPM_VERSION: 11.28.8
 
 jobs:
   quality:
