@@ -262,7 +262,11 @@ jobs:
           secret() { openssl rand -base64 48 | tr '+/' '-_' | tr -d '='; }
           export BETTER_AUTH_SECRET="$(secret)"
           export AUTH_IDENTIFIER_HASH_KEY="$(secret)"
-          docker compose --env-file .env.local up --build --detach --wait --wait-timeout 240
+          if ! docker compose --env-file .env.local up --build --detach --wait --wait-timeout 240; then
+            docker compose --env-file .env.local ps || true
+            docker compose --env-file .env.local logs --no-color --tail=100 || true
+            exit 1
+          fi
           curl --fail --silent --show-error http://127.0.0.1:3000/api/ready
 
       - name: Print container diagnostics
