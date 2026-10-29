@@ -257,6 +257,7 @@ jobs:
 
       - name: Verify the full Compose stack
         run: |
+          docker rm --force siglum-studio-ci
           cp .env.example .env.local
           secret() { openssl rand -base64 48 | tr '+/' '-_' | tr -d '='; }
           export BETTER_AUTH_SECRET="$(secret)"
@@ -274,4 +275,5 @@ jobs:
         if: always()
         run: |
           docker rm --force siglum-studio-ci || true
-          docker compose --env-file .env.local down --remove-orphans || true
+          BETTER_AUTH_SECRET=ci_cleanup AUTH_IDENTIFIER_HASH_KEY=ci_cleanup \
+            docker compose --env-file .env.local down --remove-orphans || true
