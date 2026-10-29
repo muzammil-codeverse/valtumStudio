@@ -262,6 +262,8 @@ jobs:
           secret() { openssl rand -base64 48 | tr '+/' '-_' | tr -d '='; }
           export BETTER_AUTH_SECRET="$(secret)"
           export AUTH_IDENTIFIER_HASH_KEY="$(secret)"
+          export BETTER_AUTH_URL="http://127.0.0.1:3000"
+          export AUTH_TRUSTED_ORIGINS="http://127.0.0.1:3000"
           if ! docker compose --env-file .env.local up --build --detach --wait --wait-timeout 240; then
             docker compose --env-file .env.local ps || true
             docker compose --env-file .env.local logs --no-color --tail=100 || true
@@ -273,7 +275,8 @@ jobs:
         if: failure()
         run: |
           docker logs siglum-studio-ci || true
-          docker compose --env-file .env.local logs || true
+          BETTER_AUTH_SECRET=ci_diagnostics AUTH_IDENTIFIER_HASH_KEY=ci_diagnostics \
+            docker compose --env-file .env.local logs --no-color || true
 
       - name: Stop production container
         if: always()
