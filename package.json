@@ -47,7 +47,7 @@
     "ci:verify": "corepack pnpm check && corepack pnpm test:coverage && corepack pnpm test:integration && corepack pnpm build && corepack pnpm test:e2e"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1085.0",
+    "@aws-sdk/client-s3": "^3.1152.0",
     "@aws-sdk/s3-request-presigner": "^3.1085.0",
     "@better-auth/prisma-adapter": "1.6.23",
     "@lexical/history": "^0.47.0",
@@ -65,7 +65,7 @@
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "server-only": "0.0.1",
-    "zod": "4.4.3"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",
