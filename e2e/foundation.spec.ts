@@ -7,7 +7,7 @@ test("foundation routes are available with an accessible light-only baseline", a
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { level: 1, name: "Siglum Studio" })
+    page.getByRole("heading", { level: 1, name: "Clarity from complexity." })
   ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.locator("body")).toHaveCSS(
