@@ -4,7 +4,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    # Temporary: pause routine version PRs during website and dashboard stabilization.
+    # Security update PRs are handled separately by Dependabot.
+    # Restore a positive limit for scheduled dependency maintenance.
+    open-pull-requests-limit: 0
     groups:
       react:
         patterns:
@@ -42,4 +45,5 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 3
+    # Temporary: keep GitHub Actions version-update noise paused as well.
+    open-pull-requests-limit: 0
