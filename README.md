@@ -13,7 +13,7 @@ presentation remain future phases.
 ## Prerequisites
 
 - Node.js `24.18.0` (see `.node-version` or `.nvmrc`)
-- pnpm `11.12.0`, activated through Corepack
+- pnpm `11.28.8`, activated through Corepack
 - Docker Desktop for PostgreSQL and container validation
 
 ## Local setup
