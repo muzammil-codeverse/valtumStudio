@@ -153,7 +153,9 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
     const metadata = await generateMetadata();
 
     expect(metadata.title).toBe("Valtum Studio");
-    expect(metadata.description).toBe("Valtum Studio — custom software, digital products and creative development.");
+    expect(metadata.description).toBe(
+      "Valtum Studio — custom software, digital products and creative development."
+    );
     expect(logger.warn).toHaveBeenCalledWith(
       expect.stringContaining("Public settings query failed for homepage metadata"),
       {
