@@ -1,7 +1,8 @@
 export const siteConfig = Object.freeze({
   defaultLocale: "en",
-  description: "Siglum Studio system foundation.",
+  description:
+    "Valtum Studio — custom software, digital products and creative development.",
   htmlLanguage: "en",
-  name: "Siglum Studio",
-  title: "Siglum Studio"
+  name: "Valtum Studio",
+  title: "Valtum Studio"
 });

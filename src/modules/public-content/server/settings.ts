@@ -63,7 +63,7 @@ export async function getPublicSettings(): Promise<PublicSettingsDTO> {
       companyNumber?: string;
       registeredAddress?: string;
     } = {
-      studioName: identity?.["siteName"] ?? "Siglum Studio"
+      studioName: identity?.["siteName"] ?? "Valtum Studio"
     };
 
     // Strict exactOptionalPropertyTypes validation
@@ -131,7 +131,7 @@ export async function getPublicSettings(): Promise<PublicSettingsDTO> {
   };
 
   return withPublicCache(query, {
-    keyParts: ["settings"],
+    keyParts: ["settings", "valtum-brand-v2"],
     tags: [cacheTags.settings]
   });
 }

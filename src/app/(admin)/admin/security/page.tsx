@@ -12,8 +12,8 @@ import {
 import { requirePermission } from "@/modules/auth/server/authorization";
 
 export const metadata: Metadata = {
-  title: "Security | Siglum Studio Admin",
-  description: "Monitor Siglum Studio security operations."
+  title: "Security | Valtum Studio Admin",
+  description: "Monitor Valtum Studio security operations."
 };
 
 export default async function SecurityPage(): Promise<React.JSX.Element> {
@@ -23,7 +23,7 @@ export default async function SecurityPage(): Promise<React.JSX.Element> {
     <AdminPageContainer>
       <AdminPageHeader
         title="Security"
-        description="Monitor authentication controls, active session state, and access configuration for the Siglum Studio administration workspace."
+        description="Monitor authentication controls, active session state, and access configuration for the Valtum Studio administration workspace."
       />
       <AdminPageBody>
         <AdminPageSection>

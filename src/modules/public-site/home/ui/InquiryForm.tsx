@@ -72,7 +72,7 @@ export function InquiryForm(): React.JSX.Element {
       <label className={styles.consent}>
         <input name="consent" required type="checkbox" />
         <span>
-          I consent to Siglum Studio using these details to respond to this enquiry.
+          I consent to Valtum Studio using these details to respond to this enquiry.
         </span>
       </label>
       <button

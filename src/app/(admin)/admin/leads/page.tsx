@@ -33,7 +33,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Leads | Siglum Studio Admin",
+  title: "Leads | Valtum Studio Admin",
   description: "Manage private client enquiries."
 };
 

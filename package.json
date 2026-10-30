@@ -1,9 +1,9 @@
 {
-  "name": "siglum-studio",
+  "name": "valtum-studio",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Engineering foundation for Siglum Studio V1.",
+  "description": "Engineering foundation for Valtum Studio V1.",
   "packageManager": "pnpm@11.28.8",
   "engines": {
     "node": "24.x",

@@ -7,7 +7,7 @@ export async function GET(): Promise<Response> {
 
   return Response.json(
     {
-      service: "siglum-studio",
+      service: "valtum-studio",
       status: ready ? "ready" : "not_ready"
     },
     {

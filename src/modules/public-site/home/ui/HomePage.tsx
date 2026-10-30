@@ -82,15 +82,15 @@ function HeroStage({
         <ProjectImage
           media={media}
           priority
-          title={project?.title ?? "Siglum Studio"}
+          title={project?.title ?? "Valtum Studio"}
         />
       </div>
     );
   }
   return (
-    <div aria-label="Siglum Studio structural media stage" className={styles.heroStage}>
+    <div aria-label="Valtum Studio structural media stage" className={styles.heroStage}>
       <div className={styles.heroFallback}>
-        <p className={styles.stageWordmark}>Siglum Studio / Product systems</p>
+        <p className={styles.stageWordmark}>Valtum Studio / Product systems</p>
         <p className={styles.stageStatement}>
           Designed for the work beneath the interface.
         </p>
@@ -116,7 +116,7 @@ function StudioSection({
               Australia-based. Built for global work.
             </h2>
             <p>
-              Siglum brings product thinking, technical depth and careful execution into
+              Valtum brings product thinking, technical depth and careful execution into
               one accountable studio practice.
             </p>
           </div>
@@ -150,7 +150,7 @@ export function HomePage({
   const heroProject =
     projects.find((project) => displayMedia(project) !== null) ?? null;
   const hasSelectedWork = projects.some((project) => displayMedia(project) !== null);
-  const studioName = settings.studioName || "Siglum Studio";
+  const studioName = settings.studioName || "Valtum Studio";
   const capabilities =
     services.length > 0
       ? services.map((service) => ({
@@ -248,7 +248,7 @@ export function HomePage({
             <div className={styles.sectionHeader}>
               <p className={styles.label}>Process</p>
               <h2 className={styles.sectionTitle} id="process-heading">
-                How Siglum works
+                How Valtum works
               </h2>
             </div>
             <div className={styles.processPath}>

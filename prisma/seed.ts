@@ -74,7 +74,7 @@ export async function seedDatabase(
       });
 
       await transaction.siteSetting.upsert({
-        create: { key: "site.identity", value: { name: "Siglum Studio" } },
+        create: { key: "site.identity", value: { siteName: "Valtum Studio" } },
         update: { value: { name: "Siglum Studio" } },
         where: { key: "site.identity" }
       });

@@ -18,7 +18,7 @@ test("foundation routes are available with an accessible light-only baseline", a
   const healthResponse = await request.get("/api/health");
   expect(healthResponse.status()).toBe(200);
   expect(await healthResponse.json()).toMatchObject({
-    service: "siglum-studio-web",
+    service: "valtum-studio-web",
     status: "ok"
   });
 

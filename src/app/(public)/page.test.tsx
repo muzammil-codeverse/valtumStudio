@@ -49,7 +49,7 @@ import { getPublicTeamMembers } from "@/modules/public-content/server/team";
 const data: HomePageData = {
   projects: [],
   services: [],
-  settings: { studioName: "Siglum Studio" },
+  settings: { studioName: "Valtum Studio" },
   team: []
 };
 
@@ -152,8 +152,10 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
 
     const metadata = await generateMetadata();
 
-    expect(metadata.title).toBe("Siglum Studio");
-    expect(metadata.description).toBe("Siglum Studio system foundation.");
+    expect(metadata.title).toBe("Valtum Studio");
+    expect(metadata.description).toBe(
+      "Valtum Studio — custom software, digital products and creative development."
+    );
     expect(logger.warn).toHaveBeenCalledWith(
       expect.stringContaining("Public settings query failed for homepage metadata"),
       {
@@ -186,7 +188,7 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
 
     const result = await loadHomePageData();
 
-    expect(result.settings).toEqual({ studioName: "Siglum Studio" });
+    expect(result.settings).toEqual({ studioName: "Valtum Studio" });
     expect(result.projects).toEqual([]);
     expect(result.services).toEqual([]);
     expect(result.team).toEqual([]);
