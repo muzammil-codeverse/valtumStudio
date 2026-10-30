@@ -131,7 +131,7 @@ export async function getPublicSettings(): Promise<PublicSettingsDTO> {
   };
 
   return withPublicCache(query, {
-    keyParts: ["settings"],
+    keyParts: ["settings", "valtum-brand-v2"],
     tags: [cacheTags.settings]
   });
 }
