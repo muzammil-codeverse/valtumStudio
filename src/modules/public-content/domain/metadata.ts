@@ -202,7 +202,7 @@ export function buildGenericPageMetadata(
  */
 export function buildNotFoundMetadata(): Metadata {
   return {
-    title: "Page Not Found | Siglum Studio",
+    title: "Page Not Found | Valtum Studio",
     description: "The requested page does not exist.",
     robots: {
       index: false,
