@@ -38,7 +38,7 @@ export function AdminSidebar({
       {/* Identity block */}
       <div className="h-16 px-6 border-b border-[var(--admin-border)] flex items-center gap-2">
         <span className="font-semibold text-sm tracking-wide text-[var(--admin-text)]">
-          SIGLUM STUDIO
+          VALTUM STUDIO
         </span>
         <span className="text-[10px] font-medium tracking-widest px-1.5 py-0.5 rounded-sm uppercase bg-[var(--admin-surface-subtle)] text-[var(--admin-text-secondary)] border border-[var(--admin-border)]">
           Admin
