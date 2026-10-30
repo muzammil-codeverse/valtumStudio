@@ -20,8 +20,8 @@ import { can } from "@/modules/auth/policies/authorization";
 import { requireCompletedAuthentication } from "@/modules/auth/server/authorization";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Siglum Studio Admin",
-  description: "Private operations dashboard for Siglum Studio."
+  title: "Dashboard | Valtum Studio Admin",
+  description: "Private operations dashboard for Valtum Studio."
 };
 
 export default async function DashboardPage(): Promise<React.JSX.Element> {
@@ -54,7 +54,7 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
             <RoleBadge role={user.role} />
           </div>
           <p className="text-xs sm:text-sm text-[var(--admin-text-secondary)] mt-1.5">
-            Operating from the Siglum Studio private administration workspace.
+            Operating from the Valtum Studio private administration workspace.
           </p>
         </div>
 
