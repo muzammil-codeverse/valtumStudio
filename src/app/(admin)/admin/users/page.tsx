@@ -21,8 +21,8 @@ import {
 import { requirePermission } from "@/modules/auth/server/authorization";
 
 export const metadata: Metadata = {
-  title: "Users | Siglum Studio Admin",
-  description: "Manage Siglum Studio administrative user accounts."
+  title: "Users | Valtum Studio Admin",
+  description: "Manage Valtum Studio administrative user accounts."
 };
 
 export default async function UsersPage(): Promise<React.JSX.Element> {

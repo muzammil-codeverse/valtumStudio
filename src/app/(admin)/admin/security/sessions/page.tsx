@@ -11,9 +11,9 @@ import { requirePermission } from "@/modules/auth/server/authorization";
 import { SessionsPanel } from "@/modules/auth/ui/sessions-panel";
 
 export const metadata: Metadata = {
-  title: "Active Sessions | Siglum Studio Admin",
+  title: "Active Sessions | Valtum Studio Admin",
   description:
-    "Manage active login sessions for the Siglum Studio administration workspace."
+    "Manage active login sessions for the Valtum Studio administration workspace."
 };
 
 export default async function SessionsPage(): Promise<React.JSX.Element> {

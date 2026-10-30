@@ -27,7 +27,7 @@ export default async function SettingsPage(): Promise<React.JSX.Element> {
             name: "value",
             label: "Structured group value JSON",
             kind: "textarea",
-            defaultValue: JSON.stringify({ siteName: "Siglum Studio" }, null, 2)
+            defaultValue: JSON.stringify({ siteName: "Valtum Studio" }, null, 2)
           }
         ]}
       />
