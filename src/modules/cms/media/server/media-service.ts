@@ -22,6 +22,7 @@ import {
   validateMediaUpload,
   validateMetadata
 } from "../domain/validation";
+import { publishVerifiedMedia, removePublishedMedia } from "./cloudinary-publisher";
 import { StorageError } from "./storage-errors";
 import type { MediaStorage } from "./storage-port";
 
@@ -359,14 +360,25 @@ export async function finalizeMediaUpload(
         sourceKey: initial.incomingKey
       });
     }
+    // Verified S3 object remains the private source of truth. Cloudinary receives
+    // only checked, approved bytes for public image delivery.
+    const cloudinaryUrl = await publishVerifiedMedia({
+      byteSize: head.byteSize,
+      key: finalKey,
+      storage: input.storage
+    });
+    const publicUrl = cloudinaryUrl ??
+      (input.environment.MEDIA_PUBLIC_BASE_URL
+        ? publicUrlForObject(input.environment.MEDIA_PUBLIC_BASE_URL, finalKey)
+        : null);
+    if (!publicUrl) {
+      throw new MediaOperationError("STORAGE_NOT_CONFIGURED");
+    }
     try {
       await input.storage.deleteObject(initial.incomingKey);
     } catch {
       // The verified key is authoritative; incoming cleanup is retried by operations tooling.
     }
-    const publicUrl = input.environment.MEDIA_PUBLIC_BASE_URL
-      ? publicUrlForObject(input.environment.MEDIA_PUBLIC_BASE_URL, finalKey)
-      : null;
     const completed = await prisma.$transaction(async (tx) => {
       const updated = await tx.mediaAsset.updateMany({
         where: { id: initial.id, revision: claimedRevision, status: "VERIFYING" },
@@ -567,7 +579,10 @@ export async function deleteUnusedMedia(
     return input.expectedRevision + 1;
   });
   try {
-    if (current.storageKey) await input.storage.deleteObject(current.storageKey);
+    if (current.storageKey) {
+      await removePublishedMedia({ key: current.storageKey, publicUrl: current.publicUrl });
+      await input.storage.deleteObject(current.storageKey);
+    }
   } catch {
     await prisma.$transaction(async (tx) => {
       await tx.mediaAsset.updateMany({

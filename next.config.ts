@@ -1,27 +1,29 @@
 import type { NextConfig } from "next";
 
 function mediaRemotePattern(): URL[] | undefined {
-  if (process.env["MEDIA_STORAGE_ENABLED"] !== "true") {
-    return undefined;
+  const patterns: URL[] = [];
+  const cloud = process.env["CLOUDINARY_CLOUD_NAME"];
+  if (cloud && /^[a-z0-9_-]+$/i.test(cloud)) {
+    patterns.push(new URL(`https://res.cloudinary.com/${cloud}/image/upload/**`));
   }
 
-  const value = process.env["MEDIA_PUBLIC_BASE_URL"];
-  if (value === undefined || value.length === 0) {
-    return undefined;
-  }
-
-  try {
-    const url = new URL(value);
-    if (url.protocol !== "http:" && url.protocol !== "https:") {
-      return undefined;
+  if (process.env["MEDIA_STORAGE_ENABLED"] === "true") {
+    const value = process.env["MEDIA_PUBLIC_BASE_URL"];
+    if (value) {
+      try {
+        const url = new URL(value);
+        if (url.protocol === "http:" || url.protocol === "https:") {
+          url.pathname = `${url.pathname.replace(/\/$/, "")}/**`;
+          url.search = "";
+          url.hash = "";
+          patterns.push(url);
+        }
+      } catch {
+        // Invalid configuration must not authorize any arbitrary image host.
+      }
     }
-    url.pathname = `${url.pathname.replace(/\/$/, "")}/**`;
-    url.search = "";
-    url.hash = "";
-    return [url];
-  } catch {
-    return undefined;
   }
+  return patterns.length ? patterns : undefined;
 }
 
 const contentSecurityPolicy = [
@@ -32,8 +34,8 @@ const contentSecurityPolicy = [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "frame-src https://aegis-sentinel-tau.vercel.app https://booking-marketplace-web.vercel.app https://www.ktcouriers.com https://math-intellect.vercel.app https://personality-analysis-exploiter.vercel.app",
-  "img-src 'self' data: blob:",
-  "media-src 'self'",
+  "img-src 'self' data: blob: https://res.cloudinary.com",
+  "media-src 'self' https://res.cloudinary.com",
   "object-src 'none'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
