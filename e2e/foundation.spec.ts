@@ -13,7 +13,9 @@ test("approved Valtum Studio pages and system health remain reachable", async ({
     })
   ).toBeVisible({ timeout: 15_000 });
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.getByRole("link", { name: /explore our work/i }).first()).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /explore our work/i }).first()
+  ).toBeVisible();
 
   const healthResponse = await request.get("/api/health");
   expect(healthResponse.status()).toBe(200);
