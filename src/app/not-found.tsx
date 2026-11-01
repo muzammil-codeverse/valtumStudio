@@ -1,11 +1,10 @@
-import Link from "next/link";
+import PublicLayout from "./(public)/layout";
+import PublicNotFound from "./(public)/not-found";
 
-export default function NotFound() {
+export default function NotFound(): React.JSX.Element {
   return (
-    <main>
-      <h1>Page not found</h1>
-      <p>The requested page does not exist.</p>
-      <Link href="/">Return to the foundation page</Link>
-    </main>
+    <PublicLayout>
+      <PublicNotFound />
+    </PublicLayout>
   );
 }
