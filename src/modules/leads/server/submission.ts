@@ -9,13 +9,12 @@ import {
   isRateLimitBlocked,
   startOfUtcWindow
 } from "../domain/protection";
-import { publishSubmittedLeadNotification } from "./notification-port";
-
 import {
   leadSubmissionSchema,
   type NormalizedLeadSubmission,
   normalizeLeadSubmission
 } from "../domain/submission";
+import { publishSubmittedLeadNotification } from "./notification-port";
 
 const DUPLICATE_WINDOW_MS = 15 * 60 * 1000;
 const EMAIL_LIMIT = 8;
