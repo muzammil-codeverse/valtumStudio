@@ -1,0 +1,377 @@
+/* The studio's work, arranged as a contact sheet rather than a device mockup. */
+.h-hero {
+  position: relative;
+  height: 240svh;
+  margin-top: -90px;
+  background: #edeef1;
+  isolation: isolate;
+}
+.h-hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 650px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 78% 48%, #d8dee5, #edeef1 62%);
+}
+.h-hero-copy {
+  position: absolute;
+  z-index: 5;
+  top: 23%;
+  left: 4%;
+  width: 44%;
+}
+.valtum .h-hero h1 {
+  width: 100%;
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(60px, 5.8vw, 108px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  color: #20242c;
+}
+.h-hero-copy h1 span {
+  display: block;
+}
+.h-hero-copy > p {
+  max-width: 350px;
+  margin: 36px 0 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #404958;
+}
+.h-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 30px;
+}
+.h-hero-actions .x-button {
+  background: #20242c;
+  color: #f5f6f8 !important;
+  white-space: nowrap;
+  font-size: 14px;
+  gap: 24px;
+  padding: 19px 24px;
+}
+.h-hero-actions .x-link {
+  color: #20242c;
+  font-size: 14px;
+  gap: 14px;
+}
+.h-hero-work {
+  position: absolute;
+  z-index: 3;
+  top: 26%;
+  left: 52%;
+  right: 7%;
+  height: calc(25.625vw + 42px);
+  touch-action: pan-y;
+  isolation: isolate;
+}
+.h-hero-front,
+.h-hero-back {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+}
+.h-hero-front {
+  display: block;
+  z-index: 3;
+  transform: rotate(-5deg);
+  outline-offset: 8px;
+}
+.h-hero-back-first {
+  z-index: 1;
+  transform: translate(-7%, -9%) rotate(-11deg) scale(0.88);
+}
+.h-hero-back-last {
+  z-index: 2;
+  transform: translate(15%, 13%) rotate(7deg) scale(0.85);
+}
+.h-hero-print {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffffff90;
+  box-shadow:
+    0 16px 35px #2632491f,
+    0 2px 4px #26324915;
+}
+.h-hero-front .h-hero-print {
+  transition: box-shadow 0.4s;
+}
+.h-hero-front:hover .h-hero-print {
+  box-shadow:
+    0 26px 55px #26324930,
+    0 2px 4px #26324915;
+}
+.h-hero-image {
+  position: absolute;
+  inset: 10px 10px 38px;
+  overflow: hidden;
+}
+.h-hero-image picture,
+.h-hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.h-hero-image img {
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.h-hero-front picture {
+  animation: h-print-arrive 0.55s ease both;
+}
+.h-hero-print-caption {
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #20242c;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+.h-hero-browser {
+  position: absolute;
+  z-index: 5;
+  left: 4%;
+  bottom: 5.5%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.h-hero-browser .h-hero-current {
+  min-width: 135px;
+  margin: 0 15px 0 0;
+  color: #404958;
+  font-size: 12px;
+}
+.h-hero-browser button {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #a6b0be;
+  border-radius: 50%;
+  background: #edeef180;
+  color: #20242c;
+  cursor: pointer;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    transform 0.3s;
+}
+.h-hero-browser button:hover {
+  background: #20242c;
+  color: #fff;
+  transform: translateY(-3px);
+}
+.h-hero-browser button:focus-visible {
+  outline: 2px solid #20242c;
+  outline-offset: 4px;
+}
+.h-hero-scroll {
+  position: absolute;
+  z-index: 5;
+  right: 7%;
+  bottom: 2%;
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  min-height: 46px;
+  font-size: 12px;
+  color: #566174;
+}
+.h-hero-scroll span {
+  transition: transform 0.35s;
+}
+.h-hero-scroll:hover span {
+  transform: translateY(5px);
+}
+@keyframes h-print-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 761px) and (max-height: 730px) {
+  .h-hero-copy {
+    top: 22%;
+  }
+  .valtum .h-hero h1 {
+    font-size: clamp(56px, 5.3vw, 92px);
+  }
+  .h-hero-copy > p {
+    margin-top: 26px;
+    font-size: 14px;
+  }
+  .h-hero-actions {
+    margin-top: 25px;
+  }
+  .h-hero-work {
+    top: 24%;
+  }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .valtum .h-hero h1 {
+    font-size: 5.6vw;
+  }
+  .h-hero-copy {
+    top: 28%;
+  }
+  .h-hero-work {
+    top: 32%;
+  }
+  .h-hero-copy > p {
+    font-size: 14px;
+    max-width: 310px;
+  }
+  .h-hero-actions {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .h-hero-actions .x-button {
+    font-size: 12px;
+    padding: 16px 20px;
+    gap: 18px;
+  }
+  .h-hero-actions .x-link {
+    font-size: 12px;
+  }
+}
+@media (max-width: 760px) {
+  .h-hero {
+    height: 215svh;
+    margin-top: -74px;
+  }
+  .h-hero-stage {
+    min-height: 700px;
+  }
+  .h-hero-copy {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+  }
+  .valtum .h-hero h1 {
+    position: absolute;
+    top: max(100px, 12.5%);
+    left: 6%;
+    width: 88%;
+    font-size: clamp(37px, 10.6vw, 72px);
+    text-align: center;
+  }
+  .h-hero-copy > p {
+    position: absolute;
+    left: 6%;
+    bottom: 13.5%;
+    width: 88%;
+    max-width: none;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .h-hero-actions {
+    pointer-events: auto;
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: 4.2%;
+    margin: 0;
+    gap: 24px;
+  }
+  .h-hero-actions .x-button {
+    font-size: 12px;
+    padding: 15px 19px;
+    gap: 18px;
+  }
+  .h-hero-actions .x-link {
+    font-size: 12px;
+    gap: 10px;
+  }
+  .h-hero-work {
+    top: 28%;
+    left: 31%;
+    right: 31%;
+    height: calc(82.23vw + 26px);
+  }
+  .h-hero-back-first {
+    transform: translate(-57%, 1%) rotate(-13deg) scale(0.8);
+  }
+  .h-hero-back-last {
+    transform: translate(57%, 1%) rotate(13deg) scale(0.8);
+  }
+  .h-hero-front {
+    transform: rotate(-4deg);
+  }
+  .h-hero-image {
+    inset: 6px 6px 26px;
+  }
+  .h-hero-print-caption {
+    height: 26px;
+    left: 8px;
+    right: 8px;
+    font-size: 8px;
+  }
+  .h-hero-browser {
+    left: 6%;
+    right: 6%;
+    bottom: 23%;
+    justify-content: flex-end;
+  }
+  .h-hero-browser .h-hero-current {
+    margin-right: auto;
+    min-width: 0;
+    font-size: 11px;
+  }
+  .h-hero-browser button {
+    width: 44px;
+    height: 44px;
+  }
+  .h-hero-scroll {
+    display: none;
+  }
+}
+@media (max-width: 760px) and (max-height: 760px) {
+  .h-hero-work {
+    top: 29%;
+    left: 34%;
+    right: 34%;
+    height: calc(69.25vw + 26px);
+  }
+  .h-hero-browser {
+    bottom: 23%;
+  }
+  .h-hero-copy > p {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .h-hero {
+    height: 100svh;
+    min-height: 700px;
+  }
+  .h-hero-stage {
+    position: relative;
+  }
+  .h-hero-front picture {
+    animation: none;
+  }
+  .h-hero-browser button,
+  .h-hero-front .h-hero-print,
+  .h-hero-scroll span {
+    transition: none;
+  }
+}

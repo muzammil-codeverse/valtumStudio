@@ -1,356 +1,225 @@
 import Image from "next/image";
+import Link from "next/link";
 
-import type {
-  PublicMediaDTO,
-  PublicProjectDTO
-} from "@/modules/public-content/types/dto";
+import { Archive } from "../../studio/Archive";
+import { stories } from "../../studio/content";
+import { DevicePreview } from "../../studio/DevicePreview";
+import { studioJournal as journal } from "../../studio/journal";
+import { CinematicHero, InlinePhoto, MediaTakeover } from "../../studio/SceneElements";
+import { ServiceAccordion } from "../../studio/ServiceAccordion";
+import { TurningBook } from "../../studio/TurningBook";
+import type { HomePageData } from "../data/home-data";
 
-import {
-  defaultCapabilities,
-  homeNavigation,
-  type HomePageData
-} from "../data/home-data";
-import { CapabilitiesSection } from "./CapabilitiesSection";
-import styles from "./home.module.css";
-import { InquiryForm } from "./InquiryForm";
-import { SelectedWorkSection } from "./SelectedWorkSection";
-import { SiteHeader } from "./SiteHeader";
-
-const processStages = [
-  ["Understand", "Clarify the problem, users, constraints and commercial context."],
-  ["Frame", "Define the product boundary, workflows and measurable priorities."],
-  [
-    "Architect",
-    "Design the experience, system structure, data model and delivery strategy."
-  ],
-  ["Build", "Implement the product through disciplined, reviewable increments."],
-  [
-    "Validate",
-    "Test behaviour, security, accessibility, performance and operational readiness."
-  ],
-  ["Evolve", "Improve the product using real usage, evidence and changing priorities."]
-] as const;
-
-const systemLayers = [
-  ["Experience", "Interfaces and workflows shaped around real users."],
-  ["Application", "Maintainable product logic and dependable integrations."],
-  ["Intelligence", "AI and automation applied where they create measurable clarity."],
-  ["Data", "Information designed for quality, visibility and useful decisions."],
-  ["Infrastructure", "Operational foundations that support dependable change."],
-  ["Assurance", "Security, accessibility and performance considered throughout."]
-] as const;
-
-function displayMedia(project: PublicProjectDTO): PublicMediaDTO | null {
-  if (project.coverAsset?.mimeType.startsWith("image/")) return project.coverAsset;
-  const supporting = project.media.find((item) =>
-    item.mediaAsset.mimeType.startsWith("image/")
-  );
-  return supporting?.mediaAsset ?? null;
-}
-
-function ProjectImage({
-  media,
-  priority,
-  title
-}: Readonly<{
-  media: PublicMediaDTO;
-  priority?: boolean;
-  title: string;
-}>): React.JSX.Element {
-  const width = media.width ?? 1600;
-  const height = media.height ?? 1000;
+const orbit = [
+  ["light", "Light across a geometric building"],
+  ["sketch", "A product drawing taking shape"],
+  ["paper", "Drawing tools and a notebook"],
+  ["collaboration", "Laptops and notes on a shared work surface"],
+  ["sydney", "Sydney Harbour and its architectural landmarks"],
+  ["detail", "A conversation over a laptop"],
+  ["architecture", "A person moving through a designed space"],
+  ["sketch", "The detail of a technical drawing"]
+];
+export function HomePage({ team }: HomePageData): React.JSX.Element {
   return (
-    <Image
-      alt={media.altText?.trim() || `${title} project interface`}
-      className={styles.heroImage}
-      height={height}
-      priority={priority ?? false}
-      sizes="(max-width: 800px) calc(100vw - 40px), 65vw"
-      src={media.url}
-      width={width}
-    />
-  );
-}
-
-function HeroStage({
-  project
-}: Readonly<{ project: PublicProjectDTO | null }>): React.JSX.Element {
-  const media = project ? displayMedia(project) : null;
-  if (media) {
-    return (
-      <div className={styles.heroStage}>
-        <ProjectImage
-          media={media}
-          priority
-          title={project?.title ?? "Valtum Studio"}
-        />
-      </div>
-    );
-  }
-  return (
-    <div aria-label="Valtum Studio structural media stage" className={styles.heroStage}>
-      <div className={styles.heroFallback}>
-        <p className={styles.stageWordmark}>Valtum Studio / Product systems</p>
-        <p className={styles.stageStatement}>
-          Designed for the work beneath the interface.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function StudioSection({
-  team
-}: Readonly<{ team: HomePageData["team"] }>): React.JSX.Element {
-  return (
-    <section
-      aria-labelledby="studio-heading"
-      className={`${styles.section} ${styles.studio}`}
-      id="studio"
-    >
-      <div className={styles.container}>
-        <div className={styles.studioGrid}>
-          <div className={styles.studioText}>
-            <p className={styles.label}>Studio</p>
-            <h2 className={styles.sectionTitle} id="studio-heading">
-              Australia-based. Built for global work.
-            </h2>
-            <p>
-              Valtum brings product thinking, technical depth and careful execution into
-              one accountable studio practice.
-            </p>
-          </div>
-          <p className={styles.studioDetail}>
-            We work where complexity needs a considered route from first decision to
-            production reality.
+    <main className="x-home" id="main-content">
+      <CinematicHero />
+      <section className="x-intro" id="studio-introduction" data-cover-scene>
+        <h2 data-word-reveal>
+          A sharper <InlinePhoto name="sculpture" /> experience.
+          <br />A stronger business.
+          <br />
+          <span className="x-inline-photo">
+            <Image
+              src="/editorial/sketch.webp"
+              alt="A close look at the creative process"
+              fill
+              sizes="120px"
+            />
+          </span>{" "}
+          The two belong together.
+        </h2>
+        <div className="x-intro-prose" data-reveal>
+          <p>
+            You might be making your first product, untangling a difficult process or
+            giving a good business the website it deserves.
           </p>
-          {team.length > 0 ? (
-            <div className={styles.teamList}>
+          <p>
+            Valtum brings the creative thinking and the engineering into one
+            conversation. From Australia, we work directly with founders and teams
+            around the world, staying close to the idea and the people it is for.
+          </p>
+          <Link className="x-link" href="/studio">
+            Meet the studio ↗
+          </Link>
+        </div>
+      </section>
+      <section className="x-device-story" data-section-shift>
+        <div className="x-device-story-copy">
+          <h2 data-word-reveal>
+            Simple on the surface.
+            <br />
+            Considered all the way through.
+          </h2>
+          <p>
+            What people see should feel natural. The decisions behind it deserve just as
+            much care.
+          </p>
+        </div>
+        <div className="x-device-pair" data-device-stage>
+          <DevicePreview theme="aegis" title="Aegis Sentinel" />
+          <div className="x-pair-phone">
+            <DevicePreview theme="lodge" title="Laugh & Lodge" phone />
+          </div>
+        </div>
+        <Link className="x-link" href="/work">
+          Explore the work behind the screens ↗
+        </Link>
+      </section>
+      <section className="x-services-home" data-cover-scene>
+        <div className="x-section-heading">
+          <h2 data-reveal>
+            What are you
+            <br />
+            ready to <InlinePhoto name="spiral" /> change?
+          </h2>
+          <p>
+            A new product. A better way of working.
+            <br />A presence that feels like you.
+          </p>
+        </div>
+        <ServiceAccordion />
+        <Link className="x-link x-section-link" href="/services">
+          See all services ↗
+        </Link>
+      </section>
+      <section className="x-orbit" data-orbit>
+        <div className="x-orbit-images" aria-hidden="true">
+          {orbit.map(([name, alt], i) => (
+            <div className={`x-orbit-image orbit-${i}`} key={i}>
+              <Image
+                src={`/editorial/${name}.webp`}
+                alt={alt ?? ""}
+                fill
+                sizes="(max-width:760px) 28vw, 16vw"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="x-orbit-copy">
+          <h2>
+            The whole
+            <br />
+            <em>picture.</em>
+          </h2>
+          <p>
+            A useful product is a meeting of people, ideas and decisions. We keep them
+            in view together, from the first conversation to the smallest interaction.
+          </p>
+          <Link href="/approach" className="x-link">
+            See how we work ↗
+          </Link>
+        </div>
+      </section>
+      <Archive projects={stories} />
+      <MediaTakeover
+        image="sculpture"
+        alt="A sculptural concrete curve at Tate Modern"
+        title="An idea deserves a world of its own."
+        body="The story, the interface, the detail. Each one should feel like it belongs to the same idea."
+      />
+      <section className="x-journal-section" data-cover-scene>
+        <div className="x-section-heading">
+          <h2 data-reveal>
+            The <InlinePhoto name="paper" /> thinking
+            <br />
+            becomes the thing.
+          </h2>
+          <p>
+            Open the working journal.
+            <br />
+            This is how a project takes shape.
+          </p>
+        </div>
+        <TurningBook pages={journal} label="The Valtum working journal" />
+      </section>
+      <section className="x-partnership" data-section-shift>
+        <div className="x-partnership-photo">
+          <Image
+            src="/editorial/sydney.webp"
+            alt="An aerial view across Sydney Harbour"
+            fill
+            sizes="(max-width:760px) 100vw, 50vw"
+            data-parallax
+          />
+        </div>
+        <div>
+          <h2 data-reveal>
+            Close to <InlinePhoto name="detail" /> the work.
+            <br />
+            Wherever you are.
+          </h2>
+          <p>
+            A good partnership needs a shared understanding, not a shared postcode. We
+            make room for direct conversations, visible progress and decisions you can
+            follow.
+          </p>
+          <p>
+            Tell us what you are trying to change. We will work through the right
+            starting point with you.
+          </p>
+          <Link className="x-button" href="/contact">
+            Start a conversation ↗
+          </Link>
+          {team.length > 0 && (
+            <div className="v-real-team">
               {team.map((member) => (
-                <div className={styles.teamMember} key={member.slug}>
-                  <strong>{member.name}</strong>
-                  <span>{member.roleTitle}</span>
-                  <p>{member.shortBio ?? member.bioText ?? ""}</p>
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function HomePage({
-  projects,
-  services,
-  settings,
-  team
-}: HomePageData): React.JSX.Element {
-  const heroProject =
-    projects.find((project) => displayMedia(project) !== null) ?? null;
-  const hasSelectedWork = projects.some((project) => displayMedia(project) !== null);
-  const studioName = settings.studioName || "Valtum Studio";
-  const capabilities =
-    services.length > 0
-      ? services.map((service) => ({
-          title: service.title,
-          description: service.description ?? service.summary
-        }))
-      : defaultCapabilities;
-  return (
-    <div className={styles.home} id="top">
-      <SiteHeader studioName={studioName} />
-      <main id="main-content">
-        <section
-          aria-labelledby="hero-heading"
-          className={`${styles.hero} ${styles.container}`}
-        >
-          <div className={styles.heroGrid}>
-            <div className={styles.heroIntro}>
-              <p className={styles.label}>
-                Independent digital product and engineering studio
-              </p>
-              <h1 className={styles.heroTitle} id="hero-heading">
-                Clarity from complexity.
-              </h1>
-            </div>
-            <div className={styles.heroDetails}>
-              <div>
-                <p className={styles.heroCopy}>
-                  We design and engineer digital products, intelligent systems and
-                  platforms for organisations with serious problems to solve.
+                <p key={member.slug}>
+                  {member.name} · {member.roleTitle}
                 </p>
-                <div className={styles.heroButtons}>
-                  <a className={styles.buttonPrimary} href="#contact">
-                    Start a project
-                  </a>
-                  <a className={styles.buttonSecondary} href="#work">
-                    Explore selected work
-                  </a>
-                </div>
-              </div>
-              <div className={styles.heroLocations}>
-                <span className={styles.metadata}>Australia-based</span>
-                <span className={styles.metadata}>Working globally</span>
-              </div>
-            </div>
-          </div>
-          <HeroStage project={heroProject} />
-        </section>
-
-        <section
-          aria-labelledby="thesis-heading"
-          className={`${styles.section} ${styles.thesis}`}
-        >
-          <div className={styles.container}>
-            <div className={styles.thesisGrid}>
-              <h2 className={styles.thesisTitle} id="thesis-heading">
-                Complex ideas become useful products when strategy, design and
-                engineering move as one.
-              </h2>
-              <p className={styles.thesisCopy}>
-                From product definition and interface design to architecture,
-                implementation and production evolution, the work stays connected to the
-                problem it is there to solve.
-              </p>
-              <div className={styles.capabilityColumns}>
-                <div>
-                  <h3>Products</h3>
-                  <p>Platforms and experiences people can actually use.</p>
-                </div>
-                <div>
-                  <h3>Intelligence</h3>
-                  <p>AI, automation, data and computer vision applied with purpose.</p>
-                </div>
-                <div>
-                  <h3>Systems</h3>
-                  <p>Backends, infrastructure and architecture designed to endure.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {hasSelectedWork ? (
-          <SelectedWorkSection projects={projects} />
-        ) : (
-          <span aria-hidden="true" id="work" />
-        )}
-        <CapabilitiesSection capabilities={capabilities} />
-
-        <section
-          aria-labelledby="process-heading"
-          className={styles.section}
-          id="process"
-        >
-          <div className={styles.container}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.label}>Process</p>
-              <h2 className={styles.sectionTitle} id="process-heading">
-                How Valtum works
-              </h2>
-            </div>
-            <div className={styles.processPath}>
-              {processStages.map(([title, description], index) => (
-                <article className={styles.processStage} key={title}>
-                  <p className={styles.processIndex}>
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="depth-heading"
-          className={`${styles.section} ${styles.depth}`}
-        >
-          <div className={styles.container}>
-            <div className={styles.sectionHeader}>
-              <p className={styles.label}>Technical depth</p>
-              <h2 className={styles.sectionTitle} id="depth-heading">
-                The interface is only the visible layer.
-              </h2>
-            </div>
-            <div className={styles.layerList}>
-              {systemLayers.map(([title, description], index) => (
-                <article className={styles.layer} key={title}>
-                  <p className={styles.layerIndex}>0{index + 1}</p>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <StudioSection team={team} />
-        <section
-          aria-labelledby="contact-heading"
-          className={`${styles.section} ${styles.contact}`}
-          id="contact"
-        >
-          <div className={styles.container}>
-            <div className={styles.contactGrid}>
-              <h2 className={styles.contactTitle} id="contact-heading">
-                Have something complex to build?
-                <br />
-                Let’s make it clear.
-              </h2>
-              <div className={styles.contactAside}>
-                <p>
-                  Tell us what you are building, where the complexity is, and what
-                  success should look like.
-                </p>
-                <InquiryForm />
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer className={styles.footer}>
-        <div className={`${styles.container} ${styles.footerInner}`}>
-          <div>
-            <p className={styles.wordmark}>{studioName}</p>
-            <p className={styles.footerContact}>Australia-based / global-first</p>
-          </div>
-          <nav aria-label="Footer navigation" className={styles.footerLinks}>
-            {homeNavigation.map((item) => (
-              <a href={item.href} key={item.href}>
-                {item.label}
-              </a>
-            ))}
-            {settings.publicEmail ? (
-              <a href={`mailto:${settings.publicEmail}`}>{settings.publicEmail}</a>
-            ) : null}
-            {settings.publicSocialLinks?.linkedinUrl ? (
-              <a
-                href={settings.publicSocialLinks.linkedinUrl}
-                rel="noreferrer"
-                target="_blank"
-              >
-                LinkedIn
-              </a>
-            ) : null}
-            {settings.publicSocialLinks?.instagramUrl ? (
-              <a
-                href={settings.publicSocialLinks.instagramUrl}
-                rel="noreferrer"
-                target="_blank"
-              >
-                Instagram
-              </a>
-            ) : null}
-          </nav>
-          <p className={styles.footerMeta}>
-            © {new Date().getFullYear()} {studioName}
-          </p>
+          )}
         </div>
-      </footer>
-    </div>
+      </section>
+      <section className="x-questions">
+        <h2 data-reveal>
+          A few things
+          <br />
+          you may be wondering.
+        </h2>
+        <div>
+          {[
+            [
+              "Where does a project start?",
+              "With a conversation about the change you want to make, the people involved and what already exists. We agree on a useful next step before defining a larger engagement."
+            ],
+            [
+              "Can you take an idea through design and development?",
+              "Yes. Product thinking, experience design and engineering are connected parts of our practice. The scope is shaped around what the project needs, with responsibilities agreed from the beginning."
+            ],
+            [
+              "Can you work with an existing product?",
+              "We can begin with a focused review, a new customer journey, an integration or an improvement to the public experience. A useful change does not always need a complete rebuild."
+            ],
+            [
+              "How do you put a price on the work?",
+              "We define the scope, the decisions that need to be made and the delivery boundaries before quoting. That gives both sides a clearer understanding of the work and the investment."
+            ]
+          ].map(([question, answer]) => (
+            <details key={question}>
+              <summary>
+                {question}
+                <span aria-hidden="true">+</span>
+              </summary>
+              <p>{answer}</p>
+            </details>
+          ))}
+        </div>
+        <Link className="x-link" href="/solutions">
+          Explore solutions ↗
+        </Link>
+      </section>
+    </main>
   );
 }

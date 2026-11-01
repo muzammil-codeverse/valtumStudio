@@ -28,14 +28,15 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "connect-src 'self'",
-  "font-src 'self' data:",
+  "font-src 'self' data: https://cdn.fontshare.com",
   "form-action 'self'",
   "frame-ancestors 'none'",
+  "frame-src https://aegis-sentinel-tau.vercel.app https://booking-marketplace-web.vercel.app https://www.ktcouriers.com https://math-intellect.vercel.app https://personality-analysis-exploiter.vercel.app",
   "img-src 'self' data: blob:",
   "media-src 'self'",
   "object-src 'none'",
   "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
   "worker-src 'self' blob:"
 ].join("; ");
 
@@ -70,12 +71,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: securityHeaders
-      }
-    ];
+    return [{ source: "/(.*)", headers: securityHeaders }];
   }
 };
 

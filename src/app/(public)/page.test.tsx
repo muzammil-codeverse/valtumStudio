@@ -1,5 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Prisma } from "@/generated/prisma/client";
@@ -56,82 +55,72 @@ const data: HomePageData = {
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  vi.unstubAllEnvs();
 });
 
 describe("PublicHomePage UI", () => {
-  it("renders the approved hero heading with one page h1", () => {
+  it("keeps the authored opening semantic and all five projects reachable", () => {
     render(<HomePage {...data} />);
-
-    expect(
-      screen.getByRole("heading", { level: 1, name: "Clarity from complexity." })
-    ).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-  });
-
-  it("uses only homepage anchors for public navigation", () => {
-    render(<HomePage {...data} />);
-
-    const links = screen.getAllByRole("link");
-    const navigationLinks = links.filter((link) =>
-      ["Work", "Capabilities", "Process", "Studio", "Start a project"].includes(
-        link.textContent ?? ""
-      )
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      /Good ideas.*Beautifully built/
     );
-    expect(navigationLinks.length).toBeGreaterThan(0);
-    expect(
-      navigationLinks.every((link) => link.getAttribute("href")?.startsWith("#"))
-    ).toBe(true);
-    expect(
-      screen.queryByRole("link", { name: /services|insights|privacy/i })
-    ).not.toBeInTheDocument();
+    for (const slug of [
+      "aegis-sentinel",
+      "laugh-and-lodge",
+      "kt-couriers",
+      "math-intellect",
+      "personality-assessor"
+    ]) {
+      expect(document.querySelector(`a[href="/work/${slug}"]`)).toBeInTheDocument();
+    }
   });
 
-  it("omits selected work when there are no publicly supplied project scenes", () => {
+  it("offers direct commercial routes without requiring the animated archive", () => {
     render(<HomePage {...data} />);
-
-    expect(
-      screen.queryByRole("heading", { name: "Evidence, not theatre." })
-    ).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Explore solutions/ })).toHaveAttribute(
+      "href",
+      "/solutions"
+    );
+    expect(screen.getByRole("link", { name: /See how we work/ })).toHaveAttribute(
+      "href",
+      "/approach"
+    );
+    expect(screen.getByRole("link", { name: /Start a project/ })).toHaveAttribute(
+      "href",
+      "/contact"
+    );
   });
 
-  it("keeps capability selection accessible", async () => {
-    const user = userEvent.setup();
+  it("lets visitors browse real project captures and open the selected case study", () => {
     render(<HomePage {...data} />);
-    const capability = screen.getByRole("tab", {
-      name: /web applications and backends/i
-    });
-
-    await user.click(capability);
-
-    expect(capability).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("tabpanel")).toHaveTextContent("Reliable applications");
+    expect(
+      screen.getByRole("link", { name: "View Aegis Sentinel case study" })
+    ).toHaveAttribute("href", "/work/aegis-sentinel");
+    fireEvent.click(screen.getByRole("button", { name: "Next project" }));
+    expect(
+      screen.getByRole("link", { name: "View Laugh & Lodge case study" })
+    ).toHaveAttribute("href", "/work/laugh-and-lodge");
+    const gallery = screen.getByRole("region", { name: "Explore our projects" });
+    fireEvent.keyDown(gallery, { key: "ArrowLeft" });
+    fireEvent.click(screen.getByRole("button", { name: "Previous project" }));
+    expect(
+      screen.getByRole("link", { name: "View Personality Assessor case study" })
+    ).toHaveAttribute("href", "/work/personality-assessor");
   });
 
-  it("exposes accessible mobile navigation state", async () => {
-    const user = userEvent.setup();
+  it("does not manufacture client metrics or testimonials", () => {
     render(<HomePage {...data} />);
-    const button = screen.getByRole("button", { name: "Open navigation" });
-
-    await user.click(button);
-
-    expect(button).toHaveAttribute("aria-expanded", "true");
-    expect(
-      screen.getByRole("dialog", { name: "Mobile navigation" })
-    ).toBeInTheDocument();
-    await user.keyboard("{Escape}");
-    expect(button).toHaveAttribute("aria-expanded", "false");
-  });
-
-  it("keeps the approved lead mechanism and does not render fake social proof", () => {
-    render(<HomePage {...data} />);
-
-    expect(
-      screen.getByRole("heading", { name: /Have something complex to build/i })
-    ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Start a project" })).toBeInTheDocument();
     expect(
       screen.queryByText(/trusted by|testimonial|clients|rating/i)
     ).not.toBeInTheDocument();
+    expect(
+      screen
+        .getAllByRole("img")
+        .every((image) =>
+          Boolean(image.getAttribute("alt") || image.getAttribute("aria-label"))
+        )
+    ).toBe(true);
   });
 });
 
@@ -154,7 +143,7 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
 
     expect(metadata.title).toBe("Valtum Studio");
     expect(metadata.description).toBe(
-      "Valtum Studio — custom software, digital products and creative development."
+      "Software, systems and digital experiences. An independent Australian studio bringing product thinking, design and engineering together."
     );
     expect(logger.warn).toHaveBeenCalledWith(
       expect.stringContaining("Public settings query failed for homepage metadata"),
@@ -267,7 +256,7 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
     render(element);
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Clarity from complexity."
+      /Good ideas.*Beautifully built/
     );
     expect(
       screen.queryByRole("heading", { name: "Evidence, not theatre." })
