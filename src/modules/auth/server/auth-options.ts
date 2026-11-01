@@ -43,7 +43,7 @@ export function createAuthOptions(input: AuthOptionInput) {
         : undefined,
       useSecureCookies: input.environment === "production"
     },
-    appName: "Siglum Studio",
+    appName: "Valtum Studio",
     basePath: "/api/auth",
     baseURL: input.baseUrl,
     database: prismaAdapter(input.prisma, { provider: "postgresql" }),
@@ -55,7 +55,7 @@ export function createAuthOptions(input: AuthOptionInput) {
       minPasswordLength: 14
     },
     plugins: [
-      twoFactor({ issuer: "Siglum Studio", skipVerificationOnEnable: false }),
+      twoFactor({ issuer: "Valtum Studio", skipVerificationOnEnable: false }),
       admin({ ac: pluginAccessControl, defaultRole: "editor", roles: pluginRoles })
     ],
     rateLimit: {
