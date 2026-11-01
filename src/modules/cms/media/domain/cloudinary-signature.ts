@@ -9,5 +9,7 @@ export function signCloudinaryParameters(
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
-  return createHash("sha1").update(canonical + apiSecret).digest("hex");
+  return createHash("sha1")
+    .update(canonical + apiSecret)
+    .digest("hex");
 }

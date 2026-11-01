@@ -12,9 +12,15 @@ describe("Cloudinary parameter signatures", () => {
   it("sorts parameters independent of insertion order", () => {
     const secret = "test-secret";
     expect(
-      signCloudinaryParameters({ timestamp: "123", public_id: "valtum/photo", overwrite: "true" }, secret)
+      signCloudinaryParameters(
+        { timestamp: "123", public_id: "valtum/photo", overwrite: "true" },
+        secret
+      )
     ).toBe(
-      signCloudinaryParameters({ overwrite: "true", public_id: "valtum/photo", timestamp: "123" }, secret)
+      signCloudinaryParameters(
+        { overwrite: "true", public_id: "valtum/photo", timestamp: "123" },
+        secret
+      )
     );
   });
 });
