@@ -6,8 +6,8 @@ import {
   formatClientMoney,
   getClientDashboard
 } from "@/modules/portal/server/client-data";
-import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
 import { summarizeClientInvoices } from "@/modules/portal/server/invoice-insights";
+import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
 
 export const dynamic = "force-dynamic";
 

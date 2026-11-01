@@ -2,14 +2,14 @@
 
 import { randomUUID } from "node:crypto";
 
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { prisma } from "@/lib/database";
-import { requirePermission } from "@/modules/auth/server/authorization";
 import { auth } from "@/modules/auth/server/auth";
+import { requirePermission } from "@/modules/auth/server/authorization";
 import { isClientPortalEnabled } from "@/modules/portal/server/client-data";
 
 function assertEnabled(): void {

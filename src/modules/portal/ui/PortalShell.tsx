@@ -45,7 +45,7 @@ export function PortalShell({
         <div className="portal-sidebar-bottom">
           <div className="portal-help">
             <small>NEED SOMETHING?</small>
-            <strong>We're here for the details.</strong>
+            <strong>We&apos;re here for the details.</strong>
             <a href="mailto:hello@valtumstudio.com.au">Talk to the studio ↗</a>
           </div>
           <div className="portal-account">
