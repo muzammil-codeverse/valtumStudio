@@ -66,7 +66,8 @@ export function ContactForm(): React.JSX.Element {
       <div aria-live="polite" className="v-form-status">
         <h2 style={{ fontSize: 35, margin: "20px 0" }}>A good place to begin.</h2>
         <p>
-          Thank you for telling us about your idea. We will read it carefully and get back to you at the email you shared.
+          Thank you for telling us about your idea. We will read it carefully and get
+          back to you at the email you shared.
         </p>
         <button
           className="v-submit"
@@ -141,9 +142,7 @@ export function ContactForm(): React.JSX.Element {
         </span>
       </label>
       <button className="v-submit" disabled={status === "submitting"} type="submit">
-        {status === "submitting"
-          ? "Sending your enquiry"
-          : "Begin a conversation"}
+        {status === "submitting" ? "Sending your enquiry" : "Begin a conversation"}
         <span aria-hidden="true">↗</span>
       </button>
       {status === "error" && (

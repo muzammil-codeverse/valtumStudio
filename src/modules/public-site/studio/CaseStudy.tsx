@@ -112,8 +112,8 @@ export function CaseStudy({ story }: { story: ProjectStory }): React.JSX.Element
             The same intention.
           </h2>
           <p>
-            The experience is reworked for a smaller screen, with the same care for
-            the journey. Explore the live site or open it in your browser.
+            The experience is reworked for a smaller screen, with the same care for the
+            journey. Explore the live site or open it in your browser.
           </p>
         </div>
         <div className="x-case-responsive-phone">
