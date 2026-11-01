@@ -1,0 +1,37 @@
+{
+  "aegis": {
+    "url": "https://aegis-sentinel-tau.vercel.app/",
+    "captured": "2026-10-19",
+    "representation": "Actual public first viewport: 1440 \u00d7 900 desktop and 390 \u00d7 844 mobile. No full page scaling or artificial screen pan.",
+    "method": "Live public page screenshot",
+    "rights": "User requested representation of their own products."
+  },
+  "lodge": {
+    "url": "https://booking-marketplace-web.vercel.app/",
+    "captured": "2026-10-19",
+    "representation": "Actual public first viewport: 1440 \u00d7 900 desktop and 390 \u00d7 844 mobile. No full page scaling or artificial screen pan.",
+    "method": "Live public page screenshot",
+    "rights": "User requested representation of their own products."
+  },
+  "courier": {
+    "url": "https://www.ktcouriers.com/",
+    "captured": "2026-10-19",
+    "representation": "Actual public first viewport: 1440 \u00d7 900 desktop and 390 \u00d7 844 mobile. No full page scaling or artificial screen pan.",
+    "method": "Live public page screenshot",
+    "rights": "User requested representation of their own products."
+  },
+  "math": {
+    "url": "https://math-intellect.vercel.app/",
+    "captured": "2026-10-19",
+    "representation": "Actual public first viewport: 1440 \u00d7 900 desktop and 390 \u00d7 844 mobile. No full page scaling or artificial screen pan.",
+    "method": "Live public page screenshot",
+    "rights": "User requested representation of their own products."
+  },
+  "personality": {
+    "url": "https://personality-analysis-exploiter.vercel.app/",
+    "captured": "2026-10-19",
+    "representation": "Actual public first viewport: 1440 \u00d7 900 desktop and 390 \u00d7 844 mobile. No full page scaling or artificial screen pan.",
+    "method": "Live public page screenshot",
+    "rights": "User requested representation of their own products."
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "architecture": {
+    "source": "https://unsplash.com/photos/WBTU_EoNzNs",
+    "download": "https://images.unsplash.com/photo-1516907167-052dab9dbf32?auto=format&fit=crop&w=1800&q=85",
+    "author": "Madalena Veloso",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "sketch": {
+    "source": "https://unsplash.com/photos/Wlg-hDGCQ08",
+    "download": "https://images.unsplash.com/photo-1764737740462-2a310c7b2c39?auto=format&fit=crop&w=1800&q=85",
+    "author": "Vooglam Eyewear",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "paper": {
+    "source": "https://unsplash.com/photos/6hVS5dXige8",
+    "download": "https://images.unsplash.com/photo-1771366629879-8b3128ee62ca?auto=format&fit=crop&w=1800&q=85",
+    "author": "Calvin Wise",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "collaboration": {
+    "source": "https://unsplash.com/photos/SYTO3xs06fU",
+    "download": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1800&q=85",
+    "author": "Marvin Meyer",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "light": {
+    "source": "https://unsplash.com/photos/PhYq704ffdA",
+    "download": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85",
+    "author": "Sean Pollock",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "detail": {
+    "source": "https://unsplash.com/photos/2FPjlAyMQTA",
+    "download": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=85",
+    "author": "John Schnobrich",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "sydney": {
+    "source": "https://unsplash.com/photos/7Zb7kUyQg1E",
+    "download": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=1800&q=85",
+    "author": "Dan Freeman",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photography about craft, collaboration and place. Not represented as Valtum premises or personnel."
+  },
+  "spiral": {
+    "source": "https://unsplash.com/photos/RFcn_DFKd04",
+    "download": "https://images.unsplash.com/photo-1618210538767-0db262c77d1b?auto=format&fit=crop&w=2400&q=88",
+    "author": "Loegunn Lai",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial study of form and movement. Not represented as Valtum premises."
+  },
+  "sculpture": {
+    "source": "https://unsplash.com/photos/ulFAi1jkNcA",
+    "download": "https://images.unsplash.com/photo-1565768502473-c5dc73b7eb33?auto=format&fit=crop&w=2400&q=88",
+    "author": "Jonny James",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial study of form and movement. Not represented as Valtum premises."
+  },
+  "hero-wireframe": {
+    "source": "https://unsplash.com/photos/ml1IgjV8OvY",
+    "download": "https://images.unsplash.com/photo-1634245482394-1bcf5ccffcc0?auto=format&fit=crop&w=2400&q=88",
+    "author": "Kelly Sikkema",
+    "license": "https://unsplash.com/license",
+    "retrieved": "2026-10-19",
+    "use": "Editorial photograph of website and app wireframing. Not represented as Valtum personnel or premises."
+  }
+}

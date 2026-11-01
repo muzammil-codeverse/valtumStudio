@@ -1,0 +1,1562 @@
+/* Scroll scenes keep their reading order when motion is unavailable. */
+.valtum .m-inline-photo {
+  position: relative;
+  display: inline-block;
+  width: 1.55em;
+  height: 0.66em;
+  vertical-align: baseline;
+  border-radius: 100px;
+  overflow: hidden;
+  margin: 0 0.08em;
+  transform: translateY(0.06em);
+}
+.m-inline-photo img {
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+.m-inline-photo:hover img {
+  transform: scale(1.12);
+}
+.m-hero {
+  position: relative;
+  height: 220svh;
+  background: #e9ebef;
+  isolation: isolate;
+}
+.m-hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 650px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.valtum .m-hero-copy {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  width: min(1200px, 90vw);
+  padding-bottom: 7svh;
+  pointer-events: none;
+}
+.m-hero-copy a {
+  pointer-events: auto;
+}
+.valtum .m-hero h1 {
+  font-size: clamp(80px, 9vw, 155px);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+}
+.valtum .m-hero h1 em {
+  font-family: inherit;
+  font-style: normal;
+  color: #626b7b;
+  letter-spacing: inherit;
+}
+.m-hero-copy p {
+  max-width: 470px;
+  margin: 30px auto 0;
+  font-size: 17px;
+  line-height: 1.7;
+}
+.m-hero-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 28px;
+}
+.m-hero-wheel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.m-hero-wheel-inner {
+  position: absolute;
+  inset: 0;
+}
+.m-wheel-frame {
+  position: absolute;
+  width: clamp(110px, 15vw, 235px);
+  height: clamp(90px, 12vw, 190px);
+  overflow: hidden;
+  box-shadow: 0 12px 30px #17202e25;
+  border: 6px solid #f4f4f0;
+}
+.m-wheel-frame img {
+  object-fit: cover;
+}
+.m-frame-0 {
+  left: 4%;
+  top: 13%;
+  transform: rotate(-14deg);
+}
+.m-frame-1 {
+  right: 5%;
+  top: 9%;
+  transform: rotate(12deg);
+}
+.m-frame-2 {
+  left: -3%;
+  top: 50%;
+  transform: rotate(9deg);
+}
+.m-frame-3 {
+  right: -3%;
+  top: 48%;
+  transform: rotate(-12deg);
+}
+.m-frame-4 {
+  left: 14%;
+  bottom: 3%;
+  transform: rotate(-10deg);
+}
+.m-frame-5 {
+  right: 14%;
+  bottom: 4%;
+  transform: rotate(13deg);
+}
+.m-hero-focus {
+  position: absolute;
+  inset: 81% 45% 4%;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 18px;
+}
+.m-hero-focus img {
+  object-fit: cover;
+  object-position: center 42%;
+}
+.m-hero-focus:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent, #0d141bc7);
+}
+.m-hero-refrain {
+  position: absolute;
+  inset: auto 8% 15%;
+  z-index: 5;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+}
+.valtum .m-hero-refrain h2 {
+  font-size: clamp(50px, 7vw, 105px);
+  line-height: 1;
+  max-width: 1100px;
+}
+.m-hero-refrain h2 em {
+  font-family: inherit;
+  font-style: normal;
+}
+.m-hero-refrain p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-top: 25px;
+}
+.m-scroll-cue {
+  position: absolute;
+  bottom: 30px;
+  left: 5%;
+  z-index: 6;
+  font-size: 13px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+.m-scroll-cue span {
+  display: grid;
+  place-items: center;
+  border: 1px solid #8992a3;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+}
+[data-cover-scene] {
+  position: relative;
+  z-index: 3;
+  background: #f0f1f5;
+}
+.m-takeover {
+  height: 180svh;
+  position: relative;
+  background: #dce0e7;
+  isolation: isolate;
+}
+.m-takeover-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 580px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.m-takeover-media {
+  position: absolute;
+  inset: 22% 26%;
+  overflow: hidden;
+  border-radius: 180px;
+}
+.m-takeover-media img {
+  object-fit: cover;
+}
+.m-takeover-media:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#07101b15, #07101baa);
+}
+.m-takeover-copy {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-align: center;
+  max-width: 1050px;
+  padding: 50px;
+  opacity: 0;
+}
+.valtum .m-takeover-copy h2 {
+  font-size: clamp(55px, 7vw, 110px);
+  line-height: 1.02;
+}
+.m-takeover-copy p {
+  max-width: 460px;
+  margin: 30px auto 0;
+  font-size: 18px;
+  line-height: 1.7;
+}
+.m-practice-reel {
+  overflow: hidden;
+  background: #252b35;
+  color: #edf0f5;
+  padding: 48px 0;
+  position: relative;
+  z-index: 4;
+}
+.m-practice-reel > div {
+  width: max-content;
+  white-space: nowrap;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: clamp(50px, 6vw, 100px);
+  line-height: 1.2;
+  will-change: transform;
+}
+.m-practice-reel .m-inline-photo {
+  width: 1.8em;
+  height: 0.8em;
+  margin: 0 0.3em;
+}
+/* The complete photographic orbit fits into one viewport. */
+.valtum .x-orbit {
+  height: 100svh;
+  min-height: 620px;
+}
+.valtum .x-orbit-images {
+  width: min(94vw, 112svh, 1250px);
+  height: min(86svh, 850px);
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+}
+.valtum .x-orbit-image {
+  width: 16%;
+  height: 21%;
+  max-width: none;
+}
+.valtum .x-orbit-copy {
+  width: 34%;
+  max-width: 420px;
+}
+.valtum .x-orbit-copy h2 {
+  font-size: clamp(54px, 5vw, 80px);
+}
+.valtum .x-orbit-copy p {
+  font-size: 15px;
+  line-height: 1.55;
+  margin-top: 20px;
+}
+.valtum .orbit-0 {
+  left: 25%;
+  top: 3%;
+}
+.valtum .orbit-1 {
+  left: 57%;
+  top: 3%;
+}
+.valtum .orbit-2 {
+  right: 4%;
+  top: 24%;
+}
+.valtum .orbit-3 {
+  right: 4%;
+  bottom: 22%;
+}
+.valtum .orbit-4 {
+  right: 25%;
+  bottom: 2%;
+}
+.valtum .orbit-5 {
+  left: 24%;
+  bottom: 2%;
+}
+.valtum .orbit-6 {
+  left: 3%;
+  bottom: 22%;
+}
+.valtum .orbit-7 {
+  left: 3%;
+  top: 24%;
+}
+/* A measured arc around the mark replaces the progress bar. */
+.x-arrival-center {
+  width: 240px;
+  height: 240px;
+  place-items: center;
+  gap: 0;
+}
+.x-arrival-center img {
+  width: 135px;
+  height: 135px;
+  object-fit: contain;
+  grid-area: 1/1;
+}
+.m-logo-spinner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  fill: none;
+  stroke-width: 1;
+}
+.m-spinner-track {
+  stroke: #ffffff25;
+}
+.m-spinner-progress {
+  stroke: #ffffff80;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.5s ease;
+}
+.m-spinner-orbit {
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-dasharray: 18 82;
+  transform-origin: center;
+  animation: m-spinner-turn 1.5s linear infinite;
+}
+@keyframes m-spinner-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.valtum .x-route-curtain {
+  display: block;
+  visibility: hidden;
+  transform: none;
+  background: transparent;
+  overflow: hidden;
+}
+.m-route-slices {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.m-route-slice {
+  height: 100%;
+  background: #202631;
+  transform: translateY(101%);
+  border-right: 1px solid #ffffff0a;
+}
+.m-route-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  color: #f3f4f6;
+  opacity: 0;
+}
+.valtum .m-route-content > img {
+  width: 55px;
+  height: 55px;
+}
+.m-route-content > span {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: clamp(55px, 8vw, 130px);
+  letter-spacing: -0.055em;
+}
+.m-route-photo {
+  width: 160px;
+  height: 210px;
+  position: relative;
+  transform: rotate(9deg);
+  overflow: hidden;
+}
+.m-route-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Services: a photographic fan and a held introduction. */
+.m-services-opening {
+  min-height: calc(100svh - 88px);
+  position: relative;
+  padding: 70px 6% 40px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 35px;
+  background: #e2e6ed;
+  overflow: hidden;
+}
+.valtum .m-services-title h1 {
+  font-size: clamp(64px, 7.5vw, 120px);
+  max-width: 950px;
+  line-height: 0.98;
+}
+.m-services-title p {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 400px;
+  margin-top: 35px;
+}
+.m-service-fan {
+  position: relative;
+  min-height: 420px;
+  perspective: 1000px;
+  align-self: center;
+}
+.m-service-fan > div {
+  position: absolute;
+  width: 66%;
+  height: 80%;
+  left: 17%;
+  top: 10%;
+  overflow: hidden;
+  box-shadow: 0 20px 50px #17233530;
+  border: 7px solid #f6f5f0;
+}
+.m-service-fan img {
+  object-fit: cover;
+}
+.m-fan-0 {
+  transform: translate(-34%, -4%) rotate(-18deg);
+}
+.m-fan-1 {
+  transform: rotate(2deg);
+  z-index: 2;
+}
+.m-fan-2 {
+  transform: translate(34%, 4%) rotate(19deg);
+  z-index: 3;
+}
+.m-services-opening nav {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+.m-services-opening nav a {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #9fa9b9;
+  padding: 20px 0;
+  font-size: 17px;
+  transition: color 0.3s;
+}
+.m-services-opening nav a:hover {
+  color: #667086;
+}
+.m-service-practice {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10%;
+  padding: 140px 6%;
+  background: #f0f1f5;
+  align-items: start;
+}
+.m-service-aside {
+  position: sticky;
+  top: 130px;
+  padding-bottom: 60px;
+}
+.valtum .m-service-aside h2 {
+  font-size: clamp(45px, 4.5vw, 74px);
+  line-height: 1.05;
+}
+.m-service-aside p {
+  max-width: 330px;
+  line-height: 1.8;
+  font-size: 17px;
+  margin-top: 30px;
+}
+.m-service-aside .x-link {
+  margin-top: 25px;
+}
+.m-service-practice .x-service-index {
+  padding: 0;
+  min-width: 0;
+}
+.valtum .m-service-practice article {
+  display: block;
+  padding: 0 0 90px;
+  margin: 0 0 80px;
+  scroll-margin-top: 120px;
+}
+.m-service-practice .x-service-index-image {
+  height: 440px;
+  min-height: 0;
+  border-radius: 80px 5px 5px 5px;
+  margin-bottom: 45px;
+}
+.m-service-practice article:nth-child(even) .x-service-index-image {
+  border-radius: 5px 5px 80px 5px;
+}
+.valtum .m-service-practice h2 {
+  font-size: clamp(42px, 4.2vw, 67px);
+}
+/* Solutions: a broad proposition and visual dossiers. */
+.m-solutions-opening {
+  position: relative;
+  overflow: hidden;
+  padding: 85px 6% 0;
+  background: #dce2ec;
+}
+.valtum .m-solutions-opening h1 {
+  font-size: clamp(70px, 8vw, 128px);
+  max-width: 1400px;
+  line-height: 0.98;
+}
+.m-solutions-opening h1 .m-inline-photo {
+  width: 1.1em;
+  height: 0.62em;
+}
+.m-solutions-lede {
+  max-width: 480px;
+  margin: 40px 0 65px auto;
+  font-size: 18px;
+  line-height: 1.7;
+}
+.m-solutions-strip {
+  display: flex;
+  gap: 2%;
+  height: 310px;
+  width: 116%;
+  margin-left: -8%;
+  padding-bottom: 35px;
+  align-items: center;
+  will-change: transform;
+}
+.m-solutions-strip > div {
+  height: 100%;
+  width: 25%;
+  position: relative;
+  overflow: hidden;
+  transform: rotate(-7deg);
+  flex-shrink: 0;
+}
+.m-solutions-strip > div:nth-child(even) {
+  transform: rotate(8deg);
+  height: 83%;
+}
+.m-solutions-strip img {
+  object-fit: cover;
+}
+.m-solution-intro {
+  padding: 140px 8%;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 12%;
+  align-items: end;
+  background: #f0f1f5;
+}
+.valtum .m-solution-intro h2 {
+  font-size: clamp(50px, 5.5vw, 85px);
+  line-height: 1.05;
+}
+.m-solution-intro p {
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 400px;
+}
+.valtum .m-solution-dossier {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px 7%;
+  padding: 90px 6%;
+  background: #e0e5ee;
+  isolation: isolate;
+  scroll-margin-top: 90px;
+}
+.valtum .m-solution-dossier:nth-of-type(even) {
+  background: #eaecef;
+}
+.m-solution-visual {
+  position: relative;
+  grid-row: span 2;
+  min-height: 700px;
+  overflow: hidden;
+  border-radius: 5px 120px 5px 5px;
+}
+.m-solution-visual img {
+  object-fit: cover;
+}
+.valtum .m-solution-dossier .x-solution-copy h2 {
+  font-size: clamp(45px, 4.5vw, 73px);
+}
+.m-solution-dossier .x-solution-copy p {
+  max-width: 560px;
+}
+.valtum .m-solution-dossier .x-solution-proof {
+  padding: 10px 0 0;
+  align-self: end;
+}
+.valtum .m-solution-dossier ol {
+  grid-column: 1/-1;
+  margin: 0;
+  border-top: 1px solid #b1bbca;
+  padding-top: 30px;
+}
+/* Approach: the method moves beside one steady statement. */
+.m-approach-opening {
+  min-height: calc(100svh - 88px);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 7%;
+  align-items: center;
+  padding: 55px 6% 80px;
+  background: #e8ebef;
+}
+.m-approach-photo {
+  height: 72svh;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50% 50% 3px 3px;
+}
+.m-approach-photo img {
+  object-fit: cover;
+}
+.valtum .m-approach-opening h1 {
+  font-size: clamp(60px, 6vw, 98px);
+  line-height: 1.02;
+}
+.m-approach-opening p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-top: 35px;
+  max-width: 430px;
+}
+.m-approach-opening .x-link {
+  margin-top: 25px;
+}
+.m-method {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 12%;
+  padding: 140px 8%;
+  align-items: start;
+  background: #dce2ec;
+}
+.m-method-heading {
+  position: sticky;
+  top: 140px;
+}
+.valtum .m-method-heading h2 {
+  font-size: clamp(50px, 5.5vw, 85px);
+  line-height: 1.02;
+}
+.m-method-heading p {
+  max-width: 340px;
+  font-size: 17px;
+  line-height: 1.8;
+  margin-top: 35px;
+}
+.m-method-chapters article {
+  padding-bottom: 100px;
+  margin-bottom: 100px;
+  border-bottom: 1px solid #aab6c8;
+}
+.m-method-chapters article:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: 0;
+}
+.m-method-image {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.m-method-image img {
+  object-fit: cover;
+}
+.m-method-chapters article:nth-child(even) .m-method-image {
+  border-radius: 50% 50% 0 0;
+}
+.valtum .m-method-chapters h2 {
+  font-size: clamp(40px, 4vw, 62px);
+  line-height: 1.05;
+}
+.m-method-chapters p {
+  font-size: 17px;
+  line-height: 1.8;
+  margin-top: 30px;
+}
+.m-method-chapters strong {
+  display: block;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid #aab6c8;
+  color: #49576d;
+}
+.m-wheel-frame {
+  animation: m-gallery-arrive 1.6s 1.4s backwards cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes m-gallery-arrive {
+  from {
+    opacity: 0;
+    translate: 0 65px;
+    scale: 0.7;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+@media (max-width: 1000px) {
+  .m-hero-stage {
+    min-height: 600px;
+  }
+  .m-hero h1 {
+    font-size: clamp(68px, 10vw, 110px);
+  }
+  .m-hero-copy {
+    padding-bottom: 0;
+  }
+  .m-wheel-frame {
+    width: 17vw;
+    height: 14vw;
+  }
+  .m-frame-0,
+  .m-frame-1 {
+    top: 7%;
+  }
+  .m-frame-2,
+  .m-frame-3 {
+    top: 64%;
+  }
+  .m-frame-4,
+  .m-frame-5 {
+    bottom: 5%;
+  }
+  .m-services-opening {
+    grid-template-columns: 1.25fr 1fr;
+    padding-top: 55px;
+  }
+  .m-service-fan {
+    min-height: 340px;
+  }
+  .m-services-opening nav {
+    grid-template-columns: 1fr 1fr;
+  }
+  .m-service-practice {
+    gap: 7%;
+    padding: 100px 5%;
+  }
+  .m-service-practice .x-service-index-image {
+    height: 350px;
+  }
+  .m-solution-intro {
+    gap: 7%;
+    padding: 100px 6%;
+  }
+  .m-solution-visual {
+    min-height: 600px;
+  }
+  .m-method {
+    padding: 100px 6%;
+    gap: 8%;
+  }
+  .m-method-image {
+    height: 330px;
+  }
+  .valtum .x-orbit-copy {
+    width: 43%;
+  }
+  .valtum .x-orbit-copy h2 {
+    font-size: 64px;
+  }
+  .valtum .x-orbit-copy p {
+    font-size: 14px;
+  }
+}
+@media (max-width: 760px) {
+  .m-hero {
+    height: 190svh;
+  }
+  .m-hero-stage {
+    height: 100svh;
+    min-height: 650px;
+  }
+  .valtum .m-hero-copy {
+    padding: 0 0 9svh;
+    width: 94%;
+  }
+  .valtum .m-hero h1 {
+    font-size: clamp(61px, 15.5vw, 95px);
+    line-height: 0.95;
+  }
+  .m-hero-copy p {
+    font-size: 15px;
+    max-width: 290px;
+    margin-top: 25px;
+    padding: 0 8px;
+    line-height: 1.7;
+  }
+  .m-hero-actions {
+    gap: 15px;
+    margin-top: 24px;
+  }
+  .m-hero-actions .x-button {
+    font-size: 12px;
+    padding: 14px 17px;
+    gap: 12px;
+    white-space: nowrap;
+  }
+  .m-hero-actions .x-link {
+    font-size: 12px;
+    max-width: 132px;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .m-wheel-frame {
+    width: 25vw;
+    height: 20vw;
+    border-width: 4px;
+  }
+  .m-frame-0 {
+    left: 5%;
+    top: 6%;
+  }
+  .m-frame-1 {
+    right: 5%;
+    top: 4%;
+  }
+  .m-frame-2 {
+    left: -9%;
+    top: 72%;
+  }
+  .m-frame-3 {
+    right: -8%;
+    top: 70%;
+  }
+  .m-frame-4 {
+    left: 16%;
+    bottom: 4%;
+  }
+  .m-frame-5 {
+    right: 11%;
+    bottom: 4%;
+  }
+  .m-hero-focus {
+    inset: 78% 44% 10%;
+    border-radius: 10px;
+  }
+  .m-hero-refrain {
+    inset: auto 7% 20%;
+  }
+  .valtum .m-hero-refrain h2 {
+    font-size: 46px;
+    line-height: 1.05;
+  }
+  .m-hero-refrain p {
+    font-size: 15px;
+    max-width: 280px;
+  }
+  .m-scroll-cue {
+    bottom: 20px;
+    font-size: 11px;
+    gap: 16px;
+  }
+  .m-scroll-cue span {
+    width: 35px;
+    height: 35px;
+  }
+  .m-takeover {
+    height: 150svh;
+  }
+  .m-takeover-stage {
+    min-height: 560px;
+  }
+  .m-takeover-media {
+    inset: 24% 15%;
+    border-radius: 140px;
+  }
+  .m-takeover-copy {
+    padding: 35px 7%;
+  }
+  .valtum .m-takeover-copy h2 {
+    font-size: 46px;
+  }
+  .m-takeover-copy p {
+    font-size: 16px;
+  }
+  .valtum .m-inline-photo {
+    width: 1.1em;
+    height: 0.65em;
+  }
+  .m-practice-reel {
+    padding: 30px 0;
+  }
+  .valtum .x-orbit {
+    height: 100svh;
+    min-height: 680px;
+  }
+  .valtum .x-orbit-images {
+    width: 96vw;
+    height: min(82svh, 740px);
+  }
+  .valtum .x-orbit-image {
+    width: 21%;
+    height: 14%;
+  }
+  .valtum .x-orbit-copy {
+    width: 60%;
+    max-width: 300px;
+  }
+  .valtum .x-orbit-copy h2 {
+    font-size: 52px;
+  }
+  .valtum .x-orbit-copy p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 18px;
+  }
+  .valtum .x-orbit-copy .x-link {
+    font-size: 12px;
+  }
+  .valtum .orbit-0 {
+    left: 17%;
+    top: 3%;
+  }
+  .valtum .orbit-1 {
+    left: 63%;
+    top: 4%;
+  }
+  .valtum .orbit-2 {
+    right: 0;
+    top: 23%;
+  }
+  .valtum .orbit-3 {
+    right: 0;
+    bottom: 24%;
+  }
+  .valtum .orbit-4 {
+    right: 12%;
+    bottom: 3%;
+  }
+  .valtum .orbit-5 {
+    left: 15%;
+    bottom: 4%;
+  }
+  .valtum .orbit-6 {
+    left: 0;
+    bottom: 24%;
+  }
+  .valtum .orbit-7 {
+    left: 0;
+    top: 23%;
+  }
+  .x-arrival-center {
+    width: 210px;
+    height: 210px;
+  }
+  .x-arrival-center img {
+    width: 120px;
+    height: 120px;
+  }
+  .m-route-content {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .valtum .m-route-content > img {
+    width: 40px;
+    height: 40px;
+  }
+  .m-route-content > span {
+    font-size: 65px;
+  }
+  .m-route-photo {
+    width: 110px;
+    height: 145px;
+  }
+  .m-services-opening {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 6% 30px;
+    gap: 20px;
+    min-height: 0;
+  }
+  .valtum .m-services-title h1 {
+    font-size: 53px;
+    line-height: 1.02;
+  }
+  .m-services-title p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-top: 25px;
+    max-width: 330px;
+  }
+  .m-service-fan {
+    height: 330px;
+    min-height: 330px;
+    width: 85%;
+    margin: 0 auto 15px;
+  }
+  .m-services-opening nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+  .m-services-opening nav a {
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 72px;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  .m-service-practice {
+    display: block;
+    padding: 80px 6%;
+  }
+  .m-service-aside {
+    position: relative;
+    top: auto;
+    padding-bottom: 60px;
+  }
+  .valtum .m-service-aside h2 {
+    font-size: 45px;
+  }
+  .m-service-aside p {
+    font-size: 16px;
+  }
+  .m-service-practice .x-service-index-image {
+    height: 340px;
+    margin-bottom: 30px;
+  }
+  .valtum .m-service-practice article {
+    margin-bottom: 65px;
+    padding-bottom: 50px;
+  }
+  .valtum .m-service-practice h2 {
+    font-size: 42px;
+  }
+  .m-service-practice .x-service-index h3 {
+    font-size: 25px;
+    line-height: 1.2;
+  }
+  .m-solutions-opening {
+    padding: 50px 6% 0;
+  }
+  .valtum .m-solutions-opening h1 {
+    font-size: 54px;
+    line-height: 1.03;
+  }
+  .m-solutions-lede {
+    font-size: 16px;
+    margin: 30px 0 45px;
+  }
+  .m-solutions-strip {
+    height: 200px;
+    width: 170%;
+    margin-left: -35%;
+    gap: 3%;
+  }
+  .m-solutions-strip > div {
+    width: 25%;
+  }
+  .m-solution-intro {
+    display: block;
+    padding: 85px 6%;
+  }
+  .valtum .m-solution-intro h2 {
+    font-size: 43px;
+  }
+  .m-solution-intro p {
+    font-size: 16px;
+    margin-top: 30px;
+  }
+  .valtum .m-solution-dossier {
+    display: flex;
+    flex-direction: column;
+    padding: 60px 6%;
+    gap: 35px;
+  }
+  .m-solution-visual {
+    min-height: 0;
+    height: 340px;
+    flex: none;
+    border-radius: 5px 90px 5px 5px;
+    order: 0;
+  }
+  .m-solution-dossier .x-solution-copy {
+    order: 1;
+  }
+  .valtum .m-solution-dossier .x-solution-copy h2 {
+    font-size: 43px;
+  }
+  .m-solution-dossier .x-solution-copy p {
+    font-size: 16px;
+  }
+  .m-solution-dossier .x-solution-proof {
+    order: 2;
+    width: 100%;
+  }
+  .valtum .m-solution-dossier ol {
+    order: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+  .m-approach-opening {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 50px 6% 65px;
+    gap: 45px;
+    min-height: 0;
+  }
+  .valtum .m-approach-opening h1 {
+    font-size: 53px;
+    line-height: 1.05;
+  }
+  .m-approach-opening p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-top: 25px;
+  }
+  .m-approach-photo {
+    height: 420px;
+    min-height: 0;
+    width: 100%;
+  }
+  .m-method {
+    display: block;
+    padding: 80px 6%;
+  }
+  .m-method-heading {
+    position: relative;
+    top: auto;
+    margin-bottom: 60px;
+  }
+  .valtum .m-method-heading h2 {
+    font-size: 46px;
+  }
+  .m-method-heading p {
+    font-size: 16px;
+    margin-top: 25px;
+  }
+  .m-method-image {
+    height: 330px;
+    margin-bottom: 30px;
+  }
+  .m-method-chapters article {
+    padding-bottom: 50px;
+    margin-bottom: 60px;
+  }
+  .valtum .m-method-chapters h2 {
+    font-size: 40px;
+  }
+  .m-method-chapters p {
+    font-size: 16px;
+    margin-top: 25px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-hero {
+    height: auto;
+  }
+  .m-hero-stage {
+    position: relative;
+    height: auto;
+    min-height: 850px;
+  }
+  .m-hero-copy {
+    padding: 100px 0 200px;
+  }
+  .m-wheel-frame {
+    animation: none;
+  }
+  .m-hero-focus {
+    inset: auto 35% 30px;
+    height: 160px;
+  }
+  .m-hero-refrain {
+    display: none;
+  }
+  .m-takeover {
+    height: auto;
+  }
+  .m-takeover-stage {
+    position: relative;
+    height: auto;
+    min-height: 650px;
+  }
+  .m-takeover-media {
+    inset: 0;
+    border-radius: 0;
+  }
+  .m-takeover-copy {
+    opacity: 1;
+  }
+  .m-spinner-orbit {
+    animation: none;
+  }
+  .m-service-aside,
+  .m-method-heading {
+    position: relative;
+    top: auto;
+  }
+  .m-practice-reel > div {
+    white-space: normal;
+    width: auto;
+    padding: 0 6%;
+    font-size: 45px;
+  }
+}
+
+.valtum .m-services-opening em,
+.valtum .m-solutions-opening em,
+.valtum .m-approach-opening em {
+  color: #667185;
+}
+
+.x-arrival-center .v-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* Horizontal clipping must not create a scroll container above sticky scenes. */
+html:has(.x-shell),
+body:has(.x-shell) {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+.valtum .m-hero-refrain h2,
+.valtum .m-hero-refrain em,
+.valtum .m-hero-refrain p,
+.valtum .m-takeover-copy h2,
+.valtum .m-takeover-copy p {
+  color: #f5f6f8;
+}
+
+.m-route-slices {
+  height: 100%;
+  grid-template-rows: 100%;
+}
+.m-route-slice {
+  min-height: 100svh;
+}
+/* A single photographic world and one headline colour. */
+.valtum .m-hero-cinematic {
+  height: 280svh;
+  margin-top: -90px;
+  background: #10151b;
+}
+.m-hero-cinematic .m-hero-stage {
+  height: 100svh;
+  min-height: 620px;
+  background: #10151b;
+}
+.valtum .m-hero-cinematic .m-hero-copy {
+  width: min(1200px, 88vw);
+  padding: 0;
+  margin: 45px 0 130px;
+  color: #f5f5f2;
+}
+.valtum .m-hero-cinematic h1 {
+  font-size: clamp(80px, 8.7vw, 140px);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  color: #f5f5f2;
+}
+.m-hero-cinematic .m-hero-copy p {
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 28px auto 0;
+  color: inherit;
+}
+.m-hero-cinematic .m-hero-actions {
+  margin-top: 26px;
+  gap: 28px;
+}
+.m-hero-cinematic .m-hero-actions .x-button {
+  background: #f3f4f5;
+  color: #18202a !important;
+}
+.m-hero-cinematic .m-hero-actions .x-link {
+  color: #f5f5f2;
+}
+.m-hero-cinematic .m-hero-focus {
+  inset: 3% 2%;
+  z-index: 1;
+  border-radius: 5px;
+}
+.m-hero-cinematic .m-hero-focus img {
+  object-position: 50% 45%;
+}
+.m-hero-cinematic .m-hero-focus:after {
+  background: linear-gradient(180deg, #0810195c, #08101950 40%, #081019d9);
+}
+.m-hero-cinematic .m-hero-wheel {
+  inset: auto 0 5%;
+  height: 14%;
+  z-index: 3;
+  pointer-events: none;
+}
+.m-hero-cinematic .m-hero-wheel-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+}
+.m-hero-cinematic .m-wheel-frame {
+  position: relative;
+  inset: auto;
+  width: 12vw;
+  max-width: 180px;
+  height: 100%;
+  flex-shrink: 0;
+  border: 3px solid #eeefeb;
+  box-shadow: 0 10px 20px #0003;
+  animation: none;
+}
+.m-hero-cinematic .m-frame-0 {
+  transform: rotate(-5deg);
+}
+.m-hero-cinematic .m-frame-1 {
+  transform: rotate(4deg);
+}
+.m-hero-cinematic .m-frame-2 {
+  transform: rotate(-3deg);
+}
+.m-hero-cinematic .m-frame-3 {
+  transform: rotate(5deg);
+}
+.m-hero-cinematic .m-frame-4 {
+  transform: rotate(-4deg);
+}
+.m-hero-cinematic .m-frame-5 {
+  transform: rotate(3deg);
+}
+.m-hero-cinematic .m-scroll-cue {
+  color: #f5f5f2;
+  bottom: 18px;
+  left: 4%;
+  font-size: 11px;
+  gap: 12px;
+}
+.m-hero-cinematic .m-scroll-cue span {
+  width: 30px;
+  height: 30px;
+  border-color: #ffffff80;
+}
+.m-hero-cinematic .m-hero-refrain {
+  bottom: 22%;
+}
+.m-takeover {
+  height: 205svh;
+}
+/* Each route panel has one transform owner: GSAP. */
+.m-route-slice {
+  transform: none;
+  will-change: transform;
+}
+/* Native sticky owns the archive hold; the following scene stays in normal flow. */
+@media (min-width: 1001px) and (prefers-reduced-motion: no-preference) {
+  .valtum .x-archive-horizontal {
+    overflow: visible;
+    padding-bottom: 100px !important;
+  }
+  .x-work-runway {
+    position: relative;
+    isolation: isolate;
+    min-height: 100svh;
+  }
+  .valtum .x-archive-horizontal .x-work-window {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+    background: #f0f1f5;
+  }
+  .valtum .x-archive-horizontal .v-folio-grid {
+    height: 100%;
+    align-items: center;
+    padding: 25px 6vw 35px;
+    gap: 65px;
+  }
+  .valtum .x-archive-horizontal .v-folio-body {
+    height: clamp(245px, 46svh, 520px);
+  }
+  .x-archive-horizontal .v-folio-info {
+    padding-top: 18px;
+  }
+  .valtum .x-archive-horizontal .v-folio-info h3 {
+    font-size: clamp(28px, 2.6vw, 40px);
+  }
+  .x-archive-horizontal .v-folio-info p {
+    font-size: 14px;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+  .x-archive-horizontal .v-folio-info small {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 760px) {
+  .valtum .m-hero-cinematic {
+    height: 245svh;
+    margin-top: -74px;
+  }
+  .m-hero-cinematic .m-hero-stage {
+    min-height: 650px;
+  }
+  .valtum .m-hero-cinematic .m-hero-copy {
+    width: 90%;
+    padding: 0;
+    margin: 30px 0 135px;
+  }
+  .valtum .m-hero-cinematic h1 {
+    font-size: clamp(49px, 14vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+  .m-hero-cinematic .m-hero-copy p {
+    font-size: 14px;
+    max-width: 290px;
+    margin-top: 24px;
+  }
+  .m-hero-cinematic .m-hero-actions {
+    gap: 18px;
+    margin-top: 25px;
+  }
+  .m-hero-cinematic .m-hero-actions .x-button {
+    font-size: 12px;
+    padding: 14px 19px;
+  }
+  .m-hero-cinematic .m-hero-actions .x-link {
+    font-size: 12px;
+    max-width: 132px;
+  }
+  .m-hero-cinematic .m-hero-wheel {
+    bottom: 8%;
+    height: 13%;
+  }
+  .m-hero-cinematic .m-hero-wheel-inner {
+    gap: 15px;
+  }
+  .m-hero-cinematic .m-wheel-frame {
+    width: 28vw;
+    max-width: none;
+    border-width: 3px;
+  }
+  .m-hero-cinematic .m-scroll-cue {
+    bottom: 22px;
+    font-size: 11px;
+  }
+  .valtum .m-hero-cinematic .m-hero-refrain h2 {
+    font-size: 42px;
+  }
+  .m-hero-cinematic .m-hero-refrain {
+    bottom: 24%;
+  }
+  .m-takeover {
+    height: 175svh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .valtum .m-hero-cinematic {
+    height: auto;
+  }
+  .m-hero-cinematic .m-hero-stage {
+    height: 100svh;
+    min-height: 750px;
+  }
+  .valtum .m-hero-cinematic .m-hero-copy {
+    padding: 0;
+  }
+  .m-hero-cinematic .m-hero-focus {
+    inset: 0;
+    height: auto;
+  }
+  .m-hero-cinematic .m-hero-refrain {
+    display: none;
+  }
+  .m-takeover {
+    height: auto;
+  }
+}
+@media (min-width: 761px) {
+  .valtum .m-hero-cinematic h1 {
+    font-size: clamp(78px, 7.5vw, 124px);
+  }
+  .valtum .m-hero-cinematic .m-hero-copy {
+    margin: 85px 0 110px;
+  }
+  .m-hero-cinematic .m-hero-wheel {
+    height: 12%;
+    bottom: 3%;
+  }
+  .m-hero-cinematic .m-scroll-cue {
+    left: 2%;
+  }
+}
+@media (min-width: 1001px) and (prefers-reduced-motion: no-preference) {
+  .valtum .x-archive-horizontal .v-folio-body {
+    height: clamp(280px, calc(100svh - 235px), 620px);
+  }
+  .valtum .x-archive-horizontal .v-folio-photo {
+    container-type: size;
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  .valtum .x-archive-horizontal .v-folio-photo > .v-device-scene {
+    position: absolute;
+    left: 6%;
+    top: 50%;
+    width: min(72cqw, 135cqh) !important;
+    margin: 0 !important;
+    transform: translateY(-50%);
+  }
+  .valtum .x-archive-horizontal .v-folio-mobile {
+    right: 8% !important;
+    top: 50%;
+    bottom: auto !important;
+    width: min(25cqw, 38cqh) !important;
+    max-width: none;
+    transform: translateY(-50%) rotate(3deg) !important;
+  }
+}
