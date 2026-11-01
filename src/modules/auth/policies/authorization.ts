@@ -89,6 +89,7 @@ export const permissionMatrix: PermissionMatrix = {
   editor: {
     audit: none,
     dashboard: ["read"],
+    clients: none,
     faqs: draftContent,
     insights: draftContent,
     leads: none,
