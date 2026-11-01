@@ -1,6 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 
-const findFirst = vi.fn().mockResolvedValue(null);
+const { findFirst } = vi.hoisted(() => ({
+  findFirst: vi.fn().mockResolvedValue(null)
+}));
 vi.mock("server-only", () => ({}));
 vi.mock("@/lib/database", () => ({
   prisma: { clientEngagement: { findFirst } }
