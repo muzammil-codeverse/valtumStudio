@@ -22,6 +22,9 @@ describe("authorization matrix", () => {
     expect(can("owner", { action: "delete", resource: "audit" })).toBe(false);
     expect(can("admin", { action: "manage", resource: "users" })).toBe(false);
     expect(can("editor", { action: "publish", resource: "projects" })).toBe(false);
+    expect(can("client", { action: "read", resource: "dashboard" })).toBe(false);
+    expect(can("client", { action: "read", resource: "leads" })).toBe(false);
+    expect(can("client", { action: "read", resource: "clients" })).toBe(false);
     expect(() =>
       assertCan("editor", { action: "read", resource: "securityEvents" })
     ).toThrow();

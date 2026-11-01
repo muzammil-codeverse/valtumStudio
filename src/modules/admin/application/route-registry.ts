@@ -127,6 +127,16 @@ export const ADMIN_ROUTES = {
     requiredResource: "leads",
     requiredAction: "read"
   },
+  clients: {
+    path: "/admin/clients",
+    label: "Clients & Delivery",
+    description: "Manage client workspaces, engagements, milestones and invoices.",
+    breadcrumbLabel: "Clients",
+    group: "Operations",
+    iconKey: "users",
+    requiredResource: "clients",
+    requiredAction: "read"
+  },
   settings: {
     path: "/admin/settings",
     label: "Settings",

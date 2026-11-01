@@ -10,6 +10,7 @@ export const pluginAccessControl = createAccessControl(statement);
 export const pluginRoles = {
   admin: pluginAccessControl.newRole({ session: ["list", "revoke"] }),
   editor: pluginAccessControl.newRole({}),
+  client: pluginAccessControl.newRole({}),
   owner: pluginAccessControl.newRole({
     session: ["list", "revoke"],
     user: ["ban", "create", "get", "set-password", "set-role", "update"]

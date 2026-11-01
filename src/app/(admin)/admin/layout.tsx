@@ -38,6 +38,10 @@ export default async function AdministrationLayout({
     redirect("/auth/setup-two-factor");
   }
 
+  if (principal.role === "client") {
+    redirect("/portal");
+  }
+
   const user = {
     name: principal.name,
     email: principal.email,

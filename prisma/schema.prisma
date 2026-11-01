@@ -798,6 +798,7 @@ model User {
   leadActivities    LeadActivity[]    @relation("LeadActivityActor")
   leadNotes         LeadNote[]        @relation("LeadNoteAuthor")
   author            Author?
+  clientMemberships ClientMembership[]
 
   @@unique([email])
   @@map("user")
@@ -949,4 +950,160 @@ model RedirectRule {
   updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("redirect_rules")
+}
+
+enum ClientEngagementStatus {
+  PLANNING
+  ACTIVE
+  REVIEW
+  COMPLETE
+  ON_HOLD
+}
+
+enum ClientMilestoneStatus {
+  PLANNED
+  IN_PROGRESS
+  AWAITING_REVIEW
+  APPROVED
+  COMPLETE
+}
+
+enum ClientTaskStatus {
+  OPEN
+  IN_PROGRESS
+  BLOCKED
+  DONE
+}
+
+enum ClientInvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  VOID
+}
+
+enum ClientMembershipRole {
+  CLIENT_OWNER
+  CLIENT_MEMBER
+}
+
+model ClientWorkspace {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  memberships ClientMembership[]
+  engagements ClientEngagement[]
+
+  @@map("client_workspaces")
+}
+
+model ClientMembership {
+  id           String               @id @default(cuid())
+  workspaceId  String               @map("workspace_id")
+  userId       String               @map("user_id")
+  role         ClientMembershipRole @default(CLIENT_MEMBER)
+  createdAt    DateTime             @default(now()) @map("created_at")
+
+  workspace ClientWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([userId, workspaceId])
+  @@map("client_memberships")
+}
+
+model ClientEngagement {
+  id          String                 @id @default(cuid())
+  workspaceId String                 @map("workspace_id")
+  title       String
+  summary     String?                @db.Text
+  status      ClientEngagementStatus @default(PLANNING)
+  startDate   DateTime?              @map("start_date")
+  targetDate  DateTime?              @map("target_date")
+  createdAt   DateTime               @default(now()) @map("created_at")
+  updatedAt   DateTime               @updatedAt @map("updated_at")
+
+  workspace  ClientWorkspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  milestones ClientMilestone[]
+  tasks      ClientTask[]
+  invoices   ClientInvoice[]
+  updates    ClientUpdate[]
+
+  @@index([workspaceId, status])
+  @@map("client_engagements")
+}
+
+model ClientMilestone {
+  id           String                @id @default(cuid())
+  engagementId String                @map("engagement_id")
+  title        String
+  description  String?               @db.Text
+  status       ClientMilestoneStatus @default(PLANNED)
+  dueDate      DateTime?             @map("due_date")
+  completedAt  DateTime?             @map("completed_at")
+  sortOrder    Int                   @default(0) @map("sort_order")
+  createdAt    DateTime              @default(now()) @map("created_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@index([engagementId, sortOrder])
+  @@index([dueDate])
+  @@map("client_milestones")
+}
+
+model ClientTask {
+  id           String           @id @default(cuid())
+  engagementId String           @map("engagement_id")
+  title        String
+  description  String?          @db.Text
+  status       ClientTaskStatus @default(OPEN)
+  dueDate      DateTime?        @map("due_date")
+  sortOrder    Int              @default(0) @map("sort_order")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@index([engagementId, status])
+  @@index([dueDate])
+  @@map("client_tasks")
+}
+
+model ClientInvoice {
+  id           String              @id @default(cuid())
+  engagementId String              @map("engagement_id")
+  reference    String
+  description  String?
+  currency     String              @default("AUD")
+  amountCents  Int                 @map("amount_cents")
+  status       ClientInvoiceStatus @default(DRAFT)
+  issuedAt     DateTime?           @map("issued_at")
+  dueDate      DateTime?           @map("due_date")
+  paidAt       DateTime?           @map("paid_at")
+  createdAt    DateTime            @default(now()) @map("created_at")
+  updatedAt    DateTime            @updatedAt @map("updated_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@unique([engagementId, reference])
+  @@index([engagementId, status])
+  @@index([dueDate])
+  @@map("client_invoices")
+}
+
+model ClientUpdate {
+  id           String    @id @default(cuid())
+  engagementId String    @map("engagement_id")
+  title        String
+  body         String    @db.Text
+  publishedAt  DateTime? @map("published_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@index([engagementId, publishedAt])
+  @@map("client_updates")
 }

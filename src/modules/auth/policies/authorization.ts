@@ -2,6 +2,7 @@ import type { Role } from "@/modules/auth/domain/roles";
 
 export const resources = [
   "dashboard",
+  "clients",
   "siteSettings",
   "navigation",
   "services",
@@ -49,9 +50,28 @@ const managedContent = [
 ] as const;
 
 export const permissionMatrix: PermissionMatrix = {
+  client: {
+    audit: none,
+    dashboard: none,
+    clients: none,
+    faqs: none,
+    insights: none,
+    leads: none,
+    media: none,
+    navigation: none,
+    projects: none,
+    securityEvents: none,
+    services: none,
+    sessions: none,
+    siteSettings: none,
+    system: none,
+    team: none,
+    users: none
+  },
   admin: {
     audit: ["read"],
     dashboard: ["read"],
+    clients: managedContent,
     faqs: managedContent,
     insights: managedContent,
     leads: ["read", "update", "manage"],
@@ -86,6 +106,7 @@ export const permissionMatrix: PermissionMatrix = {
   owner: {
     audit: ["read"],
     dashboard: ["read", "manage"],
+    clients: managedContent,
     faqs: managedContent,
     insights: managedContent,
     leads: ["read", "update", "manage"],
