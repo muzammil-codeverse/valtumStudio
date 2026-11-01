@@ -46,7 +46,7 @@ export const ADMIN_ROUTES = {
     path: "/admin/services",
     label: "Services",
     description:
-      "Manage the service offerings presented across the Siglum Studio website, including titles, summaries, and publication statuses.",
+      "Manage the service offerings presented across the Valtum Studio website, including titles, summaries, and publication statuses.",
     breadcrumbLabel: "Services",
     group: "Content",
     iconKey: "services",

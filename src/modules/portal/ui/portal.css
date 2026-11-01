@@ -112,3 +112,95 @@
   .portal-root .portal-topbar-label { font-size: 9px; }
   .portal-root .portal-workspace-name { font-size: 10px; }
 }
+
+/* Editorial billing intelligence: intentionally static and isolated from marketing. */
+.portal-root .portal-finance-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.portal-root .portal-finance-card {
+  background: #faf9ff;
+  border-color: #e6e0f5;
+}
+.portal-root .portal-finance-totals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin: 18px 0 28px;
+}
+.portal-root .portal-finance-totals > div {
+  min-width: 0;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid #eae8f2;
+  border-radius: 12px;
+}
+.portal-root .portal-finance-totals small {
+  display: block;
+  margin-bottom: 9px;
+  color: #65627a;
+  font-size: 11px;
+}
+.portal-root .portal-finance-totals strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #25213e;
+  font-size: clamp(14px, 1.5vw, 21px);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+}
+.portal-root .portal-finance-graph-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #5c5971;
+  font-size: 11px;
+  font-weight: 650;
+}
+.portal-root .portal-finance-chart {
+  height: 175px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(9px, 2vw, 21px);
+  border-bottom: 1px solid #dcd8eb;
+  margin-top: 20px;
+}
+.portal-root .portal-finance-month {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 26px;
+  min-width: 0;
+  align-items: end;
+  text-align: center;
+  color: #79748c;
+  font-size: 11px;
+}
+.portal-root .portal-finance-track {
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  border-radius: 7px 7px 0 0;
+  background: #eeebf8;
+  overflow: hidden;
+}
+.portal-root .portal-finance-bar {
+  width: 100%;
+  background: #6052d1;
+  border-radius: 7px 7px 0 0;
+}
+.portal-root .portal-finance-month:last-child .portal-finance-bar {
+  background: #27213e;
+}
+.portal-root .portal-finance-note {
+  margin: 17px 0 0;
+  color: #777385;
+  font-size: 11px;
+  line-height: 1.65;
+}
+@media (max-width: 600px) {
+  .portal-root .portal-finance-totals {
+    grid-template-columns: 1fr;
+  }
+}
