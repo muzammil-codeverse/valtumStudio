@@ -22,6 +22,26 @@ export const ADMIN_ROUTES = {
     requiredResource: "dashboard",
     requiredAction: "read"
   },
+  analytics: {
+    path: "/admin/analytics",
+    label: "Analytics",
+    description: "CRM activity, pipeline distribution and enquiry trends.",
+    breadcrumbLabel: "Analytics",
+    group: "Overview",
+    iconKey: "insights",
+    requiredResource: "leads",
+    requiredAction: "read"
+  },
+  calendar: {
+    path: "/admin/calendar",
+    label: "Activity Calendar",
+    description: "View new enquiry activity on the studio calendar.",
+    breadcrumbLabel: "Calendar",
+    group: "Operations",
+    iconKey: "dashboard",
+    requiredResource: "leads",
+    requiredAction: "read"
+  },
   services: {
     path: "/admin/services",
     label: "Services",
