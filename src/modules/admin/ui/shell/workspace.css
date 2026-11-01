@@ -19,8 +19,11 @@
   background: var(--admin-canvas);
   font-family: Arial, Helvetica, sans-serif;
 }
-.admin-root *, .admin-root *::before, .admin-root *::after,
-.admin-root::before, .admin-root::after {
+.admin-root *,
+.admin-root *::before,
+.admin-root *::after,
+.admin-root::before,
+.admin-root::after {
   animation: none !important;
   transition: none !important;
   scroll-behavior: auto !important;
@@ -29,113 +32,592 @@
   outline: 3px solid #5348c6;
   outline-offset: 3px;
 }
-.admin-root .ds-workspace { max-width: 1560px; margin: 0 auto; padding: 32px 36px 56px; }
-.admin-root .ds-hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
-.admin-root .ds-kicker { color: #77788d; font-size: 10px; font-weight: 800; letter-spacing: .17em; }
-.admin-root .ds-hero h1 { font-size: clamp(29px, 3vw, 43px); line-height: 1.13; letter-spacing: -.055em; font-weight: 750; margin: 9px 0 9px; }
-.admin-root .ds-hero h1 em { font-style: normal; color: #5b50cd; }
-.admin-root .ds-hero p, .admin-root .ds-block-heading p, .admin-root .ds-calendar-heading p { font-size: 13px; line-height: 1.55; color: #626579; }
-.admin-root .ds-hero-status { display: flex; align-items: flex-end; flex-direction: column; gap: 7px; color: #74758a; font-size: 11px; }
-.admin-root .ds-health { display: inline-flex; gap: 8px; align-items: center; color: #145c43; background: #e9f6ee; border: 1px solid #c8e8d5; padding: 7px 11px; border-radius: 100px; font-weight: 700; }
-.admin-root .ds-health i { width: 7px; height: 7px; background: #239364; display: block; border-radius: 50%; }
-.admin-root .ds-health--error { color: #9b1e32; background: #fff1f2; border-color: #f7d2d8; }
-.admin-root .ds-health--error i { background: #9b1e32; }
-.admin-root .ds-role-label { text-transform: capitalize; }
-.admin-root .ds-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 15px; }
-.admin-root .ds-stat { min-height: 166px; border-radius: 19px; border: 1px solid #e7e7ef; background: #fff; padding: 21px; display: flex; flex-direction: column; text-decoration: none; box-shadow: 0 6px 24px rgb(18 16 48 / 3%); }
-.admin-root .ds-stat:focus-visible, .admin-root .ds-stat:hover { border-color: #8276da; }
-.admin-root .ds-stat-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; font-size: 12px; font-weight: 700; }
-.admin-root .ds-stat-arrow { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid currentColor; border-radius: 50%; font-size: 13px; }
-.admin-root .ds-stat strong { margin: 14px 0 5px; font-size: clamp(34px, 3vw, 44px); font-weight: 750; letter-spacing: -.055em; line-height: 1; }
-.admin-root .ds-stat-note { margin-top: auto; font-size: 11px; color: #6c7082; }
-.admin-root .ds-stat--dark { color: #fff; background: #1d1b34; border-color: #1d1b34; }
-.admin-root .ds-stat--dark .ds-stat-note { color: #c2bfd9; }
-.admin-root .ds-stat--lilac { background: #dcd6ff; border-color: #dcd6ff; }
-.admin-root .ds-stat--blue { background: #e4ebff; border-color: #e4ebff; }
-.admin-root .ds-section-title { margin: 38px 0 19px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
-.admin-root .ds-section-title h2 { margin: 5px 0 0; letter-spacing: -.045em; font-weight: 760; font-size: 24px; }
-.admin-root .ds-outline-link, .admin-root .ds-inline-link { border: 1px solid #dcdbe8; border-radius: 99px; padding: 10px 14px; text-decoration: none; font-size: 11px; color: #312b74; font-weight: 700; white-space: nowrap; }
-.admin-root .ds-inline-link { border: none; padding: 3px 0; }
-.admin-root .ds-bento-primary, .admin-root .ds-bento-secondary { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0,1fr); align-items: stretch; gap: 16px; margin-bottom: 16px; }
-.admin-root .ds-bento-secondary { grid-template-columns: minmax(0, 1fr) minmax(0,1.45fr); }
-.admin-root .ds-panel { min-width: 0; background: #fff; border: 1px solid #e6e6ef; border-radius: 19px; padding: 23px; box-shadow: 0 4px 18px rgb(15 14 30 / 2%); }
-.admin-root .ds-block-heading { display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; }
-.admin-root .ds-block-heading h2, .admin-root .ds-calendar-heading h2 { font-size: 18px; font-weight: 750; letter-spacing: -.04em; margin-top: 5px; }
-.admin-root .ds-block-heading p { margin: 6px 0 0; }
-.admin-root .ds-chart-caption { margin-top: 25px; display: flex; justify-content: space-between; align-items: center; }
-.admin-root .ds-chart-caption > div { display: flex; flex-direction: column; gap: 3px; }
-.admin-root .ds-chart-caption strong { font-size: 32px; letter-spacing: -.06em; }
-.admin-root .ds-chart-caption span { font-size: 11px; color: #73768b; }
-.admin-root .ds-chart-caption-tag { background: #f4f1fe; border-radius: 99px; padding: 8px 10px; }
-.admin-root .ds-bars { height: 210px; padding-top: 13px; margin-top: 6px; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 16px; border-bottom: 1px solid #ececf3; }
-.admin-root .ds-bar-group { height: 100%; min-width: 0; display: grid; grid-template-rows: 20px 1fr 27px; text-align: center; gap: 4px; }
-.admin-root .ds-bar-count { font-size: 12px; color: #424159; font-weight: 700; }
-.admin-root .ds-bar-track { display: flex; align-items: flex-end; min-height: 0; padding: 0 5px; }
-.admin-root .ds-bar { display: block; width: 100%; border-radius: 7px 7px 0 0; background: #c5bcfb; }
-.admin-root .ds-bar--current { background: #5348c6; }
-.admin-root .ds-bar-month { color: #777b8b; font-size: 11px; padding-top: 5px; }
-.admin-root .ds-footnote, .admin-root .ds-empty-inline { margin-top: 16px; font-size: 11px; line-height: 1.6; color: #75798d; }
-.admin-root .ds-pipeline { background: #211e37; border-color: #211e37; color: #fff; }
-.admin-root .ds-pipeline .ds-kicker, .admin-root .ds-pipeline .ds-footnote { color: #c2bdd7; }
-.admin-root .ds-pipeline .ds-inline-link { color: #ebe4ff; }
-.admin-root .ds-pipeline-tally { margin: 21px 0 18px; display: flex; align-items: baseline; gap: 9px; }
-.admin-root .ds-pipeline-tally strong { font-size: 36px; line-height: 1; letter-spacing: -.06em; }
-.admin-root .ds-pipeline-tally span { font-size: 11px; color: #c4c0d7; }
-.admin-root .ds-pipeline-list { display: grid; gap: 12px; list-style: none; padding: 0; margin: 0; }
-.admin-root .ds-pipeline-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11px; color: #eceaf6; }
-.admin-root .ds-pipeline-label span { text-transform: capitalize; display: inline-flex; gap: 9px; align-items: center; }
-.admin-root .ds-pipeline-label i { width: 8px; height: 8px; border-radius: 50%; }
-.admin-root .ds-pipeline-label strong { font-weight: 700; }
-.admin-root .ds-pipeline-track { background: #35314d; height: 5px; border-radius: 8px; overflow: hidden; }
-.admin-root .ds-pipeline-track > div { height: 100%; border-radius: 8px; }
-.admin-root .ds-calendar-heading { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
-.admin-root .ds-calendar-heading p { margin: 4px 0 0; }
-.admin-root .ds-month-nav { display: flex; gap: 7px; align-items: center; border-radius: 50px; background: #f5f4fa; padding: 5px; font-size: 11px; color: #30314a; }
-.admin-root .ds-month-nav a { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; color: #403c79; text-decoration: none; font-size: 21px; }
-.admin-root .ds-month-nav a:hover { background: #e7e2fb; }
-.admin-root .ds-month-nav span { min-width: 88px; text-align: center; font-weight: 700; }
-.admin-root .ds-calendar-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 5px; margin-top: 22px; }
-.admin-root .ds-calendar-weekday { font-size: 10px; color: #777b8e; text-align: center; padding: 0 0 9px; font-weight: 700; }
-.admin-root .ds-calendar-empty, .admin-root .ds-calendar-day { border-radius: 8px; min-height: 38px; display: flex; justify-content: space-between; align-items: flex-start; padding: 6px; font-size: 11px; }
-.admin-root .ds-calendar-day { background: #f5f5f9; color: #353449; }
-.admin-root .ds-calendar-day--today { outline: 2px solid #5b50cd; outline-offset: -2px; font-weight: 800; }
-.admin-root .ds-calendar-day small { color: #322a87; font-weight: 750; }
-.admin-root .ds-recent-list { margin: 17px 0 0; padding: 0; list-style: none; }
-.admin-root .ds-recent-list li { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #eeeef4; padding: 11px 0; }
-.admin-root .ds-recent-list li:last-child { border: none; }
-.admin-root .ds-avatar { display: grid; place-items: center; flex: 0 0 34px; width: 34px; height: 34px; border-radius: 12px; color: #423bb2; background: #ebe8ff; font-weight: 800; font-size: 13px; }
-.admin-root .ds-recent-list li > div { flex: 1; min-width: 0; }
-.admin-root .ds-recent-list a { display: block; font-size: 12px; font-weight: 750; overflow: hidden; text-overflow: ellipsis; }
-.admin-root .ds-recent-list small { font-size: 10px; display: block; color: #74778c; text-transform: capitalize; margin-top: 3px; }
-.admin-root .ds-recent-state { color: #3e358b; background: #f2eeff; padding: 6px 8px; border-radius: 99px; font-size: 10px; text-transform: capitalize; white-space: nowrap; }
-.admin-root .ds-empty { min-height: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 9px; color: #5a5d73; padding: 22px; }
-.admin-root .ds-empty strong { color: #27243d; font-size: 15px; }
-.admin-root .ds-empty p { font-size: 12px; max-width: 320px; line-height: 1.6; }
-.admin-root .ds-empty-symbol { font-size: 32px; color: #7469d2; }
-.admin-root .ds-footbar { margin-top: 16px; padding: 23px; border-radius: 18px; background: #e9e7f7; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
-.admin-root .ds-footbar h2 { font-size: 20px; font-weight: 750; margin-top: 5px; letter-spacing: -.04em; }
-.admin-root .ds-quick-links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-.admin-root .ds-quick-links a { display: block; padding: 10px 13px; background: #fff; border: 1px solid #d8d5f0; color: #3f358a; border-radius: 99px; font-size: 11px; font-weight: 700; text-decoration: none; }
+.admin-root .ds-workspace {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 32px 36px 56px;
+}
+.admin-root .ds-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.admin-root .ds-kicker {
+  color: #77788d;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+.admin-root .ds-hero h1 {
+  font-size: clamp(29px, 3vw, 43px);
+  line-height: 1.13;
+  letter-spacing: -0.055em;
+  font-weight: 750;
+  margin: 9px 0 9px;
+}
+.admin-root .ds-hero h1 em {
+  font-style: normal;
+  color: #5b50cd;
+}
+.admin-root .ds-hero p,
+.admin-root .ds-block-heading p,
+.admin-root .ds-calendar-heading p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #626579;
+}
+.admin-root .ds-hero-status {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 7px;
+  color: #74758a;
+  font-size: 11px;
+}
+.admin-root .ds-health {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: #145c43;
+  background: #e9f6ee;
+  border: 1px solid #c8e8d5;
+  padding: 7px 11px;
+  border-radius: 100px;
+  font-weight: 700;
+}
+.admin-root .ds-health i {
+  width: 7px;
+  height: 7px;
+  background: #239364;
+  display: block;
+  border-radius: 50%;
+}
+.admin-root .ds-health--error {
+  color: #9b1e32;
+  background: #fff1f2;
+  border-color: #f7d2d8;
+}
+.admin-root .ds-health--error i {
+  background: #9b1e32;
+}
+.admin-root .ds-role-label {
+  text-transform: capitalize;
+}
+.admin-root .ds-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+.admin-root .ds-stat {
+  min-height: 166px;
+  border-radius: 19px;
+  border: 1px solid #e7e7ef;
+  background: #fff;
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgb(18 16 48 / 3%);
+}
+.admin-root .ds-stat:focus-visible,
+.admin-root .ds-stat:hover {
+  border-color: #8276da;
+}
+.admin-root .ds-stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.admin-root .ds-stat-arrow {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 13px;
+}
+.admin-root .ds-stat strong {
+  margin: 14px 0 5px;
+  font-size: clamp(34px, 3vw, 44px);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+.admin-root .ds-stat-note {
+  margin-top: auto;
+  font-size: 11px;
+  color: #6c7082;
+}
+.admin-root .ds-stat--dark {
+  color: #fff;
+  background: #1d1b34;
+  border-color: #1d1b34;
+}
+.admin-root .ds-stat--dark .ds-stat-note {
+  color: #c2bfd9;
+}
+.admin-root .ds-stat--lilac {
+  background: #dcd6ff;
+  border-color: #dcd6ff;
+}
+.admin-root .ds-stat--blue {
+  background: #e4ebff;
+  border-color: #e4ebff;
+}
+.admin-root .ds-section-title {
+  margin: 38px 0 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+.admin-root .ds-section-title h2 {
+  margin: 5px 0 0;
+  letter-spacing: -0.045em;
+  font-weight: 760;
+  font-size: 24px;
+}
+.admin-root .ds-outline-link,
+.admin-root .ds-inline-link {
+  border: 1px solid #dcdbe8;
+  border-radius: 99px;
+  padding: 10px 14px;
+  text-decoration: none;
+  font-size: 11px;
+  color: #312b74;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.admin-root .ds-inline-link {
+  border: none;
+  padding: 3px 0;
+}
+.admin-root .ds-bento-primary,
+.admin-root .ds-bento-secondary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.admin-root .ds-bento-secondary {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+}
+.admin-root .ds-panel {
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #e6e6ef;
+  border-radius: 19px;
+  padding: 23px;
+  box-shadow: 0 4px 18px rgb(15 14 30 / 2%);
+}
+.admin-root .ds-block-heading {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.admin-root .ds-block-heading h2,
+.admin-root .ds-calendar-heading h2 {
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  margin-top: 5px;
+}
+.admin-root .ds-block-heading p {
+  margin: 6px 0 0;
+}
+.admin-root .ds-chart-caption {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-root .ds-chart-caption > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.admin-root .ds-chart-caption strong {
+  font-size: 32px;
+  letter-spacing: -0.06em;
+}
+.admin-root .ds-chart-caption span {
+  font-size: 11px;
+  color: #73768b;
+}
+.admin-root .ds-chart-caption-tag {
+  background: #f4f1fe;
+  border-radius: 99px;
+  padding: 8px 10px;
+}
+.admin-root .ds-bars {
+  height: 210px;
+  padding-top: 13px;
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  border-bottom: 1px solid #ececf3;
+}
+.admin-root .ds-bar-group {
+  height: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 20px 1fr 27px;
+  text-align: center;
+  gap: 4px;
+}
+.admin-root .ds-bar-count {
+  font-size: 12px;
+  color: #424159;
+  font-weight: 700;
+}
+.admin-root .ds-bar-track {
+  display: flex;
+  align-items: flex-end;
+  min-height: 0;
+  padding: 0 5px;
+}
+.admin-root .ds-bar {
+  display: block;
+  width: 100%;
+  border-radius: 7px 7px 0 0;
+  background: #c5bcfb;
+}
+.admin-root .ds-bar--current {
+  background: #5348c6;
+}
+.admin-root .ds-bar-month {
+  color: #777b8b;
+  font-size: 11px;
+  padding-top: 5px;
+}
+.admin-root .ds-footnote,
+.admin-root .ds-empty-inline {
+  margin-top: 16px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #75798d;
+}
+.admin-root .ds-pipeline {
+  background: #211e37;
+  border-color: #211e37;
+  color: #fff;
+}
+.admin-root .ds-pipeline .ds-kicker,
+.admin-root .ds-pipeline .ds-footnote {
+  color: #c2bdd7;
+}
+.admin-root .ds-pipeline .ds-inline-link {
+  color: #ebe4ff;
+}
+.admin-root .ds-pipeline-tally {
+  margin: 21px 0 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.admin-root .ds-pipeline-tally strong {
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+.admin-root .ds-pipeline-tally span {
+  font-size: 11px;
+  color: #c4c0d7;
+}
+.admin-root .ds-pipeline-list {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.admin-root .ds-pipeline-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: #eceaf6;
+}
+.admin-root .ds-pipeline-label span {
+  text-transform: capitalize;
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+}
+.admin-root .ds-pipeline-label i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.admin-root .ds-pipeline-label strong {
+  font-weight: 700;
+}
+.admin-root .ds-pipeline-track {
+  background: #35314d;
+  height: 5px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.admin-root .ds-pipeline-track > div {
+  height: 100%;
+  border-radius: 8px;
+}
+.admin-root .ds-calendar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.admin-root .ds-calendar-heading p {
+  margin: 4px 0 0;
+}
+.admin-root .ds-month-nav {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  border-radius: 50px;
+  background: #f5f4fa;
+  padding: 5px;
+  font-size: 11px;
+  color: #30314a;
+}
+.admin-root .ds-month-nav a {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: #403c79;
+  text-decoration: none;
+  font-size: 21px;
+}
+.admin-root .ds-month-nav a:hover {
+  background: #e7e2fb;
+}
+.admin-root .ds-month-nav span {
+  min-width: 88px;
+  text-align: center;
+  font-weight: 700;
+}
+.admin-root .ds-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 22px;
+}
+.admin-root .ds-calendar-weekday {
+  font-size: 10px;
+  color: #777b8e;
+  text-align: center;
+  padding: 0 0 9px;
+  font-weight: 700;
+}
+.admin-root .ds-calendar-empty,
+.admin-root .ds-calendar-day {
+  border-radius: 8px;
+  min-height: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 6px;
+  font-size: 11px;
+}
+.admin-root .ds-calendar-day {
+  background: #f5f5f9;
+  color: #353449;
+}
+.admin-root .ds-calendar-day--today {
+  outline: 2px solid #5b50cd;
+  outline-offset: -2px;
+  font-weight: 800;
+}
+.admin-root .ds-calendar-day small {
+  color: #322a87;
+  font-weight: 750;
+}
+.admin-root .ds-recent-list {
+  margin: 17px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.admin-root .ds-recent-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #eeeef4;
+  padding: 11px 0;
+}
+.admin-root .ds-recent-list li:last-child {
+  border: none;
+}
+.admin-root .ds-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  color: #423bb2;
+  background: #ebe8ff;
+  font-weight: 800;
+  font-size: 13px;
+}
+.admin-root .ds-recent-list li > div {
+  flex: 1;
+  min-width: 0;
+}
+.admin-root .ds-recent-list a {
+  display: block;
+  font-size: 12px;
+  font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-root .ds-recent-list small {
+  font-size: 10px;
+  display: block;
+  color: #74778c;
+  text-transform: capitalize;
+  margin-top: 3px;
+}
+.admin-root .ds-recent-state {
+  color: #3e358b;
+  background: #f2eeff;
+  padding: 6px 8px;
+  border-radius: 99px;
+  font-size: 10px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+.admin-root .ds-empty {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 9px;
+  color: #5a5d73;
+  padding: 22px;
+}
+.admin-root .ds-empty strong {
+  color: #27243d;
+  font-size: 15px;
+}
+.admin-root .ds-empty p {
+  font-size: 12px;
+  max-width: 320px;
+  line-height: 1.6;
+}
+.admin-root .ds-empty-symbol {
+  font-size: 32px;
+  color: #7469d2;
+}
+.admin-root .ds-footbar {
+  margin-top: 16px;
+  padding: 23px;
+  border-radius: 18px;
+  background: #e9e7f7;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.admin-root .ds-footbar h2 {
+  font-size: 20px;
+  font-weight: 750;
+  margin-top: 5px;
+  letter-spacing: -0.04em;
+}
+.admin-root .ds-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.admin-root .ds-quick-links a {
+  display: block;
+  padding: 10px 13px;
+  background: #fff;
+  border: 1px solid #d8d5f0;
+  color: #3f358a;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
 @media (max-width: 1280px) {
-  .admin-root .ds-workspace { padding: 28px 24px 48px; }
-  .admin-root .ds-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .admin-root .ds-workspace {
+    padding: 28px 24px 48px;
+  }
+  .admin-root .ds-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 @media (max-width: 900px) {
-  .admin-root .ds-bento-primary, .admin-root .ds-bento-secondary { grid-template-columns: 1fr; }
+  .admin-root .ds-bento-primary,
+  .admin-root .ds-bento-secondary {
+    grid-template-columns: 1fr;
+  }
 }
 @media (max-width: 640px) {
-  .admin-root .ds-workspace { padding: 18px 13px 36px; }
-  .admin-root .ds-hero { align-items: flex-start; flex-direction: column; }
-  .admin-root .ds-hero-status { flex-direction: row; flex-wrap: wrap; align-items: center; }
-  .admin-root .ds-stats { gap: 10px; }
-  .admin-root .ds-stat { padding: 15px; min-height: 150px; border-radius: 14px; }
-  .admin-root .ds-stat strong { font-size: 32px; }
-  .admin-root .ds-stat-top { font-size: 11px; }
-  .admin-root .ds-stat-note { font-size: 10px; }
-  .admin-root .ds-panel { padding: 16px; border-radius: 15px; }
-  .admin-root .ds-section-title { align-items: flex-start; }
-  .admin-root .ds-section-title h2 { font-size: 21px; }
-  .admin-root .ds-month-nav { margin-top: 6px; }
-  .admin-root .ds-footbar { align-items: flex-start; flex-direction: column; }
-  .admin-root .ds-quick-links { justify-content: flex-start; }
+  .admin-root .ds-workspace {
+    padding: 18px 13px 36px;
+  }
+  .admin-root .ds-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .admin-root .ds-hero-status {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .admin-root .ds-stats {
+    gap: 10px;
+  }
+  .admin-root .ds-stat {
+    padding: 15px;
+    min-height: 150px;
+    border-radius: 14px;
+  }
+  .admin-root .ds-stat strong {
+    font-size: 32px;
+  }
+  .admin-root .ds-stat-top {
+    font-size: 11px;
+  }
+  .admin-root .ds-stat-note {
+    font-size: 10px;
+  }
+  .admin-root .ds-panel {
+    padding: 16px;
+    border-radius: 15px;
+  }
+  .admin-root .ds-section-title {
+    align-items: flex-start;
+  }
+  .admin-root .ds-section-title h2 {
+    font-size: 21px;
+  }
+  .admin-root .ds-month-nav {
+    margin-top: 6px;
+  }
+  .admin-root .ds-footbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .admin-root .ds-quick-links {
+    justify-content: flex-start;
+  }
 }

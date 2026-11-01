@@ -31,7 +31,9 @@ export default async function CalendarPage({
           <h1>Activity, in context.</h1>
           <p>A precise calendar of enquiries submitted to your studio.</p>
         </div>
-        <Link href="/admin/leads" className="ds-outline-link">Review CRM ↗</Link>
+        <Link href="/admin/leads" className="ds-outline-link">
+          Review CRM ↗
+        </Link>
       </div>
       <div style={{ maxWidth: 750 }}>
         <EnquiryCalendar insight={insight} />

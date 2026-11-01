@@ -52,12 +52,16 @@ export function countLeadsByMonth(
   points: ReadonlyArray<Readonly<{ createdAt: Date; count: number }>>,
   focusMonth: string
 ): { trend: DashboardTrend[]; dailyCounts: Readonly<Record<string, number>> } {
-  const [year, month] = focusMonth.split("-").map(Number);
+  const year = Number(focusMonth.slice(0, 4));
+  const month = Number(focusMonth.slice(5, 7));
   const months = Array.from({ length: 6 }, (_, index) => {
     const date = new Date(Date.UTC(year, month - 1 - (5 - index), 1));
     return {
       key: date.toISOString().slice(0, 7),
-      label: new Intl.DateTimeFormat("en-AU", { month: "short", timeZone: "UTC" }).format(date),
+      label: new Intl.DateTimeFormat("en-AU", {
+        month: "short",
+        timeZone: "UTC"
+      }).format(date),
       count: 0
     };
   });
@@ -94,7 +98,8 @@ export async function fetchDashboardInsight(
   };
   if (!can(role, { resource: "leads", action: "read" })) return empty;
 
-  const [year, month] = focusMonth.split("-").map(Number);
+  const year = Number(focusMonth.slice(0, 4));
+  const month = Number(focusMonth.slice(5, 7));
   const firstMonth = new Date(Date.UTC(year, month - 6, 1));
   const [days, statuses, recent] = await Promise.all([
     prisma.lead.groupBy({

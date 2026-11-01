@@ -1,12 +1,21 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+vi.mock("server-only", () => ({}));
+vi.mock("@/lib/database", () => ({ prisma: {} }));
 
 import { countLeadsByMonth, parseDashboardMonth } from "./overview-insights";
 
 describe("dashboard calendar aggregation", () => {
   it("rejects invalid month selectors and future unsafe formats", () => {
-    expect(parseDashboardMonth("../2026-11", new Date("2026-11-02T12:00:00Z"))).toBe("2026-11");
-    expect(parseDashboardMonth("2026-00", new Date("2026-11-02T12:00:00Z"))).toBe("2026-11");
-    expect(parseDashboardMonth("2026-10", new Date("2026-11-02T12:00:00Z"))).toBe("2026-10");
+    expect(parseDashboardMonth("../2026-11", new Date("2026-11-02T12:00:00Z"))).toBe(
+      "2026-11"
+    );
+    expect(parseDashboardMonth("2026-00", new Date("2026-11-02T12:00:00Z"))).toBe(
+      "2026-11"
+    );
+    expect(parseDashboardMonth("2026-10", new Date("2026-11-02T12:00:00Z"))).toBe(
+      "2026-10"
+    );
   });
 
   it("counts actual submissions per month and day without introducing demo data", () => {
