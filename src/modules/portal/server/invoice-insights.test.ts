@@ -8,9 +8,24 @@ describe("customer invoice analytics", () => {
   it("separates currencies and does not count drafts", () => {
     const summaries = summarizeClientInvoices(
       [
-        { amountCents: 12500, currency: "AUD", status: "ISSUED", issuedAt: new Date("2026-11-01") },
-        { amountCents: 7500, currency: "AUD", status: "PAID", issuedAt: new Date("2026-10-12") },
-        { amountCents: 20000, currency: "USD", status: "ISSUED", issuedAt: new Date("2026-11-01") },
+        {
+          amountCents: 12500,
+          currency: "AUD",
+          status: "ISSUED",
+          issuedAt: new Date("2026-11-01")
+        },
+        {
+          amountCents: 7500,
+          currency: "AUD",
+          status: "PAID",
+          issuedAt: new Date("2026-10-12")
+        },
+        {
+          amountCents: 20000,
+          currency: "USD",
+          status: "ISSUED",
+          issuedAt: new Date("2026-11-01")
+        },
         { amountCents: 99999, currency: "AUD", status: "DRAFT", issuedAt: null }
       ],
       date

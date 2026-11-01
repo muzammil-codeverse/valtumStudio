@@ -78,7 +78,10 @@ export async function provisionClientAction(form: FormData): Promise<void> {
   const name = text(120).parse(stringValue(form, "name"));
   const email = z.email().parse(stringValue(form, "email").trim().toLowerCase());
   const password = z.string().min(14).max(128).parse(stringValue(form, "password"));
-  const exists = await prisma.user.findUnique({ where: { email }, select: { id: true } });
+  const exists = await prisma.user.findUnique({
+    where: { email },
+    select: { id: true }
+  });
   if (exists) redirect("/admin/clients/" + workspaceId + "?notice=user-exists");
   const result = await auth.api.createUser({
     headers: await headers(),
@@ -158,9 +161,9 @@ export async function createInvoiceAction(form: FormData): Promise<void> {
   await authorizeClients();
   const engagementId = idSchema.parse(stringValue(form, "engagementId"));
   const reference = text(80).parse(stringValue(form, "reference"));
-  const currency = z.enum(["AUD", "USD", "GBP", "EUR", "AED", "SAR"]).parse(
-    stringValue(form, "currency")
-  );
+  const currency = z
+    .enum(["AUD", "USD", "GBP", "EUR", "AED", "SAR"])
+    .parse(stringValue(form, "currency"));
   const amountCents = parseCents(stringValue(form, "amount"));
   const dueDate = parseDate(form.get("dueDate"));
   const engagement = await prisma.clientEngagement.findUniqueOrThrow({
@@ -180,7 +183,11 @@ export async function issueInvoiceAction(form: FormData): Promise<void> {
   const id = idSchema.parse(stringValue(form, "invoiceId"));
   const invoice = await prisma.clientInvoice.findUniqueOrThrow({
     where: { id },
-    select: { status: true, engagementId: true, engagement: { select: { workspaceId: true } } }
+    select: {
+      status: true,
+      engagementId: true,
+      engagement: { select: { workspaceId: true } }
+    }
   });
   if (invoice.status !== "DRAFT") throw new Error("Only draft invoices can be issued.");
   await prisma.clientInvoice.update({
@@ -188,7 +195,12 @@ export async function issueInvoiceAction(form: FormData): Promise<void> {
     data: { status: "ISSUED", issuedAt: new Date() }
   });
   revalidatePath("/admin/clients/" + invoice.engagement.workspaceId);
-  redirect("/admin/clients/" + invoice.engagement.workspaceId + "?project=" + invoice.engagementId);
+  redirect(
+    "/admin/clients/" +
+      invoice.engagement.workspaceId +
+      "?project=" +
+      invoice.engagementId
+  );
 }
 
 export async function postClientUpdateAction(form: FormData): Promise<void> {
@@ -207,7 +219,13 @@ export async function postClientUpdateAction(form: FormData): Promise<void> {
   redirect("/admin/clients/" + engagement.workspaceId + "?project=" + engagementId);
 }
 
-const engagementStates = ["PLANNING", "ACTIVE", "REVIEW", "COMPLETE", "ON_HOLD"] as const;
+const engagementStates = [
+  "PLANNING",
+  "ACTIVE",
+  "REVIEW",
+  "COMPLETE",
+  "ON_HOLD"
+] as const;
 
 export async function changeEngagementStateAction(form: FormData): Promise<void> {
   await authorizeClients();
@@ -225,27 +243,42 @@ export async function changeEngagementStateAction(form: FormData): Promise<void>
 export async function changeMilestoneStateAction(form: FormData): Promise<void> {
   await authorizeClients();
   const id = idSchema.parse(stringValue(form, "milestoneId"));
-  const status = z.enum(["PLANNED", "IN_PROGRESS", "AWAITING_REVIEW", "APPROVED", "COMPLETE"]).parse(
-    stringValue(form, "status")
-  );
+  const status = z
+    .enum(["PLANNED", "IN_PROGRESS", "AWAITING_REVIEW", "APPROVED", "COMPLETE"])
+    .parse(stringValue(form, "status"));
   const record = await prisma.clientMilestone.update({
     where: { id },
-    data: { status, completedAt: status === "COMPLETE" || status === "APPROVED" ? new Date() : null },
+    data: {
+      status,
+      completedAt: status === "COMPLETE" || status === "APPROVED" ? new Date() : null
+    },
     select: { engagementId: true, engagement: { select: { workspaceId: true } } }
   });
   revalidatePath("/admin/clients/" + record.engagement.workspaceId);
-  redirect("/admin/clients/" + record.engagement.workspaceId + "?project=" + record.engagementId);
+  redirect(
+    "/admin/clients/" +
+      record.engagement.workspaceId +
+      "?project=" +
+      record.engagementId
+  );
 }
 
 export async function changeTaskStateAction(form: FormData): Promise<void> {
   await authorizeClients();
   const id = idSchema.parse(stringValue(form, "taskId"));
-  const status = z.enum(["OPEN", "IN_PROGRESS", "BLOCKED", "DONE"]).parse(stringValue(form, "status"));
+  const status = z
+    .enum(["OPEN", "IN_PROGRESS", "BLOCKED", "DONE"])
+    .parse(stringValue(form, "status"));
   const record = await prisma.clientTask.update({
     where: { id },
     data: { status },
     select: { engagementId: true, engagement: { select: { workspaceId: true } } }
   });
   revalidatePath("/admin/clients/" + record.engagement.workspaceId);
-  redirect("/admin/clients/" + record.engagement.workspaceId + "?project=" + record.engagementId);
+  redirect(
+    "/admin/clients/" +
+      record.engagement.workspaceId +
+      "?project=" +
+      record.engagementId
+  );
 }

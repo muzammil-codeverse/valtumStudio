@@ -623,12 +623,55 @@
 }
 
 /* Customer delivery administration reuses the private workspace visual system. */
-.admin-root .portal-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #ececf4; }
-.admin-root .portal-row:last-child { border-bottom: none; }
-.admin-root .portal-row-main { flex: 1; min-width: 0; }
-.admin-root .portal-row-main > a, .admin-root .portal-row-main > strong { font-size: 13px; font-weight: 750; text-decoration: none; }
-.admin-root .portal-row-main small { display: block; color: #77788d; font-size: 11px; line-height: 1.5; margin-top: 4px; }
-.admin-root .portal-tag { padding: 7px 10px; border-radius: 100px; color: #4036a3; background: #efedff; text-transform: capitalize; font-size: 10px; font-weight: 750; }
-.admin-root .ds-detail-stack { display: grid; gap: 16px; margin-top: 16px; }
-.admin-root .ds-panel input:focus-visible, .admin-root .ds-panel select:focus-visible, .admin-root .ds-panel textarea:focus-visible { outline: 3px solid #5348c6; outline-offset: 2px; }
-.admin-root .ds-panel button { cursor: pointer; }
+.admin-root .portal-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #ececf4;
+}
+.admin-root .portal-row:last-child {
+  border-bottom: none;
+}
+.admin-root .portal-row-main {
+  flex: 1;
+  min-width: 0;
+}
+.admin-root .portal-row-main > a,
+.admin-root .portal-row-main > strong {
+  font-size: 13px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.admin-root .portal-row-main small {
+  display: block;
+  color: #77788d;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.admin-root .portal-tag {
+  padding: 7px 10px;
+  border-radius: 100px;
+  color: #4036a3;
+  background: #efedff;
+  text-transform: capitalize;
+  font-size: 10px;
+  font-weight: 750;
+}
+.admin-root .ds-detail-stack {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+.admin-root .ds-panel input:focus-visible,
+.admin-root .ds-panel select:focus-visible,
+.admin-root .ds-panel textarea:focus-visible {
+  outline: 3px solid #5348c6;
+  outline-offset: 2px;
+}
+.admin-root .ds-panel button {
+  cursor: pointer;
+}

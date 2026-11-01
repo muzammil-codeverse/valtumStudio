@@ -25,31 +25,61 @@ export function PortalShell({
     <div className="portal-root">
       <aside className="portal-sidebar">
         <div className="portal-brand">
-          <span className="portal-brand-mark">V<span>.</span></span>
-          <div><strong>VALTUM</strong><small>CLIENT SPACE</small></div>
+          <span className="portal-brand-mark">
+            V<span>.</span>
+          </span>
+          <div>
+            <strong>VALTUM</strong>
+            <small>CLIENT SPACE</small>
+          </div>
         </div>
         <div className="portal-nav-caption">YOUR WORKSPACE</div>
         <nav aria-label="Client portal navigation">
           {sections.map((section) => (
             <Link href={section.path} key={section.path}>
-              <span aria-hidden="true">{section.glyph}</span>{section.title}
+              <span aria-hidden="true">{section.glyph}</span>
+              {section.title}
             </Link>
           ))}
         </nav>
         <div className="portal-sidebar-bottom">
-          <div className="portal-help"><small>NEED SOMETHING?</small><strong>We're here for the details.</strong><a href="mailto:hello@valtumstudio.com.au">Talk to the studio ↗</a></div>
-          <div className="portal-account"><span>{initial}</span><div><strong>{name}</strong><small>Client access</small></div></div>
+          <div className="portal-help">
+            <small>NEED SOMETHING?</small>
+            <strong>We're here for the details.</strong>
+            <a href="mailto:hello@valtumstudio.com.au">Talk to the studio ↗</a>
+          </div>
+          <div className="portal-account">
+            <span>{initial}</span>
+            <div>
+              <strong>{name}</strong>
+              <small>Client access</small>
+            </div>
+          </div>
         </div>
       </aside>
       <div className="portal-main">
         <header className="portal-topbar">
-          <div className="portal-topbar-label">VALTUM STUDIO <span>/</span> CLIENT EXPERIENCE</div>
-          <div className="portal-workspace-name">{workspaces.length === 1 ? workspaces[0]?.name : workspaces.length > 1 ? workspaces.length + " workspaces" : "Your space"}</div>
+          <div className="portal-topbar-label">
+            VALTUM STUDIO <span>/</span> CLIENT EXPERIENCE
+          </div>
+          <div className="portal-workspace-name">
+            {workspaces.length === 1
+              ? workspaces[0]?.name
+              : workspaces.length > 1
+                ? workspaces.length + " workspaces"
+                : "Your space"}
+          </div>
         </header>
         <nav className="portal-mobile-nav" aria-label="Mobile client portal navigation">
-          {sections.map((section) => <Link href={section.path} key={section.path}>{section.title}</Link>)}
+          {sections.map((section) => (
+            <Link href={section.path} key={section.path}>
+              {section.title}
+            </Link>
+          ))}
         </nav>
-        <main id="portal-main" className="portal-page">{children}</main>
+        <main id="portal-main" className="portal-page">
+          {children}
+        </main>
       </div>
     </div>
   );
