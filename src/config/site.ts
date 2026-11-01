@@ -1,7 +1,7 @@
 export const siteConfig = Object.freeze({
   defaultLocale: "en",
   description:
-    "Valtum Studio — custom software, digital products and creative development.",
+    "Software, systems and digital experiences. An independent Australian studio bringing product thinking, design and engineering together.",
   htmlLanguage: "en",
   name: "Valtum Studio",
   title: "Valtum Studio"
