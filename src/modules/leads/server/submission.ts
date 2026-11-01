@@ -9,6 +9,8 @@ import {
   isRateLimitBlocked,
   startOfUtcWindow
 } from "../domain/protection";
+import { publishSubmittedLeadNotification } from "./notification-port";
+
 import {
   leadSubmissionSchema,
   type NormalizedLeadSubmission,
@@ -182,7 +184,7 @@ export async function submitLead(
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     try {
-      await client.$transaction(async (tx) => {
+      const leadId = await client.$transaction(async (tx) => {
         await tx.leadDuplicateWindow.create({
           data: {
             fingerprint,
@@ -192,7 +194,14 @@ export async function submitLead(
             )
           }
         });
-        await createLead(tx, normalized, fingerprint, now);
+        return createLead(tx, normalized, fingerprint, now);
+      });
+      await publishSubmittedLeadNotification({
+        leadId,
+        name: normalized.fullName,
+        email: normalized.email,
+        projectSummary: normalized.projectSummary,
+        projectType: normalized.projectType
       });
       return;
     } catch (error) {
@@ -215,7 +224,7 @@ async function createLead(
   input: NormalizedLeadSubmission,
   fingerprint: string,
   now: Date
-): Promise<void> {
+): Promise<string> {
   const lead = await tx.lead.create({
     data: {
       idempotencyKey: input.submissionToken,
@@ -249,6 +258,7 @@ async function createLead(
     }
   });
   await tx.leadActivity.create({ data: { leadId: lead.id, type: "CREATED" } });
+  return lead.id;
 }
 
 export const leadSubmissionPolicy = Object.freeze({
