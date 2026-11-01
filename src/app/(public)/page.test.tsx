@@ -263,18 +263,3 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
     ).not.toBeInTheDocument();
   });
 });
-
-describe("Frontend deployment profile", () => {
-  it("loads the public stories without calling any CMS query", async () => {
-    vi.stubEnv("VALTUM_SITE_MODE", "frontend");
-    const result = await loadHomePageData();
-    expect(result.settings.studioName).toBe("Valtum Studio");
-    expect(getPublicSettings).not.toHaveBeenCalled();
-    expect(getPublicFeaturedProjects).not.toHaveBeenCalled();
-    expect(getPublicServices).not.toHaveBeenCalled();
-    expect(getPublicTeamMembers).not.toHaveBeenCalled();
-    const metadata = await generateMetadata();
-    expect(metadata.title).toBe("Valtum Studio");
-    expect(getPublicSettings).not.toHaveBeenCalled();
-  });
-});

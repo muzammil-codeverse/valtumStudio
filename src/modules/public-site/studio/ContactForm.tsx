@@ -3,11 +3,7 @@
 import { useRef, useState } from "react";
 
 type Status = "idle" | "submitting" | "success" | "error";
-export function ContactForm({
-  frontendOnly = false
-}: {
-  frontendOnly?: boolean;
-}): React.JSX.Element {
+export function ContactForm(): React.JSX.Element {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const request = useRef<{ signature: string; token: string } | null>(null);
@@ -23,19 +19,6 @@ export function ContactForm({
       projectSummary: String(data.get("projectSummary") ?? ""),
       projectType: String(data.get("projectType") ?? "NOT_SURE")
     };
-    if (frontendOnly) {
-      const brief = `VALTUM STUDIO / PROJECT BRIEF\n\nName: ${fields.fullName}\nEmail: ${fields.email}\n\n${fields.projectSummary}\n\nSaved on your device. This brief has not been sent to the studio.\n`;
-      const url = URL.createObjectURL(
-        new Blob([brief], { type: "text/plain;charset=utf-8" })
-      );
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "valtum-project-brief.txt";
-      link.click();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setStatus("success");
-      return;
-    }
     const signature = JSON.stringify(fields);
     if (request.current?.signature !== signature)
       request.current = { signature, token: crypto.randomUUID().replaceAll("-", "") };
@@ -83,27 +66,19 @@ export function ContactForm({
       <div aria-live="polite" className="v-form-status">
         <h2 style={{ fontSize: 35, margin: "20px 0" }}>A good place to begin.</h2>
         <p>
-          {frontendOnly
-            ? "Your brief has been saved to your device. Nothing has been sent to the studio. You can keep refining the idea before sharing it."
-            : "Thank you for telling us about your idea. We will read it carefully and get back to you at the email you shared."}
+          Thank you for telling us about your idea. We will read it carefully and get back to you at the email you shared.
         </p>
         <button
           className="v-submit"
           onClick={() => setStatus("idle")}
           style={{ marginTop: 25 }}
         >
-          {frontendOnly ? "Prepare another brief ↗" : "Send another enquiry ↗"}
+          Send another enquiry ↗
         </button>
       </div>
     );
   return (
     <form className="v-form" onSubmit={submit}>
-      {frontendOnly && (
-        <p className="v-contact-tip">
-          Prepare a project brief and save a copy to your device. Online enquiries will
-          open soon.
-        </p>
-      )}
       <div className="v-field">
         <label htmlFor="contact-name">Your name</label>
         <input
@@ -154,25 +129,21 @@ export function ContactForm({
         <label htmlFor="contact-website">Leave this field empty</label>
         <input autoComplete="off" id="contact-website" name="website" tabIndex={-1} />
       </div>
-      {!frontendOnly && (
-        <label className="v-consent">
-          <input name="consent" required type="checkbox" />
-          <span>
-            I agree to Valtum Studio using these details to respond to my enquiry. Read
-            our{" "}
-            <a href="/privacy" style={{ textDecoration: "underline" }}>
-              privacy information
-            </a>
-            .
-          </span>
-        </label>
-      )}
+      <label className="v-consent">
+        <input name="consent" required type="checkbox" />
+        <span>
+          I agree to Valtum Studio using these details to respond to my enquiry. Read
+          our{" "}
+          <a href="/privacy" style={{ textDecoration: "underline" }}>
+            privacy information
+          </a>
+          .
+        </span>
+      </label>
       <button className="v-submit" disabled={status === "submitting"} type="submit">
         {status === "submitting"
           ? "Sending your enquiry"
-          : frontendOnly
-            ? "Save project brief"
-            : "Begin a conversation"}
+          : "Begin a conversation"}
         <span aria-hidden="true">↗</span>
       </button>
       {status === "error" && (

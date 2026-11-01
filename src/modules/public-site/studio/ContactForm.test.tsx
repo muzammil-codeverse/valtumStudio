@@ -64,30 +64,3 @@ describe("Project enquiry", () => {
     expect(second.submissionToken).toBe(first.submissionToken);
   });
 });
-
-describe("Frontend project brief", () => {
-  it("saves a local brief without sending data or claiming an enquiry was received", async () => {
-    const fetcher = vi.fn();
-    const createObjectURL = vi.fn(() => "blob:valtum-test");
-    vi.stubGlobal("fetch", fetcher);
-    vi.stubGlobal("URL", { createObjectURL, revokeObjectURL: vi.fn() });
-    const download = vi
-      .spyOn(HTMLAnchorElement.prototype, "click")
-      .mockImplementation(() => {});
-    render(<ContactForm frontendOnly />);
-    const user = userEvent.setup();
-    await user.type(screen.getByLabelText("Your name"), "Example Person");
-    await user.type(screen.getByLabelText("Email address"), "example@example.com");
-    await user.type(
-      screen.getByLabelText("Tell us a little about it"),
-      "A new product with a carefully considered workflow."
-    );
-    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: /Save project brief/ }));
-    expect(download).toHaveBeenCalledOnce();
-    expect(createObjectURL).toHaveBeenCalledOnce();
-    expect(fetcher).not.toHaveBeenCalled();
-    expect(screen.getByText(/Nothing has been sent to the studio/)).toBeInTheDocument();
-    expect(screen.queryByText("Enquiry received")).not.toBeInTheDocument();
-  });
-});

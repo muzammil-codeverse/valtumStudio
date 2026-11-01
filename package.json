@@ -44,8 +44,7 @@
     "test:authorization": "vitest run src/modules/auth/policies",
     "test:security": "vitest run src/server/security src/modules/auth",
     "check": "corepack pnpm format:check && corepack pnpm lint && corepack pnpm typecheck && corepack pnpm db:check && corepack pnpm auth:security-check && corepack pnpm test",
-    "ci:verify": "corepack pnpm check && corepack pnpm test:coverage && corepack pnpm test:integration && corepack pnpm build && corepack pnpm test:e2e",
-    "build:frontend": "node scripts/build-frontend.mjs"
+    "ci:verify": "corepack pnpm check && corepack pnpm test:coverage && corepack pnpm test:integration && corepack pnpm build && corepack pnpm test:e2e"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",

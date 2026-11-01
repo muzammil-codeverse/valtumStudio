@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { isFrontendOnly } from "@/config/site-mode";
 import { isDatabaseUnavailableError } from "@/lib/errors";
 import { buildSiteMetadata } from "@/modules/public-content/domain/metadata";
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
@@ -9,7 +8,6 @@ import { HomePage } from "@/modules/public-site/home/ui/HomePage";
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  if (isFrontendOnly()) return buildSiteMetadata({ canonicalPath: "/" });
   try {
     const { getPublicSettings } =
       await import("@/modules/public-content/server/settings");

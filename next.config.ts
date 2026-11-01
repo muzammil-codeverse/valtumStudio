@@ -28,7 +28,7 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "connect-src 'self'",
-  "font-src 'self' data:",
+  "font-src 'self' data: https://cdn.fontshare.com",
   "form-action 'self'",
   "frame-ancestors 'none'",
   "frame-src https://aegis-sentinel-tau.vercel.app https://booking-marketplace-web.vercel.app https://www.ktcouriers.com https://math-intellect.vercel.app https://personality-analysis-exploiter.vercel.app",
@@ -36,7 +36,7 @@ const contentSecurityPolicy = [
   "media-src 'self'",
   "object-src 'none'",
   "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://api.fontshare.com",
   "worker-src 'self' blob:"
 ].join("; ");
 
@@ -62,25 +62,17 @@ const securityHeaders = [
 const remotePatterns = mediaRemotePattern();
 
 const nextConfig: NextConfig = {
-  ...(process.env["VALTUM_SITE_MODE"] === "frontend"
-    ? { pageExtensions: ["frontend.ts", "frontend.tsx"] }
-    : {}),
   distDir: process.env["NEXT_DIST_DIR"] ?? ".next",
   images: {
-    ...(process.env["VALTUM_SITE_MODE"] === "frontend" ? { unoptimized: true } : {}),
     formats: ["image/avif", "image/webp"],
     qualities: [60, 75, 85],
     ...(remotePatterns === undefined ? {} : { remotePatterns })
   },
-  output: process.env["VALTUM_SITE_MODE"] === "frontend" ? "export" : "standalone",
+  output: "standalone",
   poweredByHeader: false,
-  ...(process.env["VALTUM_SITE_MODE"] === "frontend"
-    ? {}
-    : {
-        async headers() {
-          return [{ source: "/(.*)", headers: securityHeaders }];
-        }
-      })
+  async headers() {
+    return [{ source: "/(.*)", headers: securityHeaders }];
+  }
 };
 
 export default nextConfig;

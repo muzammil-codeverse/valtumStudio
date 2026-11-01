@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { isFrontendOnly } from "@/config/site-mode";
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
 
@@ -39,7 +38,7 @@ export default async function ContactPage(): Promise<React.JSX.Element> {
         </p>
       </div>
       <div className="v-contact-form">
-        <ContactForm frontendOnly={isFrontendOnly()} />
+        <ContactForm />
       </div>
     </main>
   );
