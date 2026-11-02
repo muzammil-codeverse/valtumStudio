@@ -1,0 +1,141 @@
+/* Compact consent: full control, small visual footprint. */
+.valtum .vc-cookie-banner {
+  position: fixed;
+  inset: auto clamp(14px, 2vw, 28px) clamp(14px, 2vw, 28px) auto;
+  z-index: 1200;
+  width: min(485px, calc(100vw - 28px));
+  max-height: calc(100dvh - 28px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 13px;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(248, 249, 252, 0.98);
+  color: #282d36;
+  border: 1px solid #d3dae4;
+  border-radius: 18px;
+  box-shadow: 0 14px 48px rgba(32, 43, 61, 0.15);
+  backdrop-filter: blur(18px);
+  overflow: auto;
+  font:
+    400 12px/1.5 "DM Sans",
+    sans-serif;
+}
+.valtum .vc-cookie-banner .vc-cookie-brief {
+  color: #515d6d;
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: none;
+  margin: 0;
+  grid-column: 1;
+}
+.vc-cookie-compact-actions {
+  grid-column: 2;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+.vc-cookie-compact-actions button {
+  min-height: 33px;
+  flex: 1;
+  cursor: pointer;
+  padding: 7px 9px;
+  border-radius: 99px;
+  border: 1px solid #bbc4d1;
+  background: transparent;
+  color: #28303a;
+  font:
+    500 12px/1.2 "DM Sans",
+    sans-serif;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+.vc-cookie-compact-actions button:nth-child(2) {
+  background: #262d38;
+  color: #fff;
+  border-color: #262d38;
+}
+.vc-cookie-compact-actions button:hover {
+  background: #e5e9f0;
+  border-color: #7f8a9b;
+}
+.vc-cookie-compact-actions button:nth-child(2):hover {
+  background: #414e61;
+  color: #fff;
+}
+.vc-cookie-compact-actions button:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+.vc-cookie-compact-policy {
+  grid-column: 1 / -1;
+  justify-self: end;
+  color: #56677c;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.valtum .vc-cookie-dialog {
+  width: min(510px, calc(100vw - 28px));
+  border-radius: 19px;
+  padding: clamp(23px, 3vw, 36px);
+  max-height: min(84dvh, 680px);
+}
+.valtum .vc-cookie-dialog h2 {
+  font-family: "Valtum Signature", Georgia, serif;
+  font-size: clamp(37px, 4vw, 51px);
+  line-height: 1.1;
+  margin-top: 22px;
+}
+.valtum .vc-cookie-option {
+  padding: 14px 0;
+  margin-top: 13px;
+}
+.valtum .vc-cookie-option h3 {
+  font-size: 14px;
+}
+.valtum .vc-cookie-option p {
+  font-size: 11px;
+}
+.valtum .vc-cookie-dialog-head {
+  justify-content: flex-end;
+}
+.valtum .vc-cookie-dialog-actions button {
+  min-height: 43px;
+  border-radius: 99px;
+}
+.valtum .vc-cookie-banner button:focus-visible,
+.valtum .vc-cookie-dialog button:focus-visible,
+.valtum .vc-cookie-dialog a:focus-visible {
+  outline: 3px solid #546b8c;
+  outline-offset: 3px;
+}
+@media (max-width: 500px) {
+  .valtum .vc-cookie-banner {
+    inset: auto 12px 12px 12px;
+    width: auto;
+    padding: 13px 15px 12px;
+    border-radius: 15px;
+    grid-template-columns: 1fr;
+  }
+  .valtum .vc-cookie-banner .vc-cookie-brief,
+  .vc-cookie-compact-actions,
+  .vc-cookie-compact-policy {
+    grid-column: 1;
+  }
+  .vc-cookie-compact-policy {
+    justify-self: start;
+  }
+  .valtum .vc-cookie-compact-actions button {
+    min-height: 36px;
+  }
+  .valtum .vc-cookie-dialog {
+    padding: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vc-cookie-compact-actions button {
+    transition: none;
+  }
+}

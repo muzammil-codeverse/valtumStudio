@@ -4,48 +4,37 @@ import { useRef, useState } from "react";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const interests = [
+const projectOptions = [
+  { value: "NOT_SURE", label: "What would you like to build?", service: "NOT_SURE" },
   {
     value: "WEB_APPLICATION",
-    title: "A new digital product",
-    detail: "Web app, SaaS or customer platform",
+    label: "A web application or SaaS product",
     service: "WEB_APPLICATIONS"
   },
   {
     value: "INTERNAL_BUSINESS_SYSTEM",
-    title: "A better way to work",
-    detail: "Internal tools and connected operations",
+    label: "A business system or internal tool",
     service: "BACKEND_OR_API_ENGINEERING"
   },
   {
     value: "MARKETPLACE_OR_BOOKING_PLATFORM",
-    title: "A booking or marketplace system",
-    detail: "Reservations, workflows and transactions",
+    label: "A booking or marketplace platform",
     service: "WEB_APPLICATIONS"
   },
   {
     value: "AI_OR_AUTOMATION",
-    title: "AI or automation",
-    detail: "Practical intelligence and less manual work",
+    label: "AI or workflow automation",
     service: "AI_AND_AUTOMATION"
   },
   {
     value: "WEBSITE",
-    title: "A distinctive digital experience",
-    detail: "Creative websites with a purpose",
+    label: "A creative website or digital experience",
     service: "WEBSITES"
   },
   {
     value: "EXISTING_PRODUCT_IMPROVEMENT",
-    title: "An existing product needs work",
-    detail: "Rebuild, improve or rethink",
+    label: "Improving an existing product",
     service: "TECHNICAL_CONSULTING"
-  },
-  {
-    value: "NOT_SURE",
-    title: "Let's work it out together",
-    detail: "The idea is early, but the problem is real",
-    service: "NOT_SURE"
   }
 ] as const;
 
@@ -62,11 +51,12 @@ export function ContactForm(): React.JSX.Element {
 
     const data = new FormData(form);
     const projectType = String(data.get("projectType") ?? "NOT_SURE");
-    const selection = interests.find((item) => item.value === projectType);
+    const selection = projectOptions.find((option) => option.value === projectType);
     const timeline = String(data.get("timeline") ?? "");
     const fields = {
       fullName: String(data.get("fullName") ?? ""),
       email: String(data.get("email") ?? ""),
+      phone: String(data.get("phone") ?? ""),
       company: String(data.get("company") ?? ""),
       projectSummary: String(data.get("projectSummary") ?? ""),
       projectType: selection?.value ?? "NOT_SURE",
@@ -102,7 +92,7 @@ export function ContactForm(): React.JSX.Element {
           );
         }
         throw new Error(
-          "We couldn't send your enquiry. Your words are still here. Please try again."
+          "We couldn't send your enquiry. Your message is still here. Please try again."
         );
       }
       setStatus("success");
@@ -120,12 +110,12 @@ export function ContactForm(): React.JSX.Element {
 
   if (status === "success") {
     return (
-      <div role="status" aria-live="polite" className="vc-success">
+      <div role="status" aria-live="polite" className="vx-success">
         <span aria-hidden="true">↗</span>
-        <h2>Your idea is with us.</h2>
+        <h2>Your enquiry is with us.</h2>
         <p>
-          Thank you for reaching out. We’ll review what you’ve shared and reply using
-          the email address you provided.
+          Thank you. We’ll review what you’ve shared and reply to the email address you
+          provided.
         </p>
         <button type="button" onClick={() => setStatus("idle")}>
           Send another enquiry <span aria-hidden="true">↗</span>
@@ -135,132 +125,110 @@ export function ContactForm(): React.JSX.Element {
   }
 
   return (
-    <form
-      action="/api/leads"
-      className="v-form vc-form"
-      method="post"
-      onSubmit={submit}
-    >
-      <div className="vc-form-intro">
-        <h2>Tell us what you’re working through.</h2>
-        <p>You only need a starting point. We’ll help make sense of the rest.</p>
-      </div>
-      <div className="vc-field-pair">
-        <div className="v-field">
-          <label htmlFor="contact-name">
-            Your name <span aria-hidden="true">*</span>
-          </label>
+    <form className="vx-form" action="/api/leads" method="post" onSubmit={submit}>
+      <div className="vx-form-row">
+        <label className="vx-field" htmlFor="contact-name">
+          <span className="vx-visually-hidden">Your name</span>
           <input
-            autoComplete="name"
             id="contact-name"
-            maxLength={120}
-            minLength={2}
             name="fullName"
+            type="text"
             placeholder="Your name"
+            autoComplete="name"
+            minLength={2}
+            maxLength={120}
             required
           />
-        </div>
-        <div className="v-field">
-          <label htmlFor="contact-email">
-            Email address <span aria-hidden="true">*</span>
-          </label>
+        </label>
+        <label className="vx-field" htmlFor="contact-company">
+          <span className="vx-visually-hidden">Company (optional)</span>
           <input
-            autoComplete="email"
-            id="contact-email"
-            maxLength={254}
-            name="email"
-            placeholder="you@company.com"
-            required
-            type="email"
+            id="contact-company"
+            name="company"
+            type="text"
+            placeholder="Company (optional)"
+            autoComplete="organization"
+            maxLength={160}
           />
-        </div>
-      </div>
-      <div className="v-field">
-        <label htmlFor="contact-company">
-          Company or organization <span className="vc-optional">Optional</span>
         </label>
+      </div>
+      <label className="vx-field" htmlFor="contact-email">
+        <span className="vx-visually-hidden">Email address</span>
         <input
-          autoComplete="organization"
-          id="contact-company"
-          maxLength={160}
-          name="company"
-          placeholder="Where you work"
+          id="contact-email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          maxLength={254}
+          placeholder="Email address"
+          required
         />
-      </div>
-      <fieldset className="vc-interest-fieldset">
-        <legend>
-          What do you have in mind? <span aria-hidden="true">*</span>
-        </legend>
-        <div className="vc-interest-grid">
-          {interests.map((interest) => (
-            <label className="vc-interest" key={interest.value}>
-              <input
-                type="radio"
-                name="projectType"
-                value={interest.value}
-                defaultChecked={interest.value === "NOT_SURE"}
-                required
-              />
-              <span className="vc-interest-copy">
-                <strong>{interest.title}</strong>
-                <small>{interest.detail}</small>
-              </span>
-              <span className="vc-interest-indicator" aria-hidden="true" />
-            </label>
-          ))}
-        </div>
-      </fieldset>
-      <div className="v-field">
-        <label htmlFor="contact-summary">
-          Tell us about the challenge <span aria-hidden="true">*</span>
-        </label>
+      </label>
+      <label className="vx-field" htmlFor="contact-phone">
+        <span className="vx-visually-hidden">Phone (optional)</span>
+        <input
+          id="contact-phone"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          maxLength={32}
+          placeholder="Phone (optional)"
+        />
+      </label>
+      <label className="vx-field" htmlFor="contact-summary">
+        <span className="vx-visually-hidden">
+          Tell us about your project or challenge
+        </span>
         <textarea
           id="contact-summary"
-          maxLength={5000}
-          minLength={20}
           name="projectSummary"
-          placeholder="What's happening today? What would you like to be different?"
+          placeholder="Tell us about your project or challenge"
+          minLength={20}
+          maxLength={5000}
+          rows={4}
           required
-          rows={5}
         />
-        <p className="vc-field-hint">
-          A few sentences are enough. At least 20 characters.
-        </p>
-      </div>
-      <div className="v-field">
-        <label htmlFor="contact-timeline">
-          When would you like to begin? <span className="vc-optional">Optional</span>
+      </label>
+      <div className="vx-form-row vx-form-row--options">
+        <label className="vx-field vx-select" htmlFor="contact-project-type">
+          <span className="vx-visually-hidden">Project type</span>
+          <select id="contact-project-type" name="projectType" defaultValue="NOT_SURE">
+            {projectOptions.map((option) => (
+              <option value={option.value} key={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </label>
-        <select id="contact-timeline" defaultValue="" name="timeline">
-          <option value="">No timeline in mind yet</option>
-          <option value="AS_SOON_AS_POSSIBLE">As soon as possible</option>
-          <option value="ONE_TO_THREE_MONTHS">Within 1–3 months</option>
-          <option value="THREE_TO_SIX_MONTHS">Within 3–6 months</option>
-          <option value="SIX_MONTHS_PLUS">Later than six months</option>
-          <option value="FLEXIBLE">Flexible</option>
-        </select>
+        <label className="vx-field vx-select" htmlFor="contact-timeline">
+          <span className="vx-visually-hidden">Timeline (optional)</span>
+          <select id="contact-timeline" name="timeline" defaultValue="">
+            <option value="">Timeline (optional)</option>
+            <option value="AS_SOON_AS_POSSIBLE">As soon as possible</option>
+            <option value="ONE_TO_THREE_MONTHS">Within 1–3 months</option>
+            <option value="THREE_TO_SIX_MONTHS">Within 3–6 months</option>
+            <option value="SIX_MONTHS_PLUS">Later than six months</option>
+            <option value="FLEXIBLE">Flexible</option>
+          </select>
+        </label>
       </div>
       <div className="v-honey" aria-hidden="true">
         <label htmlFor="contact-website">Leave this field empty</label>
-        <input autoComplete="off" id="contact-website" name="website" tabIndex={-1} />
+        <input id="contact-website" name="website" autoComplete="off" tabIndex={-1} />
       </div>
-      <label className="v-consent vc-consent">
-        <input name="consent" required type="checkbox" />
+      <label className="vx-consent">
+        <input type="checkbox" name="consent" required />
         <span>
-          I agree to Valtum Studio using my details to respond to this enquiry. See our{" "}
-          <a href="/privacy">privacy information</a>.
+          I agree to Valtum Studio using these details to respond to my enquiry.{" "}
+          <a href="/privacy">Privacy policy</a>.
         </span>
       </label>
-      <button
-        className="v-submit vc-submit"
-        disabled={status === "submitting"}
-        type="submit"
-      >
-        {status === "submitting" ? "Sending your enquiry…" : "Start the conversation"}
+      <button className="vx-submit" disabled={status === "submitting"} type="submit">
+        {status === "submitting" ? "Sending…" : "Send enquiry"}
         <span aria-hidden="true">↗</span>
       </button>
       {status === "error" && (
-        <p className="v-form-status v-form-error" role="alert">
+        <p className="vx-form-error" role="alert">
           {error}
         </p>
       )}

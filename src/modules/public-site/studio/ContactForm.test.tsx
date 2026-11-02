@@ -16,9 +16,13 @@ async function fillForm(): Promise<ReturnType<typeof userEvent.setup>> {
   const user = userEvent.setup();
   await user.type(screen.getByLabelText(/Your name/), "Example Person");
   await user.type(screen.getByLabelText(/Email address/), "example@example.com");
-  await user.click(screen.getByRole("radio", { name: /AI or automation/ }));
+  await user.selectOptions(
+    screen.getByRole("combobox", { name: "Project type" }),
+    "AI_OR_AUTOMATION"
+  );
+  await user.type(screen.getByLabelText(/Phone/), "+61 404 412 079");
   await user.type(
-    screen.getByLabelText(/Tell us about the challenge/),
+    screen.getByLabelText(/Tell us about your project or challenge/),
     "A considered workflow for a new product idea."
   );
   await user.click(screen.getByRole("checkbox"));
@@ -31,7 +35,7 @@ describe("Project enquiry", () => {
     vi.stubGlobal("fetch", fetcher);
     render(<ContactForm />);
     const user = await fillForm();
-    await user.click(screen.getByRole("button", { name: /Start the conversation/ }));
+    await user.click(screen.getByRole("button", { name: /Send enquiry/ }));
     expect(fetcher).toHaveBeenCalledOnce();
     const call = fetcher.mock.calls[0];
     if (!call) throw new Error("The form did not submit");
@@ -40,10 +44,11 @@ describe("Project enquiry", () => {
     const payload = JSON.parse(options.body);
     expect(leadSubmissionSchema.safeParse(payload).success).toBe(true);
     expect(payload.projectType).toBe("AI_OR_AUTOMATION");
+    expect(payload.phone).toBe("+61 404 412 079");
     expect(payload.serviceInterests).toEqual(["AI_AND_AUTOMATION"]);
     expect(payload.consentVersion).toBe("valtum-contact-v3");
     expect(
-      await screen.findByRole("heading", { name: "Your idea is with us." })
+      await screen.findByRole("heading", { name: "Your enquiry is with us." })
     ).toBeInTheDocument();
   });
 
@@ -52,12 +57,12 @@ describe("Project enquiry", () => {
     vi.stubGlobal("fetch", fetcher);
     render(<ContactForm />);
     const user = await fillForm();
-    await user.click(screen.getByRole("button", { name: /Start the conversation/ }));
+    await user.click(screen.getByRole("button", { name: /Send enquiry/ }));
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(screen.getByLabelText(/Tell us about the challenge/)).toHaveValue(
-      "A considered workflow for a new product idea."
-    );
-    await user.click(screen.getByRole("button", { name: /Start the conversation/ }));
+    expect(
+      screen.getByLabelText(/Tell us about your project or challenge/)
+    ).toHaveValue("A considered workflow for a new product idea.");
+    await user.click(screen.getByRole("button", { name: /Send enquiry/ }));
     const first = JSON.parse(fetcher.mock.calls[0]?.[1].body ?? "{}");
     const second = JSON.parse(fetcher.mock.calls[1]?.[1].body ?? "{}");
     expect(second.submissionToken).toBe(first.submissionToken);

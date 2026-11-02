@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
-import { studioContact } from "@/config/studio-presence";
+import {
+  studioContact,
+  studioFounderProfile,
+  studioSocialProfiles
+} from "@/config/studio-presence";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
@@ -8,96 +13,118 @@ import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 export const metadata: Metadata = publicPageMetadata(pageSeo.contact, "/contact");
 
 export default function ContactPage(): React.JSX.Element {
+  const profiles = [
+    studioFounderProfile,
+    studioSocialProfiles[0],
+    studioSocialProfiles[2]
+  ] as const;
+
   return (
-    <main className="v-contact v-contact--editorial" id="main-content">
+    <main className="vx-contact" id="main-content">
       <SeoBreadcrumb title="Contact" path="/contact" />
-      <div className="vc-grid">
-        <div className="vc-intro">
-          <span className="vc-side-note">A conversation with Valtum Studio</span>
-          <h1 data-reveal>
-            Start with
+      <svg
+        className="vx-contact-orbit"
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 1440 980"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <path d="M5 845 C240 1090 460 628 714 442 S1280 120 1340 310 C1426 585 1135 730 920 935" />
+        <circle cx="1340" cy="310" r="3.5" />
+        <circle cx="48" cy="894" r="3.5" />
+      </svg>
+      <div className="vx-contact-layout">
+        <header className="vx-contact-intro" data-reveal>
+          <h1>
+            Tell us about
             <br />
-            <em>the challenge.</em>
+            <span>your challenge.</span>
           </h1>
-          <p className="vc-lead">
-            A product worth creating. A process that should take less work. An
-            experience that needs a different point of view. Tell us what is happening,
-            and what a better outcome would look like.
+          <p className="vx-contact-lede">
+            Tell us what you&apos;re working on, what needs to change, or what you want
+            to build. An early idea is enough to begin a useful conversation.
           </p>
-          <div className="vc-contact-points">
+
+          <nav className="vx-contact-links" aria-label="Contact Valtum Studio">
             <a href={`mailto:${studioContact.email}`}>
-              <span>Write to us</span>
-              <strong>{studioContact.email}</strong>
-              <span aria-hidden="true">↗</span>
-            </a>
-            <a href={studioContact.whatsApp} target="_blank" rel="noopener noreferrer">
-              <span>Message us</span>
-              <strong>WhatsApp</strong>
-              <span aria-hidden="true">↗</span>
+              <span className="vx-method-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.65"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m4 7 8 6 8-6" />
+                </svg>
+              </span>
+              <span>{studioContact.email}</span>
+              <span className="vx-contact-link-arrow" aria-hidden="true">
+                ↗
+              </span>
             </a>
             <a href={`tel:${studioContact.phone}`}>
-              <span>Call the studio</span>
-              <strong>{studioContact.phoneDisplay}</strong>
-              <span aria-hidden="true">↗</span>
+              <span className="vx-method-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                >
+                  <path d="M6.7 3.7h3l1.25 4.15-2 1.85c1.05 2.1 2.85 3.9 4.95 4.95l1.85-2L20 13.9v3c0 1.9-1.4 3.4-3.3 3.1C9.2 18.8 5.2 14.8 4 7.3 3.7 5.4 5.6 4.1c.3-.2.7-.4 1.1-.4Z" />
+                </svg>
+              </span>
+              <span>{studioContact.phoneDisplay}</span>
+              <span className="vx-contact-link-arrow" aria-hidden="true">
+                ↗
+              </span>
             </a>
-          </div>
-          <div className="vc-side-footer">
-            <span className="vc-signal" aria-hidden="true" />
-            Based in Australia. Working across borders.
-          </div>
-        </div>
-        <div className="vc-form-panel">
-          <div className="vc-form-header">
-            <span>Project enquiry</span>
-            <span>01 / Introduction</span>
-          </div>
+            <a href={studioContact.whatsApp} target="_blank" rel="noopener noreferrer">
+              <span className="vx-method-icon" aria-hidden="true">
+                <Image
+                  src="/icons/presence/whatsapp.svg"
+                  width={22}
+                  height={22}
+                  alt=""
+                  unoptimized
+                />
+              </span>
+              <span>WhatsApp</span>
+              <span className="vx-contact-link-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          </nav>
+          <nav className="vx-contact-social" aria-label="Studio and founder profiles">
+            {profiles.map((profile) => (
+              <a
+                href={profile.url}
+                key={profile.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={profile.label}
+              >
+                {profile.icon === "linkedin" ? (
+                  <span className="vx-linkedin-glyph" aria-hidden="true">
+                    in
+                  </span>
+                ) : (
+                  <Image
+                    src={`/icons/presence/${profile.icon}.svg`}
+                    width={18}
+                    height={18}
+                    alt=""
+                    unoptimized
+                  />
+                )}
+              </a>
+            ))}
+          </nav>
+        </header>
+        <div className="vx-contact-form-panel" data-reveal>
           <ContactForm />
         </div>
       </div>
-      <section
-        className="vc-after vc-after--steps"
-        aria-labelledby="contact-next-title"
-      >
-        <div className="vc-after-intro">
-          <h2 id="contact-next-title">
-            A clear first step.
-            <br />
-            <em>No theatre.</em>
-          </h2>
-          <p>
-            You do not need a finished specification. A clear picture of the challenge
-            is a useful place to begin.
-          </p>
-        </div>
-        <ol className="vc-next-steps">
-          <li>
-            <span aria-hidden="true">01</span>
-            <div>
-              <h3>We understand the context.</h3>
-              <p>What needs changing, who it affects and what a better result means.</p>
-            </div>
-          </li>
-          <li>
-            <span aria-hidden="true">02</span>
-            <div>
-              <h3>We talk through the options.</h3>
-              <p>
-                Scope, technical constraints, priorities and whether we are the right
-                fit.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span aria-hidden="true">03</span>
-            <div>
-              <h3>We agree on a next move.</h3>
-              <p>
-                A sensible first piece of work, if there is a reason to move forward.
-              </p>
-            </div>
-          </li>
-        </ol>
-      </section>
     </main>
   );
 }

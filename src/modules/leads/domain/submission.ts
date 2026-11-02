@@ -91,6 +91,7 @@ export const leadSubmissionSchema = z
     fullName: z.string().trim().min(2).max(120),
     email: z.string().trim().email().max(254),
     company: optionalText(160),
+    phone: optionalText(32),
     location: optionalText(160),
     projectType: z.enum(projectTypes),
     projectStage: z.enum(projectStages),
@@ -153,6 +154,7 @@ function nullableText(value: string | undefined): string | null {
 export type NormalizedLeadSubmission = Readonly<{
   budgetRange: Exclude<LeadSubmission["budgetRange"], undefined> | null;
   company: string | null;
+  phone: string | null;
   consentVersion: string;
   desiredOutcome: string | null;
   email: string;
@@ -184,6 +186,7 @@ export function normalizeLeadSubmission(
   return {
     budgetRange: input.budgetRange ?? null,
     company: nullableText(input.company),
+    phone: nullableText(input.phone),
     consentVersion: compactText(input.consentVersion),
     desiredOutcome: input.desiredOutcome?.trim() ?? null,
     email: input.email.trim().toLowerCase(),

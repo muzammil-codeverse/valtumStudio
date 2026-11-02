@@ -98,38 +98,35 @@ export function CookiePreferences(): React.JSX.Element | null {
     <>
       {state === "prompt" && (
         <aside className="vc-cookie-banner" aria-label="Cookie choices">
-          <div className="vc-cookie-banner-top">
-            <span>YOUR PRIVACY, YOUR CHOICE</span>
-            <span aria-hidden="true">✳</span>
-          </div>
-          <h2>Cookies, thoughtfully handled.</h2>
-          <p>
-            We use essential storage for the site and to remember your choice. Optional
-            analytics and preferences are off by default, and no optional tracking tools
-            are currently active.
+          <p className="vc-cookie-brief">
+            Only essential cookies are active until you choose otherwise.
           </p>
-          <div className="vc-cookie-actions">
+          <div className="vc-cookie-compact-actions">
             <button
               type="button"
               onClick={() => void save(false, false)}
               disabled={pending}
             >
-              Reject optional
+              Reject
             </button>
             <button
               type="button"
               onClick={() => void save(true, true)}
               disabled={pending}
             >
-              Accept all
+              Accept
+            </button>
+            <button
+              type="button"
+              onClick={() => dialog.current?.showModal()}
+              disabled={pending}
+            >
+              Manage
             </button>
           </div>
-          <div className="vc-cookie-secondary">
-            <button type="button" onClick={() => dialog.current?.showModal()}>
-              Manage preferences
-            </button>
-            <Link href="/cookies">Cookie policy ↗</Link>
-          </div>
+          <Link className="vc-cookie-compact-policy" href="/cookies">
+            Cookie policy
+          </Link>
           {error && (
             <p className="vc-cookie-error" role="alert">
               {error}
@@ -144,7 +141,6 @@ export function CookiePreferences(): React.JSX.Element | null {
         onClose={() => setError("")}
       >
         <div className="vc-cookie-dialog-head">
-          <span>Valtum Studio / Privacy</span>
           <button
             type="button"
             aria-label="Close cookie preferences"
@@ -153,7 +149,7 @@ export function CookiePreferences(): React.JSX.Element | null {
             ×
           </button>
         </div>
-        <h2 id="vc-cookie-dialog-heading">Your preferences.</h2>
+        <h2 id="vc-cookie-dialog-heading">Cookie preferences.</h2>
         <p>
           Choose what you are comfortable with. Essential storage is always enabled;
           optional choices stay off unless you allow them. No optional analytics or

@@ -21,8 +21,9 @@ export default function PrivacyPage(): React.JSX.Element {
       <h2>What you share</h2>
       <p>
         The enquiry form asks for your name, email address, project interest and a
-        description of your idea. Please avoid sending passwords, payment details or
-        sensitive personal information.
+        description of your idea. You can also provide your company, phone number and
+        preferred timeline. Please avoid sending passwords, payment details or sensitive
+        personal information.
       </p>
       <h2>Why we collect it</h2>
       <p>

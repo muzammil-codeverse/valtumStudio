@@ -230,6 +230,7 @@ async function createLead(
       name: input.fullName,
       email: input.email,
       company: input.company,
+      phone: input.phone,
       location: input.location,
       projectType: input.projectType,
       projectStage: input.projectStage,
