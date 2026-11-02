@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { CookieSettingsButton } from "./CookieSettingsButton";
-
 import {
   studioContact,
   studioFounderProfile,
   studioMarketplaces,
   studioSocialProfiles
 } from "@/config/studio-presence";
+
+import { CookieSettingsButton } from "./CookieSettingsButton";
 
 type PresenceProfile = Readonly<{
   label: string;

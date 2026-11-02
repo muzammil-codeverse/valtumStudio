@@ -124,7 +124,7 @@ export function ContactForm(): React.JSX.Element {
         <span aria-hidden="true">↗</span>
         <h2>Your idea is with us.</h2>
         <p>
-          Thank you for reaching out. We'll review what you've shared and reply using
+          Thank you for reaching out. We’ll review what you’ve shared and reply using
           the email address you provided.
         </p>
         <button type="button" onClick={() => setStatus("idle")}>
@@ -142,8 +142,8 @@ export function ContactForm(): React.JSX.Element {
       onSubmit={submit}
     >
       <div className="vc-form-intro">
-        <h2>Tell us what you're working through.</h2>
-        <p>You only need a starting point. We'll help make sense of the rest.</p>
+        <h2>Tell us what you’re working through.</h2>
+        <p>You only need a starting point. We’ll help make sense of the rest.</p>
       </div>
       <div className="vc-field-pair">
         <div className="v-field">

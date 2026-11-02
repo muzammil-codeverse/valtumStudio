@@ -189,7 +189,7 @@ export function CookiePreferences(): React.JSX.Element | null {
           />
         </label>
         <p className="vc-cookie-disclaimer">
-          If we introduce materially different tracking technology, we'll update this
+          If we introduce materially different tracking technology, we’ll update this
           policy and request fresh consent before enabling it.
         </p>
         {error && (
