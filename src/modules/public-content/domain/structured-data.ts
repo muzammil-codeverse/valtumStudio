@@ -23,6 +23,8 @@ export function buildOrganizationJsonLd(
   appBaseUrl: string,
   _settings: PublicSettingsDTO
 ) {
+  // Compatibility with the existing CMS-facing helper signature.
+  void _settings;
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
   const orgId = `${baseCanonical}#organization`;
 

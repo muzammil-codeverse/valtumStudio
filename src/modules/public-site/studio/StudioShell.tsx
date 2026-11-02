@@ -6,10 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { PreviewMotionContext } from "./DevicePreview";
-import { StudioFooter } from "./StudioFooter";
 import { mountStudioMotion } from "./motion";
 import { RouteSequence } from "./route-sequence";
 import { mountSmoothScroll } from "./smooth-scroll";
+import { StudioFooter } from "./StudioFooter";
 const navigation = [
   ["Work", "/work"],
   ["Services", "/services"],
