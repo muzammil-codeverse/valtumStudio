@@ -15,7 +15,7 @@ export function SignInForm(): React.JSX.Element {
     setIsSubmitting(true);
     const form = new FormData(event.currentTarget);
     const result = await authClient.signIn.email({
-      callbackURL: "/admin",
+      callbackURL: "/auth/continue",
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? ""),
       rememberMe: false
@@ -34,7 +34,7 @@ export function SignInForm(): React.JSX.Element {
       window.location.assign("/auth/two-factor");
       return;
     }
-    window.location.assign("/auth/change-password");
+    window.location.assign("/auth/continue");
   }
 
   return (
@@ -55,7 +55,7 @@ export function SignInForm(): React.JSX.Element {
         </p>
       )}
       <button disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Signing in…" : "Sign in"}
+        {isSubmitting ? "Signing in…" : "Sign in"} <span aria-hidden="true">↗</span>
       </button>
     </form>
   );

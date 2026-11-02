@@ -25,7 +25,7 @@ export function TwoFactorForm(): React.JSX.Element {
       setError("The verification code could not be accepted.");
       return;
     }
-    window.location.assign("/auth/change-password");
+    window.location.assign("/auth/continue");
   }
 
   return (
