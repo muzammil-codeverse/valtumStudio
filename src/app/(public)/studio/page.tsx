@@ -22,10 +22,10 @@ export default function StudioPage(): React.JSX.Element {
           <em>what comes next.</em>
         </h1>
         <p>
-          Valtum Studio is an Australian-registered software and digital product studio
-          founded in 2026 by Abdurrehman Khalid. We build custom applications, SaaS
-          platforms, connected business systems and distinctive digital experiences for
-          teams in Australia and internationally.
+          An independent Australian software studio working where product thinking,
+          engineering and creative technology meet. We take on complex digital
+          problems, make the decisions clear and build with the people who will use
+          what comes next.
         </p>
       </header>
       <div className="x-studio-collage">
@@ -55,7 +55,7 @@ export default function StudioPage(): React.JSX.Element {
           height={100}
         />
       </div>
-      <section className="x-studio-view" data-cover-scene>
+      <section className="x-studio-view">
         <h2 data-word-reveal>
           The <InlinePhoto name="sketch" /> creative work.
           <br />
@@ -77,28 +77,7 @@ export default function StudioPage(): React.JSX.Element {
             happens next. We keep those conversations close, wherever you are in the
             world.
           </p>
-          <p>
-            Our business name is registered in Australia. You can verify the public
-            record through the{" "}
-            <a
-              href="https://abr.business.gov.au/ABN/View?id=24207947663"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Australian Business Register
-            </a>
-            . For enquiries, email{" "}
-            <a href="mailto:hello@valtumstudio.com.au">hello@valtumstudio.com.au</a>.
-            Meet the founder on{" "}
-            <a
-              href="https://www.linkedin.com/in/abdurrehmankhalid/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-            .
-          </p>
+
         </div>
       </section>
       <PracticeReel />
@@ -108,26 +87,48 @@ export default function StudioPage(): React.JSX.Element {
         title="An independent point of view."
         body="The character of a business deserves more than a familiar formula. We look for the idea that gives the whole experience its shape."
       />
-      <section className="x-studio-principles" data-cover-scene>
-        {[
-          [
-            "A point of view.",
-            "Good work has a reason behind it. We help find the character of the product and carry it through the details."
-          ],
-          [
-            "Room to question.",
-            "The first answer is not always the useful one. We test assumptions and make important choices visible while they can still be changed."
-          ],
-          [
-            "Care that follows through.",
-            "The interface, the exception and the handover all belong to the work. Finishing well means thinking about the people who use it next."
-          ]
-        ].map(([title, body]) => (
-          <article data-stack key={title}>
-            <h2>{title}</h2>
-            <p>{body}</p>
-          </article>
-        ))}
+      <section
+        className="x-studio-principles x-studio-principles--reframed"
+        aria-labelledby="studio-principles-title"
+      >
+        <div className="x-principles-heading">
+          <h2 id="studio-principles-title">
+            Good ideas deserve
+            <br />
+            <em>better questions.</em>
+          </h2>
+          <p>
+            We bring design and engineering into the same room, where the important
+            decisions can be made clearly and the work can stand up to real use.
+          </p>
+        </div>
+        <div className="x-principles-list">
+          {[
+            {
+              number: "01",
+              title: "A point of view.",
+              body: "Find the idea that gives the product its character, then carry it through every important detail."
+            },
+            {
+              number: "02",
+              title: "Room to question.",
+              body: "Surface constraints early. Test assumptions. Keep decisions open while there is still time to make a better one."
+            },
+            {
+              number: "03",
+              title: "Care that follows through.",
+              body: "The exceptional case, the handover and the person using it next matter just as much as the first impression."
+            }
+          ].map(({ number, title, body }) => (
+            <article className="x-principle-row" data-reveal key={number}>
+              <span className="x-principle-number" aria-hidden="true">
+                {number}
+              </span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
       </section>
       <section className="x-leadership" id="team" aria-labelledby="leadership-title">
         <div className="x-leadership-heading" data-reveal>
@@ -163,8 +164,8 @@ export default function StudioPage(): React.JSX.Element {
                 <p className="x-person-role">Founder &amp; CEO</p>
               </div>
               <p className="x-person-bio">
-                Leads the studio’s direction and client relationships, bringing
-                business questions and product decisions into the same conversation.
+                Shapes the studio’s direction and works directly with clients to
+                turn commercial questions into practical product decisions.
               </p>
             </div>
           </article>
@@ -186,14 +187,14 @@ export default function StudioPage(): React.JSX.Element {
                 <p className="x-person-role">Chief Technology Officer</p>
               </div>
               <p className="x-person-bio">
-                Guides technical architecture and engineering delivery, with
-                attention to the decisions that make software reliable and useful.
+                Leads engineering decisions from system design through delivery,
+                with care for reliability, integrations and the people using the work.
               </p>
             </div>
           </article>
         </div>
         <div className="x-leadership-bottom">
-          <span>Small by design. Close to the work.</span>
+          <span>Small by design. Directly accountable to the work.</span>
           <Link href="/contact">
             Start a conversation <span aria-hidden="true">↗</span>
           </Link>

@@ -54,18 +54,41 @@ export default function ContactPage(): React.JSX.Element {
           <ContactForm />
         </div>
       </div>
-      <section className="vc-after" aria-label="What happens after you get in touch">
-        <h2>Clarity before commitment.</h2>
-        <div>
+      <section className="vc-after vc-after--steps" aria-labelledby="contact-next-title">
+        <div className="vc-after-intro">
+          <h2 id="contact-next-title">
+            A clear first step.
+            <br />
+            <em>No theatre.</em>
+          </h2>
           <p>
-            We read your enquiry, explore the problem with you, and discuss a sensible
-            next step. You do not need a finished brief or every technical answer.
-          </p>
-          <p>
-            No automatic project promise, no elaborate sales theatre. Just a direct
-            conversation about whether we are the right team for the work.
+            You do not need a finished specification. A clear picture of the
+            challenge is a useful place to begin.
           </p>
         </div>
+        <ol className="vc-next-steps">
+          <li>
+            <span aria-hidden="true">01</span>
+            <div>
+              <h3>We understand the context.</h3>
+              <p>What needs changing, who it affects and what a better result means.</p>
+            </div>
+          </li>
+          <li>
+            <span aria-hidden="true">02</span>
+            <div>
+              <h3>We talk through the options.</h3>
+              <p>Scope, technical constraints, priorities and whether we are the right fit.</p>
+            </div>
+          </li>
+          <li>
+            <span aria-hidden="true">03</span>
+            <div>
+              <h3>We agree on a next move.</h3>
+              <p>A sensible first piece of work, if there is a reason to move forward.</p>
+            </div>
+          </li>
+        </ol>
       </section>
     </main>
   );

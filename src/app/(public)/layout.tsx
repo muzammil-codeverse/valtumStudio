@@ -8,6 +8,7 @@ import "@/modules/public-site/studio/device-polish.css";
 import "@/modules/public-site/studio/footer.css";
 import "@/modules/public-site/studio/leadership.css";
 import "@/modules/public-site/studio/contact-editorial.css";
+import "@/modules/public-site/studio/studio-refinement.css";
 import "@/modules/public-site/studio/cookie-preferences.css";
 
 import type { ReactNode } from "react";
