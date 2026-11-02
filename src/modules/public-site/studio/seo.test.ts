@@ -7,8 +7,8 @@ import {
   projectSeo,
   publicCanonical,
   publicPageMetadata,
-  serviceSeo,
-  SEO_SOCIAL_IMAGE
+  SEO_SOCIAL_IMAGE,
+  serviceSeo
 } from "./seo";
 
 afterEach(() => vi.unstubAllEnvs());
