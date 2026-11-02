@@ -72,7 +72,7 @@ export function AdminBreadcrumbs(): React.JSX.Element {
           ) : (
             <Link
               href={item.href}
-              className="hover:text-[var(--admin-text)] transition-colors focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
+              className="focus-visible:text-[var(--admin-text)]  focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
             >
               {item.label}
             </Link>

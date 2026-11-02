@@ -51,13 +51,13 @@ export default function AdminError({
         <div className="mt-6 flex items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] text-[var(--admin-text)] hover:bg-[var(--admin-surface-hover)] rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] text-[var(--admin-text)] focus-visible:bg-[var(--admin-surface-hover)] rounded-md  focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
           >
             Try again
           </button>
           <Link
             href="/admin"
-            className="inline-flex items-center px-4 py-2 text-sm font-medium bg-[var(--admin-text)] text-[var(--admin-surface)] hover:opacity-90 rounded-md transition-opacity focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium bg-[var(--admin-text)] text-[var(--admin-surface)] focus-visible:opacity-90 rounded-md  focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
           >
             Back to Dashboard
           </Link>

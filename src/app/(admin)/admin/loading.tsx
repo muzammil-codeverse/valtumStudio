@@ -1,6 +1,6 @@
 export default function AdminLoading(): React.JSX.Element {
   return (
-    <div className="admin-root p-4 sm:p-6 lg:p-8 space-y-6 animate-pulse">
+    <div className="admin-root p-4 sm:p-6 lg:p-8 space-y-6 ">
       {/* Page header skeleton */}
       <div className="border-b border-[var(--admin-border)] pb-5 space-y-3">
         <div className="h-7 bg-[var(--admin-surface-subtle)] rounded-md w-48" />

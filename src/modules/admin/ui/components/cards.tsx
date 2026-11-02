@@ -93,7 +93,7 @@ export function MetricCard({
     return (
       <Link
         href={href}
-        className="block border border-[var(--admin-border)] bg-[var(--admin-surface)] rounded-lg p-5 hover:border-[var(--admin-border-strong)] transition-colors focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 shadow-2xs"
+        className="block border border-[var(--admin-border)] bg-[var(--admin-surface)] rounded-lg p-5 focus-visible:border-[var(--admin-border-strong)]  focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 shadow-2xs"
       >
         {cardContent}
       </Link>
@@ -120,7 +120,7 @@ export function NavigationCard({
   return (
     <Link
       href={href}
-      className="flex items-start gap-4 border border-[var(--admin-border)] bg-[var(--admin-surface)] rounded-lg p-5 hover:border-[var(--admin-border-strong)] hover:bg-[var(--admin-surface-hover)]/30 transition-all focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 shadow-2xs"
+      className="flex items-start gap-4 border border-[var(--admin-border)] bg-[var(--admin-surface)] rounded-lg p-5 focus-visible:border-[var(--admin-border-strong)] focus-visible:bg-[var(--admin-surface-hover)]/30  focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 shadow-2xs"
     >
       {icon ? (
         <div className="flex items-center justify-center p-2 bg-[var(--admin-surface-subtle)] text-[var(--admin-accent)] rounded-md">
@@ -180,7 +180,7 @@ export function SecurityCard({
         {href && actionText ? (
           <Link
             href={href}
-            className="text-xs font-medium text-[var(--admin-accent)] hover:underline hover:text-[var(--admin-accent-hover)] focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)]"
+            className="text-xs font-medium text-[var(--admin-accent)] focus-visible:underline focus-visible:text-[var(--admin-accent-hover)] focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)]"
           >
             {actionText} &rarr;
           </Link>
@@ -216,7 +216,7 @@ export function EmptyStateCard({
       {actionText && onAction ? (
         <button
           onClick={onAction}
-          className="mt-4 text-xs font-medium text-[var(--admin-accent)] hover:underline hover:text-[var(--admin-accent-hover)] focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)]"
+          className="mt-4 text-xs font-medium text-[var(--admin-accent)] focus-visible:underline focus-visible:text-[var(--admin-accent-hover)] focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)]"
         >
           {actionText}
         </button>

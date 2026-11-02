@@ -75,7 +75,7 @@ export function AdminTableRow({
 }: HTMLAttributes<HTMLTableRowElement> & { isSelected?: boolean }): React.JSX.Element {
   return (
     <tr
-      className={`hover:bg-[var(--admin-surface-hover)]/40 transition-colors ${
+      className={`focus-visible:bg-[var(--admin-surface-hover)]/40  ${
         isSelected ? "bg-[var(--admin-surface-selected)]/50" : ""
       } ${className}`}
       {...props}
@@ -164,7 +164,7 @@ export function AdminTableLoading({
   return (
     <>
       {Array.from({ length: rows }).map((_, index) => (
-        <tr key={index} className="animate-pulse bg-[var(--admin-surface)]">
+        <tr key={index} className=" bg-[var(--admin-surface)]">
           <td
             colSpan={colSpan}
             className="px-4 py-5 border-b border-[var(--admin-border)]"
@@ -212,14 +212,14 @@ export function TablePaginationLayout({
         <button
           disabled={currentPage <= 1}
           onClick={() => onPageChange(currentPage - 1)}
-          className="relative inline-flex items-center rounded-md border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] px-4 py-2 text-xs font-medium text-[var(--admin-text)] hover:bg-[var(--admin-surface-hover)] disabled:opacity-50"
+          className="relative inline-flex items-center rounded-md border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] px-4 py-2 text-xs font-medium text-[var(--admin-text)] focus-visible:bg-[var(--admin-surface-hover)] disabled:opacity-50"
         >
           Previous
         </button>
         <button
           disabled={currentPage >= totalPages}
           onClick={() => onPageChange(currentPage + 1)}
-          className="relative ml-3 inline-flex items-center rounded-md border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] px-4 py-2 text-xs font-medium text-[var(--admin-text)] hover:bg-[var(--admin-surface-hover)] disabled:opacity-50"
+          className="relative ml-3 inline-flex items-center rounded-md border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] px-4 py-2 text-xs font-medium text-[var(--admin-text)] focus-visible:bg-[var(--admin-surface-hover)] disabled:opacity-50"
         >
           Next
         </button>
@@ -245,14 +245,14 @@ export function TablePaginationLayout({
             <button
               disabled={currentPage <= 1}
               onClick={() => onPageChange(currentPage - 1)}
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] text-xs font-medium text-[var(--admin-text-secondary)] hover:bg-[var(--admin-surface-hover)] disabled:opacity-50 cursor-pointer"
+              className="relative inline-flex items-center rounded-l-md px-2 py-2 border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] text-xs font-medium text-[var(--admin-text-secondary)] focus-visible:bg-[var(--admin-surface-hover)] disabled:opacity-50 cursor-pointer"
             >
               Previous
             </button>
             <button
               disabled={currentPage >= totalPages}
               onClick={() => onPageChange(currentPage + 1)}
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] text-xs font-medium text-[var(--admin-text-secondary)] hover:bg-[var(--admin-surface-hover)] disabled:opacity-50 cursor-pointer"
+              className="relative inline-flex items-center rounded-r-md px-2 py-2 border border-[var(--admin-border-strong)] bg-[var(--admin-surface)] text-xs font-medium text-[var(--admin-text-secondary)] focus-visible:bg-[var(--admin-surface-hover)] disabled:opacity-50 cursor-pointer"
             >
               Next
             </button>

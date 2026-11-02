@@ -185,7 +185,7 @@ export default async function LeadsPage({
                     <AdminTableCell isPrimary>
                       <Link
                         href={`/admin/leads/${lead.id}`}
-                        className="hover:underline"
+                        className="focus-visible:underline"
                       >
                         {lead.name}
                       </Link>

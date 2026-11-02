@@ -65,7 +65,7 @@ export function AdminAccountMenu({ user }: AdminAccountMenuProps): React.JSX.Ele
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="User Account Menu"
-        className="flex items-center gap-2 p-1.5 hover:bg-[var(--admin-surface-hover)] rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
+        className="flex items-center gap-2 p-1.5 focus-visible:bg-[var(--admin-surface-hover)] rounded-md  focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
       >
         <div className="w-7 h-7 rounded-full bg-[var(--admin-accent)]/10 text-[var(--admin-accent)] font-semibold flex items-center justify-center text-xs">
           {user.name.charAt(0).toUpperCase()}
@@ -96,7 +96,7 @@ export function AdminAccountMenu({ user }: AdminAccountMenuProps): React.JSX.Ele
               href="/admin/security/sessions"
               onClick={() => setIsOpen(false)}
               role="menuitem"
-              className="flex items-center gap-2 px-4 py-2 text-xs text-[var(--admin-text-secondary)] hover:bg-[var(--admin-surface-hover)] hover:text-[var(--admin-text)] transition-colors focus:bg-[var(--admin-surface-hover)] focus:outline-hidden"
+              className="flex items-center gap-2 px-4 py-2 text-xs text-[var(--admin-text-secondary)] focus-visible:bg-[var(--admin-surface-hover)] focus-visible:text-[var(--admin-text)]  focus:bg-[var(--admin-surface-hover)] focus:outline-hidden"
             >
               <SessionsIcon className="w-4 h-4 text-[var(--admin-text-muted)]" />
               <span>Active Sessions</span>
@@ -108,7 +108,7 @@ export function AdminAccountMenu({ user }: AdminAccountMenuProps): React.JSX.Ele
             <button
               onClick={handleSignOut}
               role="menuitem"
-              className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[var(--admin-danger)] hover:bg-red-50 hover:text-[var(--admin-danger)] transition-colors text-left focus:bg-red-50 focus:outline-hidden"
+              className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[var(--admin-danger)] focus-visible:bg-red-50 focus-visible:text-[var(--admin-danger)]  text-left focus:bg-red-50 focus:outline-hidden"
             >
               <LogoutIcon className="w-4 h-4" />
               <span>Sign Out</span>
