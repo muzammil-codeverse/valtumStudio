@@ -61,7 +61,7 @@ export default async function CalendarPage({
     isClientPortalEnabled() &&
     can(principal.role, { resource: "clients", action: "read" });
 
-  const [milestones, tasks, projects] = includeDelivery
+  const [milestones, tasks, projects, decisions] = includeDelivery
     ? await Promise.all([
         prisma.clientMilestone.findMany({
           where: { dueDate: { gte: start, lt: end } },
@@ -69,7 +69,7 @@ export default async function CalendarPage({
             id: true,
             title: true,
             dueDate: true,
-            engagement: { select: { id: true, title: true } }
+            engagement: { select: { id: true, title: true, workspaceId: true } }
           },
           orderBy: { dueDate: "asc" },
           take: 300
@@ -80,7 +80,7 @@ export default async function CalendarPage({
             id: true,
             title: true,
             dueDate: true,
-            engagement: { select: { id: true, title: true } }
+            engagement: { select: { id: true, title: true, workspaceId: true } }
           },
           orderBy: { dueDate: "asc" },
           take: 300
@@ -91,13 +91,28 @@ export default async function CalendarPage({
             id: true,
             title: true,
             targetDate: true,
+            workspaceId: true,
             workspace: { select: { name: true } }
           },
           orderBy: { targetDate: "asc" },
           take: 100
+        }),
+        prisma.clientDecision.findMany({
+          where: {
+            status: "REQUESTED",
+            dueDate: { gte: start, lt: end }
+          },
+          select: {
+            id: true,
+            title: true,
+            dueDate: true,
+            engagement: { select: { id: true, title: true, workspaceId: true } }
+          },
+          orderBy: { dueDate: "asc" },
+          take: 200
         })
       ])
-    : [[], [], []];
+    : [[], [], [], []];
 
   const leadDates = await prisma.lead.groupBy({
     by: ["createdAt"],
@@ -127,7 +142,11 @@ export default async function CalendarPage({
         title: item.title,
         context: item.engagement.title + " · Milestone",
         kind: "milestone" as const,
-        href: "/admin/clients"
+        href:
+          "/admin/clients/" +
+          item.engagement.workspaceId +
+          "?project=" +
+          item.engagement.id
       })),
     ...tasks
       .filter((item) => item.dueDate !== null)
@@ -137,7 +156,11 @@ export default async function CalendarPage({
         title: item.title,
         context: item.engagement.title + " · Task",
         kind: "task" as const,
-        href: "/admin/clients"
+        href:
+          "/admin/clients/" +
+          item.engagement.workspaceId +
+          "?project=" +
+          item.engagement.id
       })),
     ...projects
       .filter((item) => item.targetDate !== null)
@@ -147,7 +170,22 @@ export default async function CalendarPage({
         title: item.title + " · Target",
         context: item.workspace.name + " · Project target",
         kind: "project" as const,
-        href: "/admin/clients"
+        href: "/admin/clients/" + item.workspaceId + "?project=" + item.id
+      })),
+    ...decisions
+      .filter((item) => item.dueDate !== null)
+      .map((item) => ({
+        id: "approval-" + item.id,
+        date: item.dueDate?.toISOString().slice(0, 10) ?? "",
+        title: item.title + " · Response requested",
+        context: item.engagement.title + " · Customer decision",
+        kind: "approval" as const,
+        href:
+          "/admin/clients/" +
+          item.engagement.workspaceId +
+          "?project=" +
+          item.engagement.id +
+          "#approvals"
       }))
   ];
 
@@ -213,7 +251,7 @@ export default async function CalendarPage({
           title="Operations and delivery"
           description={
             includeDelivery
-              ? "Enquiries, tasks, milestones and project targets are shown from your live records."
+              ? "Enquiries, tasks, milestones, open approvals and project targets come from live records."
               : "Enquiries are shown from your CRM. Client delivery events appear after the secure customer portal is enabled."
           }
         />

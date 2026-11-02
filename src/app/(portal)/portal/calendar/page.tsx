@@ -44,6 +44,16 @@ export default async function ClientCalendarPage({
         kind: "task" as const,
         href: "/portal/projects/" + item.engagement.id
       })),
+    ...data.decisions
+      .filter((item) => item.dueDate !== null)
+      .map((item) => ({
+        id: "approval-" + item.id,
+        title: item.title + " · Response requested",
+        date: item.dueDate?.toISOString().slice(0, 10) ?? "",
+        context: item.engagement.title + " · Customer decision",
+        kind: "approval" as const,
+        href: "/portal/projects/" + item.engagement.id + "#approvals"
+      })),
     ...data.engagements
       .filter((project) => project.targetDate !== null)
       .map((project) => ({
@@ -79,6 +89,11 @@ export default async function ClientCalendarPage({
           <small>Work with a confirmed due date</small>
         </div>
         <div className="portal-stat portal-stat--blue">
+          <label>Approvals due</label>
+          <strong>{scheduled("approval")}</strong>
+          <small>Open requests with dated responses</small>
+        </div>
+        <div className="portal-stat">
           <label>Project targets</label>
           <strong>{scheduled("project")}</strong>
           <small>Current planned completion dates</small>

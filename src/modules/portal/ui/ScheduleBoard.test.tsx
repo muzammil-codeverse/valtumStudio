@@ -68,6 +68,33 @@ describe("ScheduleBoard", () => {
     ).toContain("month=2026-12");
   });
 
+  it("shows dated client approvals without inventing a meeting", () => {
+    render(
+      <ScheduleBoard
+        month="2026-11"
+        selectedDate="2026-11-03"
+        path="/portal/calendar"
+        view="week"
+        items={[
+          {
+            id: "approval-1",
+            date: "2026-11-03",
+            title: "Approve prototype",
+            context: "Client A · Decision",
+            kind: "approval",
+            href: "/portal/projects/example#approvals"
+          }
+        ]}
+      />
+    );
+    expect(screen.getAllByText("Approve prototype")).toHaveLength(2);
+    expect(
+      screen
+        .getAllByRole("link", { name: /Approve prototype/ })
+        .some((link) => link.getAttribute("href")?.includes("#approvals"))
+    ).toBe(true);
+  });
+
   it("offers a real empty state without generating sample events", () => {
     render(
       <ScheduleBoard month="2026-11" path="/admin/calendar" items={[]} view="week" />

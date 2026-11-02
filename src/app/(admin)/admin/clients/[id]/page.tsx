@@ -23,6 +23,8 @@ import {
   formatClientMoney,
   isClientPortalEnabled
 } from "@/modules/portal/server/client-data";
+import { AdminDeliveryTools } from "@/modules/portal/ui/AdminDeliveryTools";
+import { DeliveryWorkroom } from "@/modules/portal/ui/DeliveryWorkroom";
 
 export const dynamic = "force-dynamic";
 
@@ -659,6 +661,12 @@ export default async function AdminClientWorkspacePage({
               ) : null}
             </section>
           </div>
+          {canManage ? <AdminDeliveryTools engagement={selected} /> : null}
+          <DeliveryWorkroom
+            engagementId={selected.id}
+            tasks={selected.tasks}
+            milestones={selected.milestones}
+          />
         </div>
       ) : null}
     </div>

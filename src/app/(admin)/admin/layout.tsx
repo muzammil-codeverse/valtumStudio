@@ -1,3 +1,4 @@
+import "@/modules/portal/ui/workroom.css";
 import "@/modules/admin/ui/shell/delivery.css";
 import "@/modules/admin/ui/analytics/insights-extension.css";
 import "@/modules/admin/ui/shell/workspace.css";

@@ -5,7 +5,7 @@ export type ScheduleItem = Readonly<{
   date: string;
   title: string;
   context: string;
-  kind: "milestone" | "task" | "enquiry" | "project";
+  kind: "milestone" | "task" | "enquiry" | "project" | "approval";
   href: string;
 }>;
 
@@ -65,7 +65,8 @@ const kinds = [
   { key: "milestone", label: "Milestones" },
   { key: "task", label: "Tasks" },
   { key: "project", label: "Project targets" },
-  { key: "enquiry", label: "Enquiries" }
+  { key: "enquiry", label: "Enquiries" },
+  { key: "approval", label: "Approvals" }
 ] as const;
 
 export function ScheduleBoard({

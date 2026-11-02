@@ -8,6 +8,7 @@ import {
   formatClientMoney,
   getClientEngagement
 } from "@/modules/portal/server/client-data";
+import { DeliveryWorkroom } from "@/modules/portal/ui/DeliveryWorkroom";
 import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
 
 export const dynamic = "force-dynamic";
@@ -157,6 +158,12 @@ export default async function ClientProjectPage({
           )}
         </section>
       </div>
+
+      <DeliveryWorkroom
+        engagementId={project.id}
+        tasks={project.tasks}
+        milestones={project.milestones}
+      />
     </>
   );
 }

@@ -23,11 +23,12 @@ export async function getClientDashboard(userId: string) {
       milestones: [],
       invoices: [],
       updates: [],
-      tasks: []
+      tasks: [],
+      decisions: []
     };
   }
   const whereWorkspace = { workspaceId: { in: workspaceIds } };
-  const [workspaces, engagements, milestones, invoices, updates, tasks] =
+  const [workspaces, engagements, milestones, invoices, updates, tasks, decisions] =
     await Promise.all([
       prisma.clientWorkspace.findMany({
         where: { id: { in: workspaceIds } },
@@ -107,9 +108,24 @@ export async function getClientDashboard(userId: string) {
         },
         orderBy: [{ dueDate: "asc" }, { sortOrder: "asc" }],
         take: 100
+      }),
+      prisma.clientDecision.findMany({
+        where: {
+          engagement: whereWorkspace,
+          status: "REQUESTED",
+          dueDate: { not: null }
+        },
+        select: {
+          id: true,
+          title: true,
+          dueDate: true,
+          engagement: { select: { id: true, title: true } }
+        },
+        orderBy: { dueDate: "asc" },
+        take: 100
       })
     ]);
-  return { workspaces, engagements, milestones, invoices, updates, tasks };
+  return { workspaces, engagements, milestones, invoices, updates, tasks, decisions };
 }
 
 export async function getClientEngagement(userId: string, id: string) {

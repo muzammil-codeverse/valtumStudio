@@ -509,3 +509,22 @@
     min-height: 135px;
   }
 }
+
+/* Explicit customer decision dates, not fabricated meeting slots. */
+:is(.admin-root, .portal-root) .schedule-event--approval {
+  background: #f0e7ff;
+  color: #593b99;
+  border-left-color: #9361c4;
+}
+:is(.admin-root, .portal-root) .schedule-week-event--approval {
+  background: #f0e7ff;
+  border-color: #9361c4;
+  color: #593b99;
+}
+:is(.admin-root, .portal-root) .schedule-indicator--approval {
+  background: #9361c4;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-date--approval {
+  background: #f0e7ff;
+  color: #593b99;
+}

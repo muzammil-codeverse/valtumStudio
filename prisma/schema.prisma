@@ -776,29 +776,34 @@ model User {
   mustChangePassword          Boolean?  @default(false)
   recoveryCodesAcknowledgedAt DateTime?
 
-  sessions          Session[]
-  accounts          Account[]
-  twofactors        TwoFactor[]
-  securityEvents    SecurityEvent[]
-  serviceCreated    ServiceOffering[] @relation("ServiceCreatedBy")
-  serviceUpdated    ServiceOffering[] @relation("ServiceUpdatedBy")
-  projectCreated    Project[]         @relation("ProjectCreatedBy")
-  projectUpdated    Project[]         @relation("ProjectUpdatedBy")
-  insightCreated    Insight[]         @relation("InsightCreatedBy")
-  insightUpdated    Insight[]         @relation("InsightUpdatedBy")
-  faqCreated        FAQGroup[]        @relation("FaqGroupCreatedBy")
-  faqUpdated        FAQGroup[]        @relation("FaqGroupUpdatedBy")
-  navigationCreated NavigationItem[]  @relation("NavigationCreatedBy")
-  navigationUpdated NavigationItem[]  @relation("NavigationUpdatedBy")
-  teamCreated       TeamMember[]      @relation("TeamCreatedBy")
-  teamUpdated       TeamMember[]      @relation("TeamUpdatedBy")
-  mediaAssets       MediaAsset[]      @relation("MediaCreatedBy")
-  auditEvents       AuditEvent[]      @relation("ContentAuditActor")
-  assignedLeads     Lead[]            @relation("LeadAssignee")
-  leadActivities    LeadActivity[]    @relation("LeadActivityActor")
-  leadNotes         LeadNote[]        @relation("LeadNoteAuthor")
-  author            Author?
-  clientMemberships ClientMembership[]
+  sessions                Session[]
+  accounts                Account[]
+  twofactors              TwoFactor[]
+  securityEvents          SecurityEvent[]
+  serviceCreated          ServiceOffering[]     @relation("ServiceCreatedBy")
+  serviceUpdated          ServiceOffering[]     @relation("ServiceUpdatedBy")
+  projectCreated          Project[]             @relation("ProjectCreatedBy")
+  projectUpdated          Project[]             @relation("ProjectUpdatedBy")
+  insightCreated          Insight[]             @relation("InsightCreatedBy")
+  insightUpdated          Insight[]             @relation("InsightUpdatedBy")
+  faqCreated              FAQGroup[]            @relation("FaqGroupCreatedBy")
+  faqUpdated              FAQGroup[]            @relation("FaqGroupUpdatedBy")
+  navigationCreated       NavigationItem[]      @relation("NavigationCreatedBy")
+  navigationUpdated       NavigationItem[]      @relation("NavigationUpdatedBy")
+  teamCreated             TeamMember[]          @relation("TeamCreatedBy")
+  teamUpdated             TeamMember[]          @relation("TeamUpdatedBy")
+  mediaAssets             MediaAsset[]          @relation("MediaCreatedBy")
+  auditEvents             AuditEvent[]          @relation("ContentAuditActor")
+  assignedLeads           Lead[]                @relation("LeadAssignee")
+  leadActivities          LeadActivity[]        @relation("LeadActivityActor")
+  leadNotes               LeadNote[]            @relation("LeadNoteAuthor")
+  author                  Author?
+  clientMemberships       ClientMembership[]
+  clientDecisionRequests  ClientDecision[]      @relation("ClientDecisionRequester")
+  clientDecisionResponses ClientDecision[]      @relation("ClientDecisionResponder")
+  clientMessages          ClientMessage[]       @relation("ClientMessageAuthor")
+  clientFiles             ClientFile[]          @relation("ClientFileUploader")
+  clientDeliveryEvents    ClientDeliveryEvent[] @relation("ClientDeliveryActor")
 
   @@unique([email])
   @@map("user")
@@ -987,12 +992,25 @@ enum ClientMembershipRole {
   CLIENT_MEMBER
 }
 
+enum ClientDecisionStatus {
+  REQUESTED
+  APPROVED
+  CHANGES_REQUESTED
+  CANCELLED
+}
+
+enum ClientFileStatus {
+  UPLOADING
+  READY
+  FAILED
+}
+
 model ClientWorkspace {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   memberships ClientMembership[]
   engagements ClientEngagement[]
@@ -1001,11 +1019,11 @@ model ClientWorkspace {
 }
 
 model ClientMembership {
-  id           String               @id @default(cuid())
-  workspaceId  String               @map("workspace_id")
-  userId       String               @map("user_id")
-  role         ClientMembershipRole @default(CLIENT_MEMBER)
-  createdAt    DateTime             @default(now()) @map("created_at")
+  id          String               @id @default(cuid())
+  workspaceId String               @map("workspace_id")
+  userId      String               @map("user_id")
+  role        ClientMembershipRole @default(CLIENT_MEMBER)
+  createdAt   DateTime             @default(now()) @map("created_at")
 
   workspace ClientWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1026,28 +1044,35 @@ model ClientEngagement {
   createdAt   DateTime               @default(now()) @map("created_at")
   updatedAt   DateTime               @updatedAt @map("updated_at")
 
-  workspace  ClientWorkspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace  ClientWorkspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   milestones ClientMilestone[]
   tasks      ClientTask[]
   invoices   ClientInvoice[]
   updates    ClientUpdate[]
+  decisions  ClientDecision[]
+  messages   ClientMessage[]
+  files      ClientFile[]
+  activity   ClientDeliveryEvent[]
 
   @@index([workspaceId, status])
   @@map("client_engagements")
 }
 
 model ClientMilestone {
-  id           String                @id @default(cuid())
-  engagementId String                @map("engagement_id")
-  title        String
-  description  String?               @db.Text
-  status       ClientMilestoneStatus @default(PLANNED)
-  dueDate      DateTime?             @map("due_date")
-  completedAt  DateTime?             @map("completed_at")
-  sortOrder    Int                   @default(0) @map("sort_order")
-  createdAt    DateTime              @default(now()) @map("created_at")
+  id              String                @id @default(cuid())
+  engagementId    String                @map("engagement_id")
+  title           String
+  description     String?               @db.Text
+  status          ClientMilestoneStatus @default(PLANNED)
+  dueDate         DateTime?             @map("due_date")
+  completedAt     DateTime?             @map("completed_at")
+  contentRevision Int                   @default(0) @map("content_revision")
+  revision        Int                   @default(0)
+  sortOrder       Int                   @default(0) @map("sort_order")
+  createdAt       DateTime              @default(now()) @map("created_at")
 
   engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  decisions  ClientDecision[]
 
   @@index([engagementId, sortOrder])
   @@index([dueDate])
@@ -1061,11 +1086,13 @@ model ClientTask {
   description  String?          @db.Text
   status       ClientTaskStatus @default(OPEN)
   dueDate      DateTime?        @map("due_date")
+  revision     Int              @default(0)
   sortOrder    Int              @default(0) @map("sort_order")
   createdAt    DateTime         @default(now()) @map("created_at")
   updatedAt    DateTime         @updatedAt @map("updated_at")
 
   engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  messages   ClientMessage[]
 
   @@index([engagementId, status])
   @@index([dueDate])
@@ -1073,18 +1100,19 @@ model ClientTask {
 }
 
 model ClientInvoice {
-  id           String              @id @default(cuid())
-  engagementId String              @map("engagement_id")
-  reference    String
-  description  String?
-  currency     String              @default("AUD")
-  amountCents  Int                 @map("amount_cents")
-  status       ClientInvoiceStatus @default(DRAFT)
-  issuedAt     DateTime?           @map("issued_at")
-  dueDate      DateTime?           @map("due_date")
-  paidAt       DateTime?           @map("paid_at")
-  createdAt    DateTime            @default(now()) @map("created_at")
-  updatedAt    DateTime            @updatedAt @map("updated_at")
+  id               String              @id @default(cuid())
+  engagementId     String              @map("engagement_id")
+  reference        String
+  description      String?
+  currency         String              @default("AUD")
+  amountCents      Int                 @map("amount_cents")
+  status           ClientInvoiceStatus @default(DRAFT)
+  issuedAt         DateTime?           @map("issued_at")
+  dueDate          DateTime?           @map("due_date")
+  paidAt           DateTime?           @map("paid_at")
+  paymentReference String?             @map("payment_reference")
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @updatedAt @map("updated_at")
 
   engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
 
@@ -1092,6 +1120,89 @@ model ClientInvoice {
   @@index([engagementId, status])
   @@index([dueDate])
   @@map("client_invoices")
+}
+
+model ClientDecision {
+  id                String               @id @default(cuid())
+  engagementId      String               @map("engagement_id")
+  milestoneId       String?              @map("milestone_id")
+  milestoneRevision Int?                 @map("milestone_revision")
+  title             String
+  description       String               @db.Text
+  status            ClientDecisionStatus @default(REQUESTED)
+  dueDate           DateTime?            @map("due_date")
+  requestedByUserId String               @map("requested_by_user_id")
+  respondedByUserId String?              @map("responded_by_user_id")
+  responseNote      String?              @map("response_note") @db.Text
+  respondedAt       DateTime?            @map("responded_at")
+  revision          Int                  @default(0)
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime             @updatedAt @map("updated_at")
+
+  engagement  ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  milestone   ClientMilestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+  requestedBy User             @relation("ClientDecisionRequester", fields: [requestedByUserId], references: [id], onDelete: Restrict)
+  respondedBy User?            @relation("ClientDecisionResponder", fields: [respondedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([engagementId, status, createdAt])
+  @@index([milestoneId])
+  @@map("client_decisions")
+}
+
+model ClientMessage {
+  id           String   @id @default(cuid())
+  engagementId String   @map("engagement_id")
+  taskId       String?  @map("task_id")
+  authorUserId String   @map("author_user_id")
+  body         String   @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  task       ClientTask?      @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  author     User             @relation("ClientMessageAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([engagementId, createdAt])
+  @@index([taskId, createdAt])
+  @@map("client_messages")
+}
+
+model ClientFile {
+  id             String           @id @default(cuid())
+  engagementId   String           @map("engagement_id")
+  uploaderUserId String           @map("uploader_user_id")
+  filename       String
+  contentType    String           @map("content_type")
+  byteSize       Int              @map("byte_size")
+  checksumSha256 String           @map("checksum_sha256")
+  storageKey     String           @unique @map("storage_key")
+  status         ClientFileStatus @default(UPLOADING)
+  expiresAt      DateTime         @map("expires_at")
+  verifiedAt     DateTime?        @map("verified_at")
+  createdAt      DateTime         @default(now()) @map("created_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  uploader   User             @relation("ClientFileUploader", fields: [uploaderUserId], references: [id], onDelete: Restrict)
+
+  @@index([engagementId, status, createdAt])
+  @@index([uploaderUserId, createdAt])
+  @@map("client_files")
+}
+
+model ClientDeliveryEvent {
+  id              String   @id @default(cuid())
+  engagementId    String   @map("engagement_id")
+  actorUserId     String?  @map("actor_user_id")
+  visibleToClient Boolean  @default(true) @map("visible_to_client")
+  kind            String
+  entityId        String   @map("entity_id")
+  summary         String
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  actor      User?            @relation("ClientDeliveryActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([engagementId, createdAt])
+  @@map("client_delivery_events")
 }
 
 model ClientUpdate {

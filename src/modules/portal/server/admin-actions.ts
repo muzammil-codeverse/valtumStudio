@@ -105,8 +105,21 @@ export async function createEngagementAction(form: FormData): Promise<void> {
   const workspaceId = idSchema.parse(stringValue(form, "workspaceId"));
   const title = text(160).parse(stringValue(form, "title"));
   const summary = optionalText(2000).parse(stringValue(form, "summary"));
-  const result = await prisma.clientEngagement.create({
-    data: { workspaceId, title, summary: summary || null }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  const result = await prisma.$transaction(async (tx) => {
+    const engagement = await tx.clientEngagement.create({
+      data: { workspaceId, title, summary: summary || null }
+    });
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId: engagement.id,
+        actorUserId: principal.userId,
+        kind: "PROJECT_CREATED",
+        entityId: engagement.id,
+        summary: "Project created"
+      }
+    });
+    return engagement;
   });
   revalidatePath("/admin/clients/" + workspaceId);
   redirect("/admin/clients/" + workspaceId + "?project=" + result.id);
@@ -121,13 +134,25 @@ export async function addMilestoneAction(form: FormData): Promise<void> {
     where: { id: engagementId },
     select: { workspaceId: true, _count: { select: { milestones: true } } }
   });
-  await prisma.clientMilestone.create({
-    data: {
-      engagementId,
-      title,
-      dueDate,
-      sortOrder: engagement._count.milestones
-    }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  await prisma.$transaction(async (tx) => {
+    const item = await tx.clientMilestone.create({
+      data: {
+        engagementId,
+        title,
+        dueDate,
+        sortOrder: engagement._count.milestones
+      }
+    });
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId,
+        actorUserId: principal.userId,
+        kind: "MILESTONE_CREATED",
+        entityId: item.id,
+        summary: "Milestone added: " + item.title
+      }
+    });
   });
   revalidatePath("/admin/clients/" + engagement.workspaceId);
   redirect("/admin/clients/" + engagement.workspaceId + "?project=" + engagementId);
@@ -142,13 +167,20 @@ export async function addClientTaskAction(form: FormData): Promise<void> {
     where: { id: engagementId },
     select: { workspaceId: true, _count: { select: { tasks: true } } }
   });
-  await prisma.clientTask.create({
-    data: {
-      engagementId,
-      title,
-      dueDate,
-      sortOrder: engagement._count.tasks
-    }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  await prisma.$transaction(async (tx) => {
+    const item = await tx.clientTask.create({
+      data: { engagementId, title, dueDate, sortOrder: engagement._count.tasks }
+    });
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId,
+        actorUserId: principal.userId,
+        kind: "TASK_CREATED",
+        entityId: item.id,
+        summary: "Delivery task added: " + item.title
+      }
+    });
   });
   revalidatePath("/admin/clients/" + engagement.workspaceId);
   redirect("/admin/clients/" + engagement.workspaceId + "?project=" + engagementId);
@@ -176,8 +208,21 @@ export async function createInvoiceAction(form: FormData): Promise<void> {
     select: { workspaceId: true }
   });
   // Invoices are drafts until an authorized operator explicitly issues them.
-  await prisma.clientInvoice.create({
-    data: { engagementId, reference, currency, amountCents, dueDate }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  await prisma.$transaction(async (tx) => {
+    const invoice = await tx.clientInvoice.create({
+      data: { engagementId, reference, currency, amountCents, dueDate }
+    });
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId,
+        actorUserId: principal.userId,
+        kind: "INVOICE_DRAFT_CREATED",
+        entityId: invoice.id,
+        summary: "Private invoice draft created",
+        visibleToClient: false
+      }
+    });
   });
   revalidatePath("/admin/clients/" + engagement.workspaceId);
   redirect("/admin/clients/" + engagement.workspaceId + "?project=" + engagementId);
@@ -195,9 +240,22 @@ export async function issueInvoiceAction(form: FormData): Promise<void> {
     }
   });
   if (invoice.status !== "DRAFT") throw new Error("Only draft invoices can be issued.");
-  await prisma.clientInvoice.update({
-    where: { id },
-    data: { status: "ISSUED", issuedAt: new Date() }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  await prisma.$transaction(async (tx) => {
+    const update = await tx.clientInvoice.updateMany({
+      where: { id, status: "DRAFT" },
+      data: { status: "ISSUED", issuedAt: new Date() }
+    });
+    if (update.count !== 1) throw new Error("Invoice status changed while issuing.");
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId: invoice.engagementId,
+        actorUserId: principal.userId,
+        kind: "INVOICE_ISSUED",
+        entityId: id,
+        summary: "Invoice issued to customer"
+      }
+    });
   });
   revalidatePath("/admin/clients/" + invoice.engagement.workspaceId);
   redirect(
@@ -217,8 +275,20 @@ export async function postClientUpdateAction(form: FormData): Promise<void> {
     where: { id: engagementId },
     select: { workspaceId: true }
   });
-  await prisma.clientUpdate.create({
-    data: { engagementId, title, body, publishedAt: new Date() }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  await prisma.$transaction(async (tx) => {
+    const update = await tx.clientUpdate.create({
+      data: { engagementId, title, body, publishedAt: new Date() }
+    });
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId,
+        actorUserId: principal.userId,
+        kind: "PROGRESS_PUBLISHED",
+        entityId: update.id,
+        summary: "Delivery update published: " + title
+      }
+    });
   });
   revalidatePath("/admin/clients/" + engagement.workspaceId);
   redirect("/admin/clients/" + engagement.workspaceId + "?project=" + engagementId);
@@ -236,10 +306,23 @@ export async function changeEngagementStateAction(form: FormData): Promise<void>
   await authorizeClients();
   const engagementId = idSchema.parse(stringValue(form, "engagementId"));
   const status = z.enum(engagementStates).parse(stringValue(form, "status"));
-  const engagement = await prisma.clientEngagement.update({
-    where: { id: engagementId },
-    data: { status },
-    select: { workspaceId: true }
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  const engagement = await prisma.$transaction(async (tx) => {
+    const updated = await tx.clientEngagement.update({
+      where: { id: engagementId },
+      data: { status },
+      select: { workspaceId: true }
+    });
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId,
+        actorUserId: principal.userId,
+        kind: "PROJECT_STATUS_CHANGED",
+        entityId: engagementId,
+        summary: "Project stage set to " + status.toLowerCase()
+      }
+    });
+    return updated;
   });
   revalidatePath("/admin/clients/" + engagement.workspaceId);
   redirect("/admin/clients/" + engagement.workspaceId + "?project=" + engagementId);
@@ -251,14 +334,53 @@ export async function changeMilestoneStateAction(form: FormData): Promise<void> 
   const status = z
     .enum(["PLANNED", "IN_PROGRESS", "AWAITING_REVIEW", "APPROVED", "COMPLETE"])
     .parse(stringValue(form, "status"));
-  const record = await prisma.clientMilestone.update({
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  const original = await prisma.clientMilestone.findUniqueOrThrow({
     where: { id },
-    data: {
-      status,
-      completedAt: status === "COMPLETE" || status === "APPROVED" ? new Date() : null
-    },
-    select: { engagementId: true, engagement: { select: { workspaceId: true } } }
+    select: {
+      revision: true,
+      contentRevision: true,
+      status: true,
+      engagementId: true,
+      engagement: { select: { workspaceId: true } }
+    }
   });
+  if (status === "APPROVED" && original.status !== "APPROVED") {
+    const approvals = await prisma.clientDecision.count({
+      where: {
+        milestoneId: id,
+        milestoneRevision: original.contentRevision,
+        status: "APPROVED"
+      }
+    });
+    if (approvals === 0) {
+      throw new Error(
+        "A recorded customer approval is required before marking a milestone approved."
+      );
+    }
+  }
+  await prisma.$transaction(async (tx) => {
+    const changed = await tx.clientMilestone.updateMany({
+      where: { id, revision: original.revision, status: original.status },
+      data: {
+        status,
+        completedAt: status === "COMPLETE" || status === "APPROVED" ? new Date() : null,
+        revision: { increment: 1 }
+      }
+    });
+    if (changed.count !== 1)
+      throw new Error("Milestone changed. Refresh before updating.");
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId: original.engagementId,
+        actorUserId: principal.userId,
+        kind: "MILESTONE_STATUS_CHANGED",
+        entityId: id,
+        summary: "Milestone status set to " + status.toLowerCase()
+      }
+    });
+  });
+  const record = original;
   revalidatePath("/admin/clients/" + record.engagement.workspaceId);
   redirect(
     "/admin/clients/" +
@@ -274,11 +396,33 @@ export async function changeTaskStateAction(form: FormData): Promise<void> {
   const status = z
     .enum(["OPEN", "IN_PROGRESS", "BLOCKED", "DONE"])
     .parse(stringValue(form, "status"));
-  const record = await prisma.clientTask.update({
+  const principal = await requirePermission(await headers(), "clients", "manage");
+  const original = await prisma.clientTask.findUniqueOrThrow({
     where: { id },
-    data: { status },
-    select: { engagementId: true, engagement: { select: { workspaceId: true } } }
+    select: {
+      revision: true,
+      status: true,
+      engagementId: true,
+      engagement: { select: { workspaceId: true } }
+    }
   });
+  await prisma.$transaction(async (tx) => {
+    const changed = await tx.clientTask.updateMany({
+      where: { id, revision: original.revision, status: original.status },
+      data: { status, revision: { increment: 1 } }
+    });
+    if (changed.count !== 1) throw new Error("Task changed. Refresh before updating.");
+    await tx.clientDeliveryEvent.create({
+      data: {
+        engagementId: original.engagementId,
+        actorUserId: principal.userId,
+        kind: "TASK_STATUS_CHANGED",
+        entityId: id,
+        summary: "Task status set to " + status.toLowerCase()
+      }
+    });
+  });
+  const record = original;
   revalidatePath("/admin/clients/" + record.engagement.workspaceId);
   redirect(
     "/admin/clients/" +
