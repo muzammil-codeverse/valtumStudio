@@ -34,9 +34,9 @@ export default function PrivacyPage(): React.JSX.Element {
       <h2>Cookies and essential storage</h2>
       <p>
         Essential storage supports website preferences, the opening experience and
-        secure account sessions. The website currently does not load optional
-        analytics, advertising or personalization scripts. Preferences are recorded
-        in an essential first-party cookie, and can be changed or withdrawn in our{" "}
+        secure account sessions. The website currently does not load optional analytics,
+        advertising or personalization scripts. Preferences are recorded in an essential
+        first-party cookie, and can be changed or withdrawn in our{" "}
         <Link href="/cookies" style={{ textDecoration: "underline" }}>
           cookie notice
         </Link>

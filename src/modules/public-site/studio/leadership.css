@@ -16,7 +16,9 @@
   display: block;
   margin-bottom: 34px;
   color: #5c6572;
-  font: 500 12px/1.4 "DM Sans", sans-serif;
+  font:
+    500 12px/1.4 "DM Sans",
+    sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }

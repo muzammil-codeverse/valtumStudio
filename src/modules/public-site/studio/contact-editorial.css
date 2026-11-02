@@ -164,7 +164,9 @@
   background: #f9fafb;
   padding: 17px 14px;
   min-height: 94px;
-  transition: background 180ms, border-color 180ms;
+  transition:
+    background 180ms,
+    border-color 180ms;
 }
 .vc-interest > input {
   position: absolute;

@@ -23,9 +23,9 @@ export default function StudioPage(): React.JSX.Element {
         </h1>
         <p>
           An independent Australian software studio working where product thinking,
-          engineering and creative technology meet. We take on complex digital
-          problems, make the decisions clear and build with the people who will use
-          what comes next.
+          engineering and creative technology meet. We take on complex digital problems,
+          make the decisions clear and build with the people who will use what comes
+          next.
         </p>
       </header>
       <div className="x-studio-collage">
@@ -77,7 +77,6 @@ export default function StudioPage(): React.JSX.Element {
             happens next. We keep those conversations close, wherever you are in the
             world.
           </p>
-
         </div>
       </section>
       <PracticeReel />
@@ -164,15 +163,15 @@ export default function StudioPage(): React.JSX.Element {
                 <p className="x-person-role">Founder &amp; CEO</p>
               </div>
               <p className="x-person-bio">
-                Shapes the studio’s direction and works directly with clients to
-                turn commercial questions into practical product decisions.
+                Shapes the studio’s direction and works directly with clients to turn
+                commercial questions into practical product decisions.
               </p>
             </div>
           </article>
           <article className="x-person x-person--offset" data-reveal>
             <div className="x-person-image">
               <Image
-                src="/team/muzammil-hassan.webp"
+                src="/team/muzammil-editorial.webp"
                 alt="Portrait of Muzammil Hassan, CTO of Valtum Studio"
                 fill
                 sizes="(max-width: 760px) 86vw, 42vw"
@@ -187,8 +186,8 @@ export default function StudioPage(): React.JSX.Element {
                 <p className="x-person-role">Chief Technology Officer</p>
               </div>
               <p className="x-person-bio">
-                Leads engineering decisions from system design through delivery,
-                with care for reliability, integrations and the people using the work.
+                Leads engineering decisions from system design through delivery, with
+                care for reliability, integrations and the people using the work.
               </p>
             </div>
           </article>

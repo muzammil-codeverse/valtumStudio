@@ -96,12 +96,12 @@
   transform-origin: center 30%;
 }
 .x-leadership .x-person--offset .x-person-image img {
-  object-position: center 19%;
-  transform: scale(1.19);
+  object-position: center 35%;
+  transform: scale(1);
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .x-leadership .x-person--offset:hover .x-person-image img {
-    transform: scale(1.225);
+    transform: scale(1.035);
   }
 }
 .vc-after--steps {
@@ -189,4 +189,16 @@
   .x-leadership .x-person-image img {
     transition: none;
   }
+}
+
+/* Ensure secondary editorial headline color clears WCAG AA for large text. */
+.x-studio-page .x-editorial-heading h1 em,
+.v-contact.v-contact--editorial .vc-intro h1 em {
+  color: #6c7889;
+}
+/* Strong visible keyboard focus for the project contact and leadership links. */
+.x-leadership a:focus-visible,
+.v-contact--editorial a:focus-visible {
+  outline: 3px solid #5b7195;
+  outline-offset: 5px;
 }

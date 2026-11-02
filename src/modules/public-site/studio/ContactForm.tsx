@@ -5,13 +5,48 @@ import { useRef, useState } from "react";
 type Status = "idle" | "submitting" | "success" | "error";
 
 const interests = [
-  { value: "WEB_APPLICATION", title: "A new digital product", detail: "Web app, SaaS or customer platform", service: "WEB_APPLICATIONS" },
-  { value: "INTERNAL_BUSINESS_SYSTEM", title: "A better way to work", detail: "Internal tools and connected operations", service: "BACKEND_OR_API_ENGINEERING" },
-  { value: "MARKETPLACE_OR_BOOKING_PLATFORM", title: "A booking or marketplace system", detail: "Reservations, workflows and transactions", service: "WEB_APPLICATIONS" },
-  { value: "AI_OR_AUTOMATION", title: "AI or automation", detail: "Practical intelligence and less manual work", service: "AI_AND_AUTOMATION" },
-  { value: "WEBSITE", title: "A distinctive digital experience", detail: "Creative websites with a purpose", service: "WEBSITES" },
-  { value: "EXISTING_PRODUCT_IMPROVEMENT", title: "An existing product needs work", detail: "Rebuild, improve or rethink", service: "TECHNICAL_CONSULTING" },
-  { value: "NOT_SURE", title: "Let's work it out together", detail: "The idea is early, but the problem is real", service: "NOT_SURE" }
+  {
+    value: "WEB_APPLICATION",
+    title: "A new digital product",
+    detail: "Web app, SaaS or customer platform",
+    service: "WEB_APPLICATIONS"
+  },
+  {
+    value: "INTERNAL_BUSINESS_SYSTEM",
+    title: "A better way to work",
+    detail: "Internal tools and connected operations",
+    service: "BACKEND_OR_API_ENGINEERING"
+  },
+  {
+    value: "MARKETPLACE_OR_BOOKING_PLATFORM",
+    title: "A booking or marketplace system",
+    detail: "Reservations, workflows and transactions",
+    service: "WEB_APPLICATIONS"
+  },
+  {
+    value: "AI_OR_AUTOMATION",
+    title: "AI or automation",
+    detail: "Practical intelligence and less manual work",
+    service: "AI_AND_AUTOMATION"
+  },
+  {
+    value: "WEBSITE",
+    title: "A distinctive digital experience",
+    detail: "Creative websites with a purpose",
+    service: "WEBSITES"
+  },
+  {
+    value: "EXISTING_PRODUCT_IMPROVEMENT",
+    title: "An existing product needs work",
+    detail: "Rebuild, improve or rethink",
+    service: "TECHNICAL_CONSULTING"
+  },
+  {
+    value: "NOT_SURE",
+    title: "Let's work it out together",
+    detail: "The idea is early, but the problem is real",
+    service: "NOT_SURE"
+  }
 ] as const;
 
 export function ContactForm(): React.JSX.Element {
@@ -62,15 +97,23 @@ export function ContactForm(): React.JSX.Element {
       });
       if (!response.ok) {
         if (response.status === 429) {
-          throw new Error("Too many enquiries are arriving right now. Please try again shortly.");
+          throw new Error(
+            "Too many enquiries are arriving right now. Please try again shortly."
+          );
         }
-        throw new Error("We couldn't send your enquiry. Your words are still here. Please try again.");
+        throw new Error(
+          "We couldn't send your enquiry. Your words are still here. Please try again."
+        );
       }
       setStatus("success");
       request.current = null;
       form.reset();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "We couldn't send your enquiry. Please try again.");
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "We couldn't send your enquiry. Please try again."
+      );
       setStatus("error");
     }
   }
@@ -81,8 +124,8 @@ export function ContactForm(): React.JSX.Element {
         <span aria-hidden="true">↗</span>
         <h2>Your idea is with us.</h2>
         <p>
-          Thank you for reaching out. We'll review what you've shared and reply
-          using the email address you provided.
+          Thank you for reaching out. We'll review what you've shared and reply using
+          the email address you provided.
         </p>
         <button type="button" onClick={() => setStatus("idle")}>
           Send another enquiry <span aria-hidden="true">↗</span>
@@ -92,35 +135,72 @@ export function ContactForm(): React.JSX.Element {
   }
 
   return (
-    <form className="v-form vc-form" onSubmit={submit}>
+    <form
+      action="/api/leads"
+      className="v-form vc-form"
+      method="post"
+      onSubmit={submit}
+    >
       <div className="vc-form-intro">
         <h2>Tell us what you're working through.</h2>
         <p>You only need a starting point. We'll help make sense of the rest.</p>
       </div>
       <div className="vc-field-pair">
         <div className="v-field">
-          <label htmlFor="contact-name">Your name <span aria-hidden="true">*</span></label>
-          <input autoComplete="name" id="contact-name" maxLength={120} minLength={2}
-            name="fullName" placeholder="Your name" required />
+          <label htmlFor="contact-name">
+            Your name <span aria-hidden="true">*</span>
+          </label>
+          <input
+            autoComplete="name"
+            id="contact-name"
+            maxLength={120}
+            minLength={2}
+            name="fullName"
+            placeholder="Your name"
+            required
+          />
         </div>
         <div className="v-field">
-          <label htmlFor="contact-email">Email address <span aria-hidden="true">*</span></label>
-          <input autoComplete="email" id="contact-email" maxLength={254}
-            name="email" placeholder="you@company.com" required type="email" />
+          <label htmlFor="contact-email">
+            Email address <span aria-hidden="true">*</span>
+          </label>
+          <input
+            autoComplete="email"
+            id="contact-email"
+            maxLength={254}
+            name="email"
+            placeholder="you@company.com"
+            required
+            type="email"
+          />
         </div>
       </div>
       <div className="v-field">
-        <label htmlFor="contact-company">Company or organization <span className="vc-optional">Optional</span></label>
-        <input autoComplete="organization" id="contact-company" maxLength={160}
-          name="company" placeholder="Where you work" />
+        <label htmlFor="contact-company">
+          Company or organization <span className="vc-optional">Optional</span>
+        </label>
+        <input
+          autoComplete="organization"
+          id="contact-company"
+          maxLength={160}
+          name="company"
+          placeholder="Where you work"
+        />
       </div>
       <fieldset className="vc-interest-fieldset">
-        <legend>What do you have in mind? <span aria-hidden="true">*</span></legend>
+        <legend>
+          What do you have in mind? <span aria-hidden="true">*</span>
+        </legend>
         <div className="vc-interest-grid">
           {interests.map((interest) => (
             <label className="vc-interest" key={interest.value}>
-              <input type="radio" name="projectType" value={interest.value}
-                defaultChecked={interest.value === "NOT_SURE"} required />
+              <input
+                type="radio"
+                name="projectType"
+                value={interest.value}
+                defaultChecked={interest.value === "NOT_SURE"}
+                required
+              />
               <span className="vc-interest-copy">
                 <strong>{interest.title}</strong>
                 <small>{interest.detail}</small>
@@ -131,14 +211,26 @@ export function ContactForm(): React.JSX.Element {
         </div>
       </fieldset>
       <div className="v-field">
-        <label htmlFor="contact-summary">Tell us about the challenge <span aria-hidden="true">*</span></label>
-        <textarea id="contact-summary" maxLength={5000} minLength={20}
-          name="projectSummary" placeholder="What's happening today? What would you like to be different?"
-          required rows={5} />
-        <p className="vc-field-hint">A few sentences are enough. At least 20 characters.</p>
+        <label htmlFor="contact-summary">
+          Tell us about the challenge <span aria-hidden="true">*</span>
+        </label>
+        <textarea
+          id="contact-summary"
+          maxLength={5000}
+          minLength={20}
+          name="projectSummary"
+          placeholder="What's happening today? What would you like to be different?"
+          required
+          rows={5}
+        />
+        <p className="vc-field-hint">
+          A few sentences are enough. At least 20 characters.
+        </p>
       </div>
       <div className="v-field">
-        <label htmlFor="contact-timeline">When would you like to begin? <span className="vc-optional">Optional</span></label>
+        <label htmlFor="contact-timeline">
+          When would you like to begin? <span className="vc-optional">Optional</span>
+        </label>
         <select id="contact-timeline" defaultValue="" name="timeline">
           <option value="">No timeline in mind yet</option>
           <option value="AS_SOON_AS_POSSIBLE">As soon as possible</option>
@@ -155,16 +247,22 @@ export function ContactForm(): React.JSX.Element {
       <label className="v-consent vc-consent">
         <input name="consent" required type="checkbox" />
         <span>
-          I agree to Valtum Studio using my details to respond to this enquiry.
-          See our <a href="/privacy">privacy information</a>.
+          I agree to Valtum Studio using my details to respond to this enquiry. See our{" "}
+          <a href="/privacy">privacy information</a>.
         </span>
       </label>
-      <button className="v-submit vc-submit" disabled={status === "submitting"} type="submit">
+      <button
+        className="v-submit vc-submit"
+        disabled={status === "submitting"}
+        type="submit"
+      >
         {status === "submitting" ? "Sending your enquiry…" : "Start the conversation"}
         <span aria-hidden="true">↗</span>
       </button>
       {status === "error" && (
-        <p className="v-form-status v-form-error" role="alert">{error}</p>
+        <p className="v-form-status v-form-error" role="alert">
+          {error}
+        </p>
       )}
     </form>
   );

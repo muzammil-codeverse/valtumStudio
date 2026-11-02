@@ -75,7 +75,8 @@ export function CookiePreferences(): React.JSX.Element | null {
         credentials: "same-origin",
         body: JSON.stringify({ analytics: nextAnalytics, functional: nextFunctional })
       });
-      if (!response.ok) throw new Error("We couldn't save that preference. Please try again.");
+      if (!response.ok)
+        throw new Error("We couldn't save that preference. Please try again.");
       const payload = (await response.json()) as { choices: CookieChoices };
       setAnalytics(payload.choices.analytics);
       setFunctional(payload.choices.functional);
@@ -103,9 +104,9 @@ export function CookiePreferences(): React.JSX.Element | null {
           </div>
           <h2>Cookies, thoughtfully handled.</h2>
           <p>
-            We use essential storage for the site and to remember your choice.
-            Optional analytics and preferences are off by default, and no optional
-            tracking tools are currently active.
+            We use essential storage for the site and to remember your choice. Optional
+            analytics and preferences are off by default, and no optional tracking tools
+            are currently active.
           </p>
           <div className="vc-cookie-actions">
             <button
@@ -124,15 +125,16 @@ export function CookiePreferences(): React.JSX.Element | null {
             </button>
           </div>
           <div className="vc-cookie-secondary">
-            <button
-              type="button"
-              onClick={() => dialog.current?.showModal()}
-            >
+            <button type="button" onClick={() => dialog.current?.showModal()}>
               Manage preferences
             </button>
             <Link href="/cookies">Cookie policy ↗</Link>
           </div>
-          {error && <p className="vc-cookie-error" role="alert">{error}</p>}
+          {error && (
+            <p className="vc-cookie-error" role="alert">
+              {error}
+            </p>
+          )}
         </aside>
       )}
       <dialog
@@ -154,8 +156,8 @@ export function CookiePreferences(): React.JSX.Element | null {
         <h2 id="vc-cookie-dialog-heading">Your preferences.</h2>
         <p>
           Choose what you are comfortable with. Essential storage is always enabled;
-          optional choices stay off unless you allow them. No optional analytics
-          or personalization scripts are currently installed.
+          optional choices stay off unless you allow them. No optional analytics or
+          personalization scripts are currently installed.
         </p>
         <div className="vc-cookie-option">
           <div>
@@ -169,29 +171,53 @@ export function CookiePreferences(): React.JSX.Element | null {
             <h3>Analytics</h3>
             <p>Permission for future usage measurement. Not currently active.</p>
           </div>
-          <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={analytics}
+            onChange={(e) => setAnalytics(e.target.checked)}
+          />
         </label>
         <label className="vc-cookie-option">
           <div>
             <h3>Optional functionality</h3>
             <p>Permission for future personalization features. Not currently active.</p>
           </div>
-          <input type="checkbox" checked={functional} onChange={e => setFunctional(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={functional}
+            onChange={(e) => setFunctional(e.target.checked)}
+          />
         </label>
         <p className="vc-cookie-disclaimer">
-          If we introduce materially different tracking technology, we'll update
-          this policy and request fresh consent before enabling it.
+          If we introduce materially different tracking technology, we'll update this
+          policy and request fresh consent before enabling it.
         </p>
-        {error && <p className="vc-cookie-error" role="alert">{error}</p>}
+        {error && (
+          <p className="vc-cookie-error" role="alert">
+            {error}
+          </p>
+        )}
         <div className="vc-cookie-dialog-actions">
-          <button type="button" disabled={pending} onClick={() => void save(false, false)}>
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => void save(false, false)}
+          >
             Reject optional
           </button>
-          <button type="button" disabled={pending} onClick={() => void save(analytics, functional)}>
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => void save(analytics, functional)}
+          >
             Save my choices
           </button>
         </div>
-        <Link href="/cookies" className="vc-cookie-more" onClick={() => dialog.current?.close()}>
+        <Link
+          href="/cookies"
+          className="vc-cookie-more"
+          onClick={() => dialog.current?.close()}
+        >
           Read the cookie policy ↗
         </Link>
       </dialog>

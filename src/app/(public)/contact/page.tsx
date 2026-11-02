@@ -21,8 +21,8 @@ export default function ContactPage(): React.JSX.Element {
           </h1>
           <p className="vc-lead">
             A product worth creating. A process that should take less work. An
-            experience that needs a different point of view. Tell us what is
-            happening, and what a better outcome would look like.
+            experience that needs a different point of view. Tell us what is happening,
+            and what a better outcome would look like.
           </p>
           <div className="vc-contact-points">
             <a href={`mailto:${studioContact.email}`}>
@@ -54,7 +54,10 @@ export default function ContactPage(): React.JSX.Element {
           <ContactForm />
         </div>
       </div>
-      <section className="vc-after vc-after--steps" aria-labelledby="contact-next-title">
+      <section
+        className="vc-after vc-after--steps"
+        aria-labelledby="contact-next-title"
+      >
         <div className="vc-after-intro">
           <h2 id="contact-next-title">
             A clear first step.
@@ -62,8 +65,8 @@ export default function ContactPage(): React.JSX.Element {
             <em>No theatre.</em>
           </h2>
           <p>
-            You do not need a finished specification. A clear picture of the
-            challenge is a useful place to begin.
+            You do not need a finished specification. A clear picture of the challenge
+            is a useful place to begin.
           </p>
         </div>
         <ol className="vc-next-steps">
@@ -78,14 +81,19 @@ export default function ContactPage(): React.JSX.Element {
             <span aria-hidden="true">02</span>
             <div>
               <h3>We talk through the options.</h3>
-              <p>Scope, technical constraints, priorities and whether we are the right fit.</p>
+              <p>
+                Scope, technical constraints, priorities and whether we are the right
+                fit.
+              </p>
             </div>
           </li>
           <li>
             <span aria-hidden="true">03</span>
             <div>
               <h3>We agree on a next move.</h3>
-              <p>A sensible first piece of work, if there is a reason to move forward.</p>
+              <p>
+                A sensible first piece of work, if there is a reason to move forward.
+              </p>
             </div>
           </li>
         </ol>
