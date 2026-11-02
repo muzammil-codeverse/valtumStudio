@@ -41,7 +41,7 @@ export function buildOrganizationJsonLd(
     foundingDate: "2026",
     founder: {
       "@type": "Person",
-      name: "Abdur Rehman Khalid",
+      name: "Abdurrehman Khalid",
       url: "https://www.linkedin.com/in/abdurrehmankhalid/"
     },
     identifier: {
