@@ -9,53 +9,57 @@ export const metadata: Metadata = publicPageMetadata(pageSeo.cookies, "/cookies"
 
 export default function CookiesPage(): React.JSX.Element {
   return (
-    <main className="v-legal x-cookie-page" id="main-content">
+    <main className="v-legal" id="main-content">
       <SeoBreadcrumb title="Cookies" path="/cookies" />
-      <div className="x-cookie-notice-intro">
-        <span>YOUR PRIVACY / VALTUM STUDIO</span>
-        <h1>Cookies, without<br /><em>the guesswork.</em></h1>
-        <p>
-          We want you to know what your browser stores when you visit this site,
-          why it is used, and how to change your preferences.
-        </p>
-      </div>
+      <h1>
+        Cookies, with
+        <br />
+        <em>clear choices.</em>
+      </h1>
+      <p>
+        Our public site uses essential storage to run correctly, maintain security
+        and remember your cookie decision. Optional tools require your choice.
+      </p>
       <h2>Essential storage</h2>
       <p>
-        Our public site can use session storage for the opening experience.
-        We use a first-party local storage preference named
-        <code> valtum-cookie-preferences-v1 </code> to remember whether you
-        allowed or rejected optional analytics. This selection expires after
-        180 days, or earlier if you clear site data. Authentication areas
-        may use cookies required for sign-in and account security.
+        A first-party cookie named <code>valtum_cookie_choices</code> records your
+        preferences for up to 180 days. It is protected from JavaScript access,
+        sent only over HTTPS on the live site, and does not contain an advertising
+        identifier. Our private authenticated areas also use security and session
+        cookies where required. The public experience may use session storage
+        for the opening animation.
       </p>
-      <h2>Optional analytics</h2>
+      <h2>Optional analytics and functionality</h2>
       <p>
-        Analytics is optional and disabled by default. If we configure a Google
-        Analytics measurement ID, its script is loaded only when you have actively
-        allowed analytics. Declining analytics does not restrict use of our public
-        site. You can withdraw permission whenever you choose.
+        The public site currently does not activate optional analytics,
+        advertising or personalization scripts. You can save a preference for
+        future analytics or optional functionality. If new tracking technology
+        is introduced, we will review its purpose and request renewed consent
+        when necessary before enabling it.
       </p>
-      <h2>Advertising and third-party embeds</h2>
+      <h2>How choices work</h2>
       <p>
-        We do not currently set advertising cookies as part of the public website.
-        Links to external social and professional profiles open on their own
-        services, which operate under their own privacy practices.
+        Rejecting optional cookies does not affect access to the public website.
+        You can accept, reject, customize or later withdraw your preferences
+        through the settings panel. Your selection is stored by the website
+        rather than attached to a project enquiry.
       </p>
-      <h2>Change your choice</h2>
+      <div className="vc-cookie-policy-action">
+        <CookieSettingsButton />
+      </div>
+      <h2>External services</h2>
       <p>
-        Open the preference panel below or use the Cookie preferences option in
-        the footer. This preference is kept locally in your browser rather than
-        added to your project enquiry.
+        Our hosting and media providers receive standard connection information
+        when serving the website. If you follow an external social or professional
+        profile link, that service has its own privacy practices.
       </p>
-      <div className="x-cookie-notice-action"><CookieSettingsButton /></div>
-      <h2>Contact and further information</h2>
+      <h2>Questions?</h2>
       <p>
-        Questions about privacy, your enquiry or these preferences can be sent
-        through our <Link href="/contact">contact page</Link>.
-        Read our <Link href="/privacy">privacy information</Link> for more
-        details about enquiry submissions.
+        For enquiries about personal information, get in touch through our{" "}
+        <Link href="/contact">contact page</Link> and consult our{" "}
+        <Link href="/privacy">privacy information</Link>.
       </p>
-      <p className="x-cookie-date">Last updated: 2 November 2026.</p>
+      <p>Last updated: 2 November 2026.</p>
     </main>
   );
 }

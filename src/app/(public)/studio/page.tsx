@@ -9,7 +9,6 @@ import {
 } from "@/modules/public-site/studio/SceneElements";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
-import { LeadershipSection } from "@/modules/public-site/studio/LeadershipSection";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.studio, "/studio");
 export default function StudioPage(): React.JSX.Element {
@@ -102,79 +101,6 @@ export default function StudioPage(): React.JSX.Element {
           </p>
         </div>
       </section>
-      <section className="x-leadership" aria-labelledby="leadership-heading">
-        <div className="x-leadership-intro" data-reveal>
-          <div className="x-leadership-rule">
-            <span>THE PEOPLE BEHIND VALTUM</span>
-            <span>01 / 02</span>
-          </div>
-          <h2 id="leadership-heading">
-            People make
-            <br />
-            <em>the difference.</em>
-          </h2>
-          <p>
-            Your project shouldn't disappear into a hand-off. Our direction and
-            engineering leads stay close to the decisions, the details and the people
-            using what we build.
-          </p>
-        </div>
-        <div className="x-leadership-grid">
-          <article className="x-leader" data-reveal>
-            <div className="x-leader-portrait x-leader-portrait--founder">
-              <div className="x-leader-photo">
-                <Image
-                  src="/team/abdurrehman-portrait.webp"
-                  alt="Portrait of Abdurrehman Khalid, founder and CEO of Valtum Studio"
-                  fill
-                  sizes="(max-width: 700px) 78vw, (max-width: 1100px) 38vw, 370px"
-                />
-              </div>
-              <span className="x-leader-number" aria-hidden="true">01</span>
-            </div>
-            <div className="x-leader-caption">
-              <span className="x-leader-discipline">Direction &amp; partnerships</span>
-              <h3>Abdurrehman Khalid</h3>
-              <p className="x-leader-role">Founder &amp; CEO</p>
-              <p className="x-leader-bio">
-                Leads the studio's direction and client relationships, keeping
-                technology decisions connected to the business problems they solve.
-              </p>
-              <a
-                className="x-leader-link"
-                href="https://www.linkedin.com/in/abdurrehmankhalid/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Connect with Abdurrehman <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </article>
-          <article className="x-leader x-leader--technology" data-reveal>
-            <div className="x-leader-portrait x-leader-portrait--cto">
-              <div className="x-leader-photo">
-                <Image
-                  src="/team/muzammil-portrait.webp"
-                  alt="Portrait of Muzammil Hassan, chief technology officer of Valtum Studio"
-                  fill
-                  sizes="(max-width: 700px) 78vw, (max-width: 1100px) 38vw, 370px"
-                />
-              </div>
-              <span className="x-leader-number" aria-hidden="true">02</span>
-            </div>
-            <div className="x-leader-caption">
-              <span className="x-leader-discipline">Architecture &amp; engineering</span>
-              <h3>Muzammil Hassan</h3>
-              <p className="x-leader-role">Chief Technology Officer</p>
-              <p className="x-leader-bio">
-                Leads technical architecture and engineering delivery, bringing
-                software systems, data and the interface together as a coherent product.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-      <LeadershipSection />
       <PracticeReel />
       <MediaTakeover
         image="sculpture"

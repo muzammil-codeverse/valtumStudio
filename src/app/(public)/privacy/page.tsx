@@ -33,11 +33,10 @@ export default function PrivacyPage(): React.JSX.Element {
       </p>
       <h2>Cookies and essential storage</h2>
       <p>
-        We use essential browser storage to support website preferences, the opening
-        experience and secure account sessions. Optional analytics will only be enabled
-        if you choose it and if an analytics service has been configured. We do not
-        currently use advertising cookies. You can review or change your selection in
-        our{" "}
+        Essential storage supports website preferences, the opening experience and
+        secure account sessions. The website currently does not load optional
+        analytics, advertising or personalization scripts. Preferences are recorded
+        in an essential first-party cookie, and can be changed or withdrawn in our{" "}
         <Link href="/cookies" style={{ textDecoration: "underline" }}>
           cookie notice
         </Link>
