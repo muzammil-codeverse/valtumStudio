@@ -123,3 +123,10 @@ page usefulness, earned references, domain reputation, and performance over time
   appropriate JSON-LD. Private portals remain protected and are not indexed.
 - Production home page continues to display the approved "Good ideas. Beautifully
   built." experience.
+
+## Branded discovery follow-up (2 November 2026)
+
+- Foreground `Valtum Studio` in the homepage search title, while keeping commercial service intent in the title and description.
+- Supply `Valtum` as an alternate Organization/WebSite name, with links to the verified Clutch and The Manifest company listings. The CMS may add verified LinkedIn/Instagram company profiles through existing `publicSocialLinks` fields; unknown handles are intentionally not fabricated.
+- Google sitelinks and knowledge panels are algorithmic, not directly creatable or guaranteed; this release supplies eligible pages, internal links and entity-disambiguation evidence.
+- Google Search Console inspection and sitemap submission still require the authorized property interface; repository deployment cannot submit them on the user's behalf.

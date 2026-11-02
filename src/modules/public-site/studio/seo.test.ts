@@ -13,6 +13,10 @@ import {
 afterEach(() => vi.unstubAllEnvs());
 
 describe("Valtum public SEO", () => {
+  it("uses a brand-first homepage title for navigational searches", () => {
+    expect(pageSeo.home.title).toMatch(/^Valtum Studio \| /);
+  });
+
   it("lists only real indexable marketing, service and case study routes", () => {
     const paths = indexablePublicPaths();
     expect(paths).toHaveLength(17);

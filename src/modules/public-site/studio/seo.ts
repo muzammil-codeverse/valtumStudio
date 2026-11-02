@@ -12,7 +12,7 @@ export type SeoCopy = Readonly<{ title: string; description: string }>;
 
 export const pageSeo = {
   home: {
-    title: "Custom Software & Digital Product Development | Valtum Studio",
+    title: "Valtum Studio | Custom Software & Digital Products",
     description:
       "Valtum Studio is an Australian software studio designing custom web applications, SaaS products, booking platforms, operational systems and distinctive digital experiences."
   },

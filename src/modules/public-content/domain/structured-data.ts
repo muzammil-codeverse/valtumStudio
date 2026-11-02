@@ -24,7 +24,11 @@ export function buildOrganizationJsonLd(
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
   const orgId = `${baseCanonical}#organization`;
 
-  const sameAs: string[] = [];
+  // Use only independently verified, public profiles of this same studio.
+  const sameAs: string[] = [
+    "https://clutch.co/profile/valtum-studio",
+    "https://themanifest.com/company/valtum-studio"
+  ];
   if (
     settings.publicSocialLinks?.linkedinUrl &&
     settings.publicSocialLinks.linkedinUrl.trim() !== ""
@@ -42,15 +46,15 @@ export function buildOrganizationJsonLd(
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": orgId,
-    name: settings.studioName,
+    name: "Valtum Studio",
+    alternateName: "Valtum",
     url: baseCanonical,
     logo: {
       "@type": "ImageObject",
       url: generateCanonicalUrl("/branding/valtum-symbol-black.svg", appBaseUrl)
     },
-    ...(settings.tagline && settings.tagline.trim() !== ""
-      ? { description: settings.tagline.trim() }
-      : {}),
+    description:
+      "Valtum Studio is an independent Australian software and digital product studio designing custom applications, operational systems, AI tools and distinctive digital experiences.",
     ...(settings.publicEmail && settings.publicEmail.trim() !== ""
       ? { email: settings.publicEmail.trim() }
       : {}),
@@ -72,7 +76,8 @@ export function buildWebSiteJsonLd(appBaseUrl: string, settings: PublicSettingsD
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": siteId,
-    name: settings.studioName,
+    name: "Valtum Studio",
+    alternateName: "Valtum",
     url: baseCanonical
   };
 }
