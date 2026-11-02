@@ -174,13 +174,13 @@
 }
 .vp-person--technical .vp-person-photo img {
   object-position: center 23%;
-  transform: scale(1.36);
+  transform: none;
 }
 .vp-person summary:hover .vp-person-photo img {
   transform: scale(1.04);
 }
 .vp-person--technical summary:hover .vp-person-photo img {
-  transform: scale(1.41);
+  transform: scale(1.04);
 }
 .vp-person-plate {
   position: relative;
