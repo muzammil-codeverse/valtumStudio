@@ -20,7 +20,8 @@ describe("Valtum public SEO", () => {
 
   it("lists only real indexable marketing, service and case study routes", () => {
     const paths = indexablePublicPaths();
-    expect(paths).toHaveLength(17);
+    expect(paths).toHaveLength(18);
+    expect(paths).toContain("/cookies");
     expect(new Set(paths).size).toBe(paths.length);
     expect(paths).toContain("/services/digital-products");
     expect(paths).toContain("/work/aegis-sentinel");

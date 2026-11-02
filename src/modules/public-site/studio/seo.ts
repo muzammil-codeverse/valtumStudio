@@ -51,6 +51,11 @@ export const pageSeo = {
     title: "Privacy & Enquiry Information | Valtum Studio",
     description:
       "Learn how Valtum Studio handles the information you share through its project enquiry form, including why the information is collected and how to contact us."
+  },
+  cookies: {
+    title: "Cookies & Privacy Preferences | Valtum Studio",
+    description:
+      "Understand essential storage, optional analytics and how to change cookie preferences on the Valtum Studio website."
   }
 } as const satisfies Record<string, SeoCopy>;
 
@@ -136,6 +141,7 @@ export function indexablePublicPaths(): string[] {
     "/approach",
     "/contact",
     "/privacy",
+    "/cookies",
     ...serviceStories.map((service) => "/services/" + service.slug),
     ...stories.map((story) => "/work/" + story.slug)
   ];

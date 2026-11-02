@@ -33,9 +33,15 @@ export default function PrivacyPage(): React.JSX.Element {
       </p>
       <h2>Cookies and essential storage</h2>
       <p>
-        The public experience uses session storage to remember whether you have seen the
-        short opening animation. Authentication areas use the storage and cookies needed
-        to manage a secure session.
+        We use essential browser storage to support website preferences, the opening
+        experience and secure account sessions. Optional analytics will only be enabled
+        if you choose it and if an analytics service has been configured. We do not
+        currently use advertising cookies. You can review or change your selection in
+        our{" "}
+        <Link href="/cookies" style={{ textDecoration: "underline" }}>
+          cookie notice
+        </Link>
+        .
       </p>
       <h2>Questions or requests</h2>
       <p>

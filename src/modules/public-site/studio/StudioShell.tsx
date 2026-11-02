@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { CookieConsent } from "./CookieConsent";
 import { PreviewMotionContext } from "./DevicePreview";
 import { mountStudioMotion } from "./motion";
 import { RouteSequence } from "./route-sequence";
@@ -342,6 +343,7 @@ export function StudioShell({ children }: { children: ReactNode }): React.JSX.El
         </dialog>
         {children}
         <StudioFooter />
+        <CookieConsent />
         <div
           className="v-route-curtain x-route-curtain"
           ref={curtain}

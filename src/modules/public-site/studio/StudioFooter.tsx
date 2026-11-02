@@ -1,4 +1,6 @@
 import Image from "next/image";
+
+import { CookieSettingsButton } from "./CookieSettingsButton";
 import Link from "next/link";
 
 import {
@@ -147,6 +149,8 @@ export function StudioFooter(): React.JSX.Element {
           <Link href="/studio">Studio</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/privacy">Privacy</Link>
+          <Link href="/cookies">Cookies</Link>
+          <CookieSettingsButton />
         </nav>
         <span>Good ideas. Beautifully built.</span>
       </div>
