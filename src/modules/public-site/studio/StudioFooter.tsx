@@ -148,6 +148,7 @@ export function StudioFooter(): React.JSX.Element {
           <Link href="/services">Services</Link>
           <Link href="/studio">Studio</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/auth/sign-in">Client login</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/cookies">Cookies</Link>
           <CookieSettingsButton />

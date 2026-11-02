@@ -69,14 +69,15 @@ export function SetupTwoFactor(): React.JSX.Element {
       return;
     }
     setSetup(undefined);
-    window.location.assign("/admin");
+    window.location.assign("/auth/continue");
   }
 
   if (setup === undefined) {
     return (
       <form className="auth-form" onSubmit={enable}>
         <p>
-          Two-factor authentication is required before you can access administration.
+          Two-factor authentication is required before you can access your private
+          workspace.
         </p>
         <label htmlFor="password">Confirm your password</label>
         <input
@@ -105,7 +106,7 @@ export function SetupTwoFactor(): React.JSX.Element {
         {/* A generated data URI is intentionally not passed through remote image optimization. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          alt="QR code for configuring Siglum Studio two-factor authentication"
+          alt="QR code for configuring Valtum Studio two-factor authentication"
           height={224}
           src={setup.qrCodeUrl}
           width={224}

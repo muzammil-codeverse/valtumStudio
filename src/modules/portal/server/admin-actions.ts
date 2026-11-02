@@ -88,6 +88,11 @@ export async function provisionClientAction(form: FormData): Promise<void> {
     body: { email, name, password, role: "client" }
   });
   const id = result.user.id;
+  // Operator-issued temporary credentials always require replacement.
+  await prisma.user.update({
+    where: { id },
+    data: { mustChangePassword: true }
+  });
   await prisma.clientMembership.create({
     data: { workspaceId, userId: id, role: "CLIENT_MEMBER" }
   });
