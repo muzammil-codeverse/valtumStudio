@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.privacy, "/privacy");
 export default function PrivacyPage(): React.JSX.Element {
   return (
     <main className="v-legal" id="main-content">
+      <SeoBreadcrumb title="Privacy" path="/privacy" />
       <h1 style={{ marginTop: 35 }}>
         Your enquiry.
         <br />

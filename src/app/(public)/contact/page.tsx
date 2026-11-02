@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.contact, "/contact");
 export const dynamic = "force-dynamic";
@@ -12,6 +13,7 @@ export default async function ContactPage(): Promise<React.JSX.Element> {
   const publicEmail = settings.publicEmail?.trim() || siteConfig.publicEmail;
   return (
     <main className="v-contact" id="main-content">
+      <SeoBreadcrumb title="Contact" path="/contact" />
       <div className="v-contact-intro">
         <h1>
           Let’s make

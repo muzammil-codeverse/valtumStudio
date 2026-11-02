@@ -8,11 +8,13 @@ import {
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.studio, "/studio");
 export default function StudioPage(): React.JSX.Element {
   return (
     <main className="x-studio-page" id="main-content">
+      <SeoBreadcrumb title="Studio" path="/studio" />
       <header className="x-editorial-heading">
         <h1>
           A studio for

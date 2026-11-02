@@ -10,11 +10,13 @@ import {
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 import { TurningBook } from "@/modules/public-site/studio/TurningBook";
 export const metadata: Metadata = publicPageMetadata(pageSeo.approach, "/approach");
 export default function ApproachPage(): React.JSX.Element {
   return (
     <main className="x-approach-page" id="main-content">
+      <SeoBreadcrumb title="Approach" path="/approach" />
       <header className="m-approach-opening">
         <div className="m-approach-photo" data-curtain-image>
           <Image
