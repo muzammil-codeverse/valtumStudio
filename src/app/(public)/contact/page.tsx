@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { studioContact } from "@/config/studio-presence";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
@@ -12,61 +11,61 @@ export default function ContactPage(): React.JSX.Element {
   return (
     <main className="v-contact v-contact--editorial" id="main-content">
       <SeoBreadcrumb title="Contact" path="/contact" />
-      <div className="v-contact-intro">
-        <p className="v-contact-index">A CONVERSATION IS A GOOD PLACE TO START / VALTUM STUDIO</p>
-        <h1 data-word-reveal>
-          What needs
-          <br />
-          <em>to work better?</em>
-        </h1>
-        <p className="v-contact-lead">
-          A product to create. A process to untangle. An experience that could
-          be better. Tell us what is happening, what needs to change and where
-          you want to go.
-        </p>
-        <div className="v-contact-promise">
-          <span aria-hidden="true">01 /</span>
-          <p>You bring the challenge. We start by understanding it, not selling a technology.</p>
-        </div>
-        <div className="v-contact-promise">
-          <span aria-hidden="true">02 /</span>
-          <p>No fully formed brief required. A clear account of the problem is enough to begin.</p>
-        </div>
-        <div className="v-contact-direct">
-          <p>Prefer a direct introduction?</p>
-          <a href={`mailto:${studioContact.email}`}>{studioContact.email} ↗</a>
-          <div>
-            <a href={`tel:${studioContact.phone}`}>{studioContact.phoneDisplay}</a>
+      <div className="vc-grid">
+        <div className="vc-intro">
+          <span className="vc-side-note">A conversation with Valtum Studio</span>
+          <h1 data-reveal>
+            Start with
+            <br />
+            <em>the challenge.</em>
+          </h1>
+          <p className="vc-lead">
+            A product worth creating. A process that should take less work. An
+            experience that needs a different point of view. Tell us what is
+            happening, and what a better outcome would look like.
+          </p>
+          <div className="vc-contact-points">
+            <a href={`mailto:${studioContact.email}`}>
+              <span>Write to us</span>
+              <strong>{studioContact.email}</strong>
+              <span aria-hidden="true">↗</span>
+            </a>
             <a href={studioContact.whatsApp} target="_blank" rel="noopener noreferrer">
-              WhatsApp ↗
+              <span>Message us</span>
+              <strong>WhatsApp</strong>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href={`tel:${studioContact.phone}`}>
+              <span>Call the studio</span>
+              <strong>{studioContact.phoneDisplay}</strong>
+              <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <span>Australian registered. Working internationally.</span>
+          <div className="vc-side-footer">
+            <span className="vc-signal" aria-hidden="true" />
+            Based in Australia. Working across borders.
+          </div>
+        </div>
+        <div className="vc-form-panel">
+          <div className="vc-form-header">
+            <span>Project enquiry</span>
+            <span>01 / Introduction</span>
+          </div>
+          <ContactForm />
         </div>
       </div>
-
-      <div className="v-contact-form">
-        <div className="v-contact-form-heading">
-          <span>PROJECT ENQUIRY / 01</span>
-          <h2>Start with the essentials.</h2>
-          <p>Just enough to begin a useful conversation. Fields marked * are required.</p>
+      <section className="vc-after" aria-label="What happens after you get in touch">
+        <h2>Clarity before commitment.</h2>
+        <div>
+          <p>
+            We read your enquiry, explore the problem with you, and discuss a sensible
+            next step. You do not need a finished brief or every technical answer.
+          </p>
+          <p>
+            No automatic project promise, no elaborate sales theatre. Just a direct
+            conversation about whether we are the right team for the work.
+          </p>
         </div>
-        <ContactForm />
-      </div>
-      <section className="v-contact-after" aria-label="How we approach new enquiries">
-        <span>FROM FIRST CONVERSATION TO A CLEAR NEXT STEP</span>
-        <h2>
-          Good work starts
-          <br />
-          <em>with the right questions.</em>
-        </h2>
-        <p>
-          We consider the business context, the people using the software and
-          the constraints around delivery. From there, we can decide together
-          whether the idea needs a new product, an improved system or another
-          approach entirely.
-        </p>
-        <Link href="/approach">Explore our approach <span aria-hidden="true">↗</span></Link>
       </section>
     </main>
   );
