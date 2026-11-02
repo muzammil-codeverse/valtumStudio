@@ -1,0 +1,265 @@
+/* Shared private calendar. No motion, pointer-hover effects, or marketing styles. */
+:is(.admin-root, .portal-root) .schedule-shell {
+  --schedule-ink: #1e2030;
+  --schedule-border: #e5e5ee;
+  --schedule-muted: #63677a;
+  --schedule-panel: #fff;
+  margin: 0 0 22px;
+  border: 1px solid var(--schedule-border);
+  border-radius: 22px;
+  background: var(--schedule-panel);
+  box-shadow: 0 8px 32px rgb(28 28 59 / 3%);
+  overflow: hidden;
+  color: var(--schedule-ink);
+}
+:is(.admin-root, .portal-root) .schedule-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 26px 28px 22px;
+}
+:is(.admin-root, .portal-root) .schedule-heading h2 {
+  font-size: clamp(23px, 2.4vw, 29px);
+  font-weight: 750;
+  letter-spacing: -.055em;
+  line-height: 1.2;
+}
+:is(.admin-root, .portal-root) .schedule-heading p {
+  margin: 7px 0 0;
+  color: var(--schedule-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+:is(.admin-root, .portal-root) .schedule-month-switcher {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid #e6e5f0;
+  border-radius: 100px;
+  padding: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+:is(.admin-root, .portal-root) .schedule-month-switcher strong {
+  font-size: 12px;
+  font-weight: 750;
+  text-align: center;
+  min-width: 103px;
+}
+:is(.admin-root, .portal-root) .schedule-month-switcher a {
+  display: grid;
+  place-items: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background: #f2f1f8;
+  color: #29263e;
+  text-decoration: none;
+  font-size: 17px;
+}
+:is(.admin-root, .portal-root) .schedule-legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 0 28px 20px;
+  color: var(--schedule-muted);
+  font-size: 11px;
+}
+:is(.admin-root, .portal-root) .schedule-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+:is(.admin-root, .portal-root) .schedule-indicator {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+:is(.admin-root, .portal-root) .schedule-indicator--milestone { background: #7c64da; }
+:is(.admin-root, .portal-root) .schedule-indicator--task { background: #248f94; }
+:is(.admin-root, .portal-root) .schedule-indicator--project { background: #dd835f; }
+:is(.admin-root, .portal-root) .schedule-indicator--enquiry { background: #bc8d30; }
+:is(.admin-root, .portal-root) .schedule-subtle { font-size: 12px; color: #77778c; }
+:is(.admin-root, .portal-root) .schedule-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(245px, 29%);
+  border-top: 1px solid var(--schedule-border);
+  min-width: 0;
+}
+:is(.admin-root, .portal-root) .schedule-calendar-scroll { min-width: 0; overflow-x: auto; }
+:is(.admin-root, .portal-root) .schedule-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  min-width: 630px;
+}
+:is(.admin-root, .portal-root) .schedule-weekday {
+  font-size: 10px;
+  font-weight: 750;
+  color: #62657a;
+  text-align: right;
+  padding: 16px 12px;
+  border-right: 1px solid #ececf1;
+  border-bottom: 1px solid #ececf1;
+  background: #fafafe;
+}
+:is(.admin-root, .portal-root) .schedule-weekday:nth-child(7) { border-right: none; }
+:is(.admin-root, .portal-root) .schedule-day {
+  min-height: 122px;
+  min-width: 0;
+  border-bottom: 1px solid #ececf1;
+  border-right: 1px solid #ececf1;
+  padding: 9px 8px;
+  background: #fff;
+}
+:is(.admin-root, .portal-root) .schedule-day:nth-child(7n) { border-right: none; }
+:is(.admin-root, .portal-root) .schedule-day--outside { background: #f8f8fb; }
+:is(.admin-root, .portal-root) .schedule-day--today { background: #f5f3ff; }
+:is(.admin-root, .portal-root) .schedule-date {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  margin-left: auto;
+  color: #33354a;
+  font-size: 12px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+:is(.admin-root, .portal-root) .schedule-day--today .schedule-date {
+  border-radius: 50%;
+  background: #302a53;
+  color: #fff;
+}
+:is(.admin-root, .portal-root) .schedule-day-events {
+  display: grid;
+  gap: 5px;
+  padding-top: 6px;
+}
+:is(.admin-root, .portal-root) .schedule-event {
+  display: block;
+  border-radius: 6px;
+  padding: 7px 7px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  line-height: 1.2;
+  text-decoration: none;
+  font-weight: 750;
+}
+:is(.admin-root, .portal-root) .schedule-event--milestone { background: #e9e2ff; color: #563b9c; }
+:is(.admin-root, .portal-root) .schedule-event--task { background: #ddf7f2; color: #175c60; }
+:is(.admin-root, .portal-root) .schedule-event--project { background: #ffebe3; color: #945236; }
+:is(.admin-root, .portal-root) .schedule-event--enquiry { background: #fff0cc; color: #7e5920; }
+:is(.admin-root, .portal-root) .schedule-more {
+  display: block;
+  font-size: 10px;
+  color: #62657a;
+  margin: 2px 3px;
+}
+:is(.admin-root, .portal-root) .schedule-agenda {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #21212e;
+  color: #fff;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 21px 19px;
+  border-bottom: 1px solid #393947;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-heading h3 {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: -.03em;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-heading span {
+  background: #3c3b4b;
+  border-radius: 50px;
+  padding: 5px 8px;
+  color: #e3e2ef;
+  font-size: 10px;
+  white-space: nowrap;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-body {
+  max-height: 650px;
+  overflow-y: auto;
+  padding: 6px 19px 20px;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-event {
+  display: grid;
+  grid-template-columns: 53px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 15px 0;
+  border-bottom: 1px solid #393947;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-date {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 9px 4px;
+  text-align: center;
+  border-radius: 8px;
+  background: #55476f;
+  color: #ede5ff;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-date--task { background: #194d4d; color: #a8faf1; }
+:is(.admin-root, .portal-root) .schedule-agenda-date--project { background: #664132; color: #ffdbbf; }
+:is(.admin-root, .portal-root) .schedule-agenda-date--enquiry { background: #51492a; color: #ffe6a7; }
+:is(.admin-root, .portal-root) .schedule-agenda-event a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 750;
+}
+:is(.admin-root, .portal-root) .schedule-agenda-event small {
+  display: block;
+  margin-top: 5px;
+  color: #a8a6b8;
+  line-height: 1.45;
+  font-size: 10px;
+}
+:is(.admin-root, .portal-root) .schedule-no-events {
+  padding: 38px 4px;
+}
+:is(.admin-root, .portal-root) .schedule-no-events strong {
+  display: block;
+  font-size: 15px;
+}
+:is(.admin-root, .portal-root) .schedule-no-events p {
+  font-size: 12px;
+  color: #b3b1c2;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+:is(.admin-root, .portal-root) .schedule-shell :focus-visible {
+  outline: 3px solid #5b4cd0;
+  outline-offset: 3px;
+}
+@media (max-width: 1180px) {
+  :is(.admin-root, .portal-root) .schedule-columns { grid-template-columns: 1fr; }
+  :is(.admin-root, .portal-root) .schedule-agenda { min-height: 160px; }
+  :is(.admin-root, .portal-root) .schedule-agenda-body { max-height: none; }
+}
+@media (max-width: 640px) {
+  :is(.admin-root, .portal-root) .schedule-heading {
+    padding: 22px 17px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+  :is(.admin-root, .portal-root) .schedule-month-switcher { width: max-content; }
+  :is(.admin-root, .portal-root) .schedule-legend { padding: 0 17px 16px; gap: 10px 15px; }
+  :is(.admin-root, .portal-root) .schedule-calendar { min-width: 595px; }
+  :is(.admin-root, .portal-root) .schedule-day { min-height: 110px; }
+}
