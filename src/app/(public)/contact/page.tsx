@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/config/site";
-import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
+import { studioContact } from "@/config/studio-presence";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
@@ -9,8 +8,6 @@ import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 export const metadata: Metadata = publicPageMetadata(pageSeo.contact, "/contact");
 export const dynamic = "force-dynamic";
 export default async function ContactPage(): Promise<React.JSX.Element> {
-  const { settings } = await loadHomePageData();
-  const publicEmail = settings.publicEmail?.trim() || siteConfig.publicEmail;
   return (
     <main className="v-contact" id="main-content">
       <SeoBreadcrumb title="Contact" path="/contact" />
@@ -26,11 +23,23 @@ export default async function ContactPage(): Promise<React.JSX.Element> {
         </p>
         <a
           className="v-text-link"
-          href={`mailto:${publicEmail}`}
+          href={`mailto:${studioContact.email}`}
           style={{ marginTop: 35 }}
         >
-          {publicEmail} ↗
+          {studioContact.email} ↗
         </a>
+        <div className="v-contact-reach">
+          <a href={`tel:${studioContact.phone}`}>
+            Call {studioContact.phoneDisplay}
+          </a>
+          <a
+            href={studioContact.whatsApp}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Message on WhatsApp ↗
+          </a>
+        </div>
         <p className="v-contact-tip">
           An Australian studio for ideas with a wider horizon.
         </p>

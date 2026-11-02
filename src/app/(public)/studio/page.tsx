@@ -89,6 +89,15 @@ export default function StudioPage(): React.JSX.Element {
             </a>
             . For enquiries, email{" "}
             <a href="mailto:hello@valtumstudio.com.au">hello@valtumstudio.com.au</a>.
+            Meet the founder on{" "}
+            <a
+              href="https://www.linkedin.com/in/abdurrehmankhalid/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            .
           </p>
         </div>
       </section>

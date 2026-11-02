@@ -1,3 +1,8 @@
+import {
+  studioContact,
+  studioOrganizationProfiles
+} from "@/config/studio-presence";
+
 import type {
   PublicFaqGroupDTO,
   PublicInsightDTO,
@@ -24,24 +29,9 @@ export function buildOrganizationJsonLd(
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
   const orgId = `${baseCanonical}#organization`;
 
-  // Use only independently verified, public profiles of this same studio.
-  const sameAs: string[] = [
-    "https://clutch.co/profile/valtum-studio",
-    "https://themanifest.com/company/valtum-studio",
-    "https://abr.business.gov.au/ABN/View?id=24207947663"
-  ];
-  if (
-    settings.publicSocialLinks?.linkedinUrl &&
-    settings.publicSocialLinks.linkedinUrl.trim() !== ""
-  ) {
-    sameAs.push(settings.publicSocialLinks.linkedinUrl.trim());
-  }
-  if (
-    settings.publicSocialLinks?.instagramUrl &&
-    settings.publicSocialLinks.instagramUrl.trim() !== ""
-  ) {
-    sameAs.push(settings.publicSocialLinks.instagramUrl.trim());
-  }
+  // Only studio-owned profiles and a separate official registry reference.
+  // The founder's personal LinkedIn identity is represented under founder.
+  const sameAs = [...studioOrganizationProfiles];
 
   return {
     "@context": "https://schema.org",
@@ -68,13 +58,16 @@ export function buildOrganizationJsonLd(
     },
     description:
       "Valtum Studio is an independent Australian software and digital product studio designing custom applications, operational systems, AI tools and distinctive digital experiences.",
-    ...(settings.publicEmail && settings.publicEmail.trim() !== ""
-      ? { email: settings.publicEmail.trim() }
-      : {}),
-    ...(settings.publicPhone && settings.publicPhone.trim() !== ""
-      ? { telephone: settings.publicPhone.trim() }
-      : {}),
-    ...(sameAs.length > 0 ? { sameAs } : {})
+    email: studioContact.email,
+    telephone: studioContact.phone,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: studioContact.email,
+      telephone: studioContact.phone,
+      availableLanguage: ["English"]
+    },
+    sameAs
   };
 }
 

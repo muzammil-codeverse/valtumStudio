@@ -694,7 +694,7 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
         expect(jsonLd.datePublished).toBeUndefined();
       });
 
-      it("omits missing contact details but includes verified brand identity", () => {
+      it("uses official contact details and distinguishes studio profiles from founder identity", () => {
         const settings = {
           studioName: "Valtum Studio",
           tagline: "",
@@ -707,19 +707,22 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
           registeredAddress: ""
         };
         const jsonLd = buildOrganizationJsonLd("https://valtumstudio.com.au", settings);
-        expect(jsonLd.email).toBeUndefined();
-        expect(jsonLd.telephone).toBeUndefined();
+        expect(jsonLd.email).toBe("hello@valtumstudio.com.au");
+        expect(jsonLd.telephone).toBe("+61404412079");
+        expect(jsonLd.contactPoint.contactType).toBe("sales");
         expect(jsonLd.name).toBe("Valtum Studio");
         expect(jsonLd.alternateName).toBe("Valtum");
         expect(jsonLd.founder.name).toBe("Abdur Rehman Khalid");
         expect(jsonLd.foundingDate).toBe("2026");
         expect(jsonLd.identifier.value).toBe("24 207 947 663");
         expect(jsonLd.description).toContain("Australian software");
-        expect(jsonLd.sameAs).toEqual([
-          "https://clutch.co/profile/valtum-studio",
-          "https://themanifest.com/company/valtum-studio",
-          "https://abr.business.gov.au/ABN/View?id=24207947663"
-        ]);
+        expect(jsonLd.sameAs).toContain("https://clutch.co/profile/valtum-studio");
+        expect(jsonLd.sameAs).toContain("https://x.com/valtumstudio");
+        expect(jsonLd.sameAs).toContain("https://www.instagram.com/valtumstudio/");
+        expect(jsonLd.sameAs).toContain("https://www.fiverr.com/valtumstudio");
+        expect(jsonLd.sameAs).not.toContain(
+          "https://www.linkedin.com/in/abdurrehmankhalid/"
+        );
       });
 
       it("does not fabricate author profile URL", () => {
