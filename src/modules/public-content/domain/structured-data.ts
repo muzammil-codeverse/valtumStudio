@@ -76,7 +76,7 @@ export function buildWebSiteJsonLd(appBaseUrl: string, settings: PublicSettingsD
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": siteId,
-    name: "Valtum Studio",
+    name: settings.studioName,
     alternateName: "Valtum",
     url: baseCanonical
   };
