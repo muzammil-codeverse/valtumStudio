@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { requireRole } from "@/modules/auth/server/authorization";
 import { getClientDashboard } from "@/modules/portal/server/client-data";
-import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
+import { PortalHeader } from "@/modules/portal/ui/PortalShell";
+import { ScheduleBoard, type ScheduleItem } from "@/modules/portal/ui/ScheduleBoard";
 
 export const dynamic = "force-dynamic";
 
@@ -15,126 +16,80 @@ export default async function ClientCalendarPage({
   const principal = await requireRole(await headers(), "client");
   const data = await getClientDashboard(principal.userId);
   const requested = (await searchParams).month;
-  const now = new Date();
   const month =
-    requested && /^20[0-9]{2}-(0[1-9]|1[0-2])$/.test(requested)
+    typeof requested === "string" &&
+    /^(20\d{2}|2100)-(0[1-9]|1[0-2])$/.test(requested)
       ? requested
-      : now.toISOString().slice(0, 7);
-  const year = Number(month.slice(0, 4));
-  const monthIndex = Number(month.slice(5, 7)) - 1;
-  const first = new Date(Date.UTC(year, monthIndex, 1));
-  const blanks = (first.getUTCDay() + 6) % 7;
-  const daysInMonth = new Date(Date.UTC(year, monthIndex + 1, 0)).getUTCDate();
-  const entries = [
+      : new Date().toISOString().slice(0, 7);
+
+  const events: ScheduleItem[] = [
     ...data.milestones
-      .filter((item) => item.dueDate)
+      .filter((item) => item.dueDate !== null)
       .map((item) => ({
-        id: item.id,
+        id: "milestone-" + item.id,
         title: item.title,
-        date: item.dueDate?.toISOString().slice(0, 10) ?? "",
-        project: item.engagement.title,
-        projectId: item.engagement.id,
-        type: "Milestone"
+        date: item.dueDate!.toISOString().slice(0, 10),
+        context: item.engagement.title + " · Milestone",
+        kind: "milestone" as const,
+        href: "/portal/projects/" + item.engagement.id
       })),
     ...data.tasks
-      .filter((item) => item.dueDate)
+      .filter((item) => item.dueDate !== null)
       .map((item) => ({
-        id: item.id,
+        id: "task-" + item.id,
         title: item.title,
-        date: item.dueDate?.toISOString().slice(0, 10) ?? "",
-        project: item.engagement.title,
-        projectId: item.engagement.id,
-        type: "Task"
+        date: item.dueDate!.toISOString().slice(0, 10),
+        context: item.engagement.title + " · Task",
+        kind: "task" as const,
+        href: "/portal/projects/" + item.engagement.id
+      })),
+    ...data.engagements
+      .filter((project) => project.targetDate !== null)
+      .map((project) => ({
+        id: "project-" + project.id,
+        title: project.title + " · Target",
+        date: project.targetDate!.toISOString().slice(0, 10),
+        context: project.workspace.name + " · Project target",
+        kind: "project" as const,
+        href: "/portal/projects/" + project.id
       }))
   ];
-  const current = entries.filter((item) => item.date.startsWith(month));
-  const monthLabel = new Intl.DateTimeFormat("en-AU", {
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC"
-  }).format(first);
-  const prev = new Date(Date.UTC(year, monthIndex - 1, 1)).toISOString().slice(0, 7);
-  const next = new Date(Date.UTC(year, monthIndex + 1, 1)).toISOString().slice(0, 7);
+  const monthly = events.filter((event) => event.date.startsWith(month));
+  const scheduled = (kind: ScheduleItem["kind"]) =>
+    monthly.filter((event) => event.kind === kind).length;
+
   return (
     <>
       <PortalHeader
-        eyebrow="DELIVERY / SCHEDULE"
-        title="The delivery calendar."
-        description="Confirmed milestone and task due dates across your authorized projects."
+        eyebrow=""
+        title="Your project calendar."
+        description="Know what is planned, what is due and which project each date belongs to. All dates are taken from your workspace records."
+        action={<Link href="/portal/projects">View your projects ↗</Link>}
       />
-      <section className="portal-panel">
-        <div className="portal-panel-heading">
-          <h2>{monthLabel}</h2>
-          <div style={{ display: "flex", gap: 9 }}>
-            <Link className="portal-link-pill" href={"/portal/calendar?month=" + prev}>
-              ← Previous
-            </Link>
-            <Link className="portal-link-pill" href={"/portal/calendar?month=" + next}>
-              Next →
-            </Link>
-          </div>
+      <div className="portal-stat-row portal-calendar-stats">
+        <div className="portal-stat portal-stat--ink">
+          <label>Milestones this month</label>
+          <strong>{scheduled("milestone")}</strong>
+          <small>Recorded delivery checkpoints</small>
         </div>
-        <div className="portal-calendar-grid">
-          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-            <span className="portal-calendar-week" key={day}>
-              {day}
-            </span>
-          ))}
-          {Array.from({ length: blanks }, (_, i) => (
-            <div
-              className="portal-calendar-cell portal-calendar-cell--blank"
-              key={"blank" + i}
-            />
-          ))}
-          {Array.from({ length: daysInMonth }, (_, i) => {
-            const date = new Date(Date.UTC(year, monthIndex, i + 1))
-              .toISOString()
-              .slice(0, 10);
-            const items = current.filter((entry) => entry.date === date);
-            return (
-              <div
-                className="portal-calendar-cell"
-                key={date}
-                title={date + ": " + items.length + " scheduled items"}
-              >
-                <strong>{i + 1}</strong>
-                {items.slice(0, 2).map((item) => (
-                  <span className="portal-calendar-event" key={item.type + item.id}>
-                    {item.title}
-                  </span>
-                ))}
-                {items.length > 2 ? <small>+{items.length - 2} more</small> : null}
-              </div>
-            );
-          })}
+        <div className="portal-stat portal-stat--lilac">
+          <label>Tasks this month</label>
+          <strong>{scheduled("task")}</strong>
+          <small>Work with a confirmed due date</small>
         </div>
-      </section>
-      <section className="portal-panel" style={{ marginTop: 18 }}>
-        <div className="portal-panel-heading">
-          <h2>Scheduled this month</h2>
-          <span className="portal-tag">{current.length} items</span>
+        <div className="portal-stat portal-stat--blue">
+          <label>Project targets</label>
+          <strong>{scheduled("project")}</strong>
+          <small>Current planned completion dates</small>
         </div>
-        {current.length === 0 ? (
-          <PortalEmpty
-            title="No deadlines scheduled"
-            description="There are no published task or milestone due dates for this month."
-          />
-        ) : (
-          current
-            .sort((a, b) => a.date.localeCompare(b.date))
-            .map((item) => (
-              <div className="portal-row" key={item.type + item.id}>
-                <div className="portal-row-main">
-                  <Link href={"/portal/projects/" + item.projectId}>{item.title}</Link>
-                  <small>
-                    {item.type} · {item.project}
-                  </small>
-                </div>
-                <span className="portal-tag">{item.date}</span>
-              </div>
-            ))
-        )}
-      </section>
+      </div>
+      <ScheduleBoard
+        month={month}
+        path="/portal/calendar"
+        items={events}
+        title="Delivery schedule"
+        description="Browse by month. Select any event to open its project and view the full context."
+      />
     </>
   );
 }
