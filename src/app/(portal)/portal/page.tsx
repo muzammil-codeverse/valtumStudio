@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 
 import { requireRole } from "@/modules/auth/server/authorization";
+import { summarizeDelivery } from "@/modules/portal/domain/delivery-insights";
 import {
   clientReadableStatus,
   getClientDashboard
@@ -13,6 +14,7 @@ export const dynamic = "force-dynamic";
 export default async function ClientOverviewPage(): Promise<React.JSX.Element> {
   const principal = await requireRole(await headers(), "client");
   const data = await getClientDashboard(principal.userId);
+  const delivery = summarizeDelivery(data);
   const activeProjects = data.engagements.filter(
     (project) => project.status !== "COMPLETE" && project.status !== "ON_HOLD"
   );
@@ -50,6 +52,93 @@ export default async function ClientOverviewPage(): Promise<React.JSX.Element> {
           <strong>{issuedInvoices.length}</strong>
           <small>Unpaid invoices visible in your account</small>
         </div>
+      </div>
+      <div className="portal-overview-analytics">
+        <section className="portal-panel" aria-labelledby="customer-progress-title">
+          <div className="portal-panel-heading">
+            <h2 id="customer-progress-title">Delivery at a glance</h2>
+            <Link href="/portal/analytics">Full analytics ↗</Link>
+          </div>
+          <div className="portal-overview-progress-body">
+            <div
+              className="portal-overview-progress-ring"
+              role="img"
+              aria-label={
+                delivery.taskPercent === null
+                  ? "No tasks recorded yet"
+                  : delivery.taskPercent + " percent of visible tasks completed"
+              }
+              style={{
+                background: `conic-gradient(#5d51d4 0 ${delivery.taskPercent ?? 0}%, #e9e8ef ${delivery.taskPercent ?? 0}% 100%)`
+              }}
+            >
+              <div>
+                <strong>
+                  {delivery.taskPercent === null ? "—" : delivery.taskPercent + "%"}
+                </strong>
+                <span>Tasks complete</span>
+              </div>
+            </div>
+            <div className="portal-overview-progress-stats">
+              <div>
+                <span>Completed tasks</span>
+                <strong>
+                  {delivery.tasksDone} / {data.tasks.length}
+                </strong>
+              </div>
+              <div>
+                <span>Completed milestones</span>
+                <strong>
+                  {delivery.milestonesDone} / {data.milestones.length}
+                </strong>
+              </div>
+              <div>
+                <span>Blocked tasks</span>
+                <strong>{delivery.blocked}</strong>
+              </div>
+            </div>
+          </div>
+          <p className="portal-overview-note">
+            Completion is calculated from recorded tasks, not estimated hours or
+            fabricated percentages.
+          </p>
+        </section>
+        <section className="portal-panel" aria-labelledby="customer-upcoming-title">
+          <div className="portal-panel-heading">
+            <h2 id="customer-upcoming-title">Next 30 days</h2>
+            <Link href="/portal/calendar">Open calendar ↗</Link>
+          </div>
+          {delivery.upcoming.length === 0 ? (
+            <p className="portal-overview-note">
+              No open tasks or milestones have confirmed dates in the next 30 days.
+            </p>
+          ) : (
+            <div className="portal-overview-upcoming">
+              {delivery.upcoming.slice(0, 5).map((item) => (
+                <div
+                  key={item.kind + item.id}
+                  className="portal-overview-upcoming-item"
+                >
+                  <time dateTime={item.dueDate?.toISOString().slice(0, 10)}>
+                    {item.dueDate?.toLocaleDateString("en-AU", {
+                      day: "2-digit",
+                      month: "short",
+                      timeZone: "UTC"
+                    })}
+                  </time>
+                  <div>
+                    <Link href={"/portal/projects/" + item.engagement.id}>
+                      {item.title}
+                    </Link>
+                    <small>
+                      {item.engagement.title} · {item.kind}
+                    </small>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
       <div className="portal-grid">
         <section className="portal-panel">

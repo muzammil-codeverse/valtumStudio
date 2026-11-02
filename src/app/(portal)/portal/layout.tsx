@@ -1,5 +1,6 @@
 import "@/modules/portal/ui/delivery-analytics.css";
 import "@/modules/portal/ui/portal.css";
+import "@/modules/portal/ui/overview-extension.css";
 
 import type { Metadata } from "next";
 import { headers } from "next/headers";
