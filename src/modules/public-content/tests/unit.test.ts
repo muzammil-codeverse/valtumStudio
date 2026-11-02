@@ -694,9 +694,9 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
         expect(jsonLd.datePublished).toBeUndefined();
       });
 
-      it("omits optional Person/Organization properties when absent", () => {
+      it("omits missing contact details but includes verified brand identity", () => {
         const settings = {
-          studioName: "Studio Name",
+          studioName: "Valtum Studio",
           tagline: "",
           publicEmail: "",
           publicPhone: "",
@@ -706,11 +706,16 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
           companyNumber: "",
           registeredAddress: ""
         };
-        const jsonLd = buildOrganizationJsonLd("https://siglum.studio", settings);
+        const jsonLd = buildOrganizationJsonLd("https://valtumstudio.com.au", settings);
         expect(jsonLd.email).toBeUndefined();
         expect(jsonLd.telephone).toBeUndefined();
-        expect(jsonLd.description).toBeUndefined();
-        expect(jsonLd.sameAs).toBeUndefined();
+        expect(jsonLd.name).toBe("Valtum Studio");
+        expect(jsonLd.alternateName).toBe("Valtum");
+        expect(jsonLd.description).toContain("Australian software");
+        expect(jsonLd.sameAs).toEqual([
+          "https://clutch.co/profile/valtum-studio",
+          "https://themanifest.com/company/valtum-studio"
+        ]);
       });
 
       it("does not fabricate author profile URL", () => {
