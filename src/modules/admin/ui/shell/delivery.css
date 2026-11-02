@@ -1,0 +1,202 @@
+/* Private studio delivery analytics only: static, responsive, and data-led. */
+.admin-root .delivery-admin-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 12px 0 18px;
+}
+.admin-root .delivery-admin-kpi {
+  display: flex;
+  flex-direction: column;
+  min-height: 154px;
+  border-radius: 18px;
+  border: 1px solid #e1e1ed;
+  padding: 22px;
+  background: #fff;
+}
+.admin-root .delivery-admin-kpi > span {
+  font-size: 12px;
+  color: #5b5b70;
+  font-weight: 700;
+}
+.admin-root .delivery-admin-kpi > strong {
+  letter-spacing: -0.055em;
+  font-size: clamp(31px, 3vw, 47px);
+  line-height: 1.3;
+  margin: 6px 0;
+}
+.admin-root .delivery-admin-kpi i {
+  font-size: 18px;
+  font-style: normal;
+  letter-spacing: 0;
+  opacity: 0.52;
+}
+.admin-root .delivery-admin-kpi > small {
+  font-size: 11px;
+  line-height: 1.45;
+  color: #66697b;
+  margin-top: auto;
+}
+.admin-root .delivery-admin-kpi--dark {
+  background: #242338;
+  color: #fff;
+  border-color: #242338;
+}
+.admin-root .delivery-admin-kpi--dark > span,
+.admin-root .delivery-admin-kpi--dark > small {
+  color: #dbd9ed;
+}
+.admin-root .delivery-admin-kpi--lilac {
+  background: #eae4ff;
+  border-color: #eae4ff;
+}
+.admin-root .delivery-admin-kpi--blue {
+  background: #dfecff;
+  border-color: #dfecff;
+}
+.admin-root .delivery-admin-kpi--coral {
+  background: #ffe4dc;
+  border-color: #ffe4dc;
+}
+.admin-root .delivery-admin-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.admin-root .delivery-admin .ds-panel {
+  min-width: 0;
+}
+.admin-root .delivery-admin-bars {
+  padding-top: 12px;
+}
+.admin-root .delivery-admin-bar-row {
+  margin: 0 0 20px;
+}
+.admin-root .delivery-admin-bar-row > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin-bottom: 8px;
+}
+.admin-root .delivery-admin-bar-row strong {
+  font-variant-numeric: tabular-nums;
+}
+.admin-root .delivery-admin-track {
+  height: 12px;
+  overflow: hidden;
+  background: #efedf7;
+  border-radius: 12px;
+}
+.admin-root .delivery-admin-track span {
+  display: block;
+  height: 100%;
+  border-radius: 12px;
+  background: #7563db;
+}
+.admin-root .delivery-admin-track--blue span {
+  background: #5b9eea;
+}
+.admin-root .delivery-admin-note {
+  color: #666b7f;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 17px;
+}
+.admin-root .delivery-admin-schedule > div {
+  display: grid;
+  grid-template-columns: 75px 1fr;
+  gap: 13px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e9e8f0;
+}
+.admin-root .delivery-admin-schedule > div:last-child {
+  border-bottom: 0;
+}
+.admin-root .delivery-admin-schedule time {
+  display: block;
+  padding: 9px 4px;
+  text-align: center;
+  border-radius: 9px;
+  color: #4b3bb5;
+  background: #eeeaff;
+  font-size: 11px;
+  font-weight: 750;
+  height: max-content;
+}
+.admin-root .delivery-admin-schedule a {
+  font-size: 13px;
+  color: #272439;
+  font-weight: 750;
+  text-decoration: none;
+}
+.admin-root .delivery-admin-schedule a:hover {
+  text-decoration: underline;
+}
+.admin-root .delivery-admin-schedule small {
+  display: block;
+  font-size: 11px;
+  color: #686b7f;
+  margin-top: 5px;
+}
+.admin-root .delivery-admin-billing {
+  display: grid;
+  gap: 12px;
+}
+.admin-root .delivery-admin-billing > div {
+  padding: 17px 19px;
+  background: #f4f2fa;
+  border: 1px solid #ebe9f5;
+  border-radius: 14px;
+}
+.admin-root .delivery-admin-billing > div > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 5px 0;
+  font-size: 12px;
+}
+.admin-root .delivery-admin-billing > div > div:first-child {
+  padding-bottom: 10px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #e2dfec;
+}
+.admin-root .delivery-admin-billing > div strong {
+  font-size: 14px;
+}
+.admin-root .delivery-admin-billing > div span,
+.admin-root .delivery-admin-billing small {
+  color: #616378;
+  font-size: 11px;
+}
+.admin-root .delivery-admin-billing b {
+  font-variant-numeric: tabular-nums;
+}
+.admin-root .delivery-admin-kpi,
+.admin-root .delivery-admin-track span {
+  animation: none !important;
+  transition: none !important;
+}
+@media (max-width: 1150px) {
+  .admin-root .delivery-admin-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .admin-root .delivery-admin-columns {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .admin-root .delivery-admin-kpis {
+    gap: 10px;
+  }
+  .admin-root .delivery-admin-kpi {
+    min-height: 145px;
+    padding: 15px;
+  }
+  .admin-root .delivery-admin-kpi > small {
+    font-size: 10px;
+  }
+}

@@ -16,11 +16,13 @@ interface AdminSidebarProps {
     role: Role;
   };
   onCloseMobileDrawer?: () => void;
+  clientPortalEnabled: boolean;
 }
 
 export function AdminSidebar({
   user,
-  onCloseMobileDrawer
+  onCloseMobileDrawer,
+  clientPortalEnabled
 }: AdminSidebarProps): React.JSX.Element {
   const pathname = usePathname();
 
@@ -52,6 +54,8 @@ export function AdminSidebar({
           const items = Object.values(ADMIN_ROUTES).filter(
             (route) =>
               route.group === group.name &&
+              (clientPortalEnabled ||
+                !["/admin/clients", "/admin/delivery"].includes(route.path)) &&
               can(user.role, {
                 resource: route.requiredResource,
                 action: route.requiredAction

@@ -14,11 +14,13 @@ interface AdminMobileDrawerProps {
     role: Role;
   };
   isOpen: boolean;
+  clientPortalEnabled: boolean;
   onClose: () => void;
 }
 
 export function AdminMobileDrawer({
   user,
+  clientPortalEnabled,
   isOpen,
   onClose
 }: AdminMobileDrawerProps): React.JSX.Element {
@@ -56,7 +58,7 @@ export function AdminMobileDrawer({
   return (
     <dialog
       ref={dialogRef}
-      className="admin-root fixed inset-y-0 left-0 h-full w-64 m-0 border-r border-[var(--admin-border)] bg-[var(--admin-surface)] p-0 shadow-xl focus:outline-hidden backdrop:bg-black/40 backdrop:backdrop-blur-xs transition-transform duration-200"
+      className="admin-root fixed inset-y-0 left-0 h-full w-64 m-0 border-r border-[var(--admin-border)] bg-[var(--admin-surface)] p-0 shadow-xl focus:outline-hidden backdrop:bg-black/40 backdrop:backdrop-blur-xs"
     >
       <div className="flex flex-col h-full relative">
         {/* Accessible close button in top right of drawer */}
@@ -70,7 +72,11 @@ export function AdminMobileDrawer({
 
         {/* Sidebar navigation wrapper inside drawer */}
         <div className="flex-1 h-full">
-          <AdminSidebar user={user} onCloseMobileDrawer={onClose} />
+          <AdminSidebar
+            user={user}
+            clientPortalEnabled={clientPortalEnabled}
+            onCloseMobileDrawer={onClose}
+          />
         </div>
       </div>
     </dialog>

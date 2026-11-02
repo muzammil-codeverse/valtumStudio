@@ -127,6 +127,16 @@ export const ADMIN_ROUTES = {
     requiredResource: "leads",
     requiredAction: "read"
   },
+  delivery: {
+    path: "/admin/delivery",
+    label: "Delivery Analytics",
+    description: "Monitor client delivery and invoice statuses.",
+    breadcrumbLabel: "Delivery",
+    group: "Operations",
+    iconKey: "insights",
+    requiredResource: "clients",
+    requiredAction: "read"
+  },
   clients: {
     path: "/admin/clients",
     label: "Clients & Delivery",

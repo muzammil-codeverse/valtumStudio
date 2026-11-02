@@ -15,6 +15,7 @@ interface AdminShellProps {
     role: Role;
   };
   children: ReactNode;
+  clientPortalEnabled: boolean;
 }
 
 export function SkipLink(): React.JSX.Element {
@@ -28,7 +29,11 @@ export function SkipLink(): React.JSX.Element {
   );
 }
 
-export function AdminShell({ user, children }: AdminShellProps): React.JSX.Element {
+export function AdminShell({
+  user,
+  children,
+  clientPortalEnabled
+}: AdminShellProps): React.JSX.Element {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   return (
@@ -38,12 +43,13 @@ export function AdminShell({ user, children }: AdminShellProps): React.JSX.Eleme
 
       {/* Persistent Desktop Sidebar */}
       <div className="hidden lg:block lg:flex-shrink-0 lg:w-64 h-screen sticky top-0">
-        <AdminSidebar user={user} />
+        <AdminSidebar user={user} clientPortalEnabled={clientPortalEnabled} />
       </div>
 
       {/* Off-canvas Mobile Drawer */}
       <AdminMobileDrawer
         user={user}
+        clientPortalEnabled={clientPortalEnabled}
         isOpen={isMobileDrawerOpen}
         onClose={() => setIsMobileDrawerOpen(false)}
       />

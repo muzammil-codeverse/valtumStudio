@@ -1,3 +1,4 @@
+import "@/modules/portal/ui/delivery-analytics.css";
 import "@/modules/portal/ui/portal.css";
 
 import type { Metadata } from "next";

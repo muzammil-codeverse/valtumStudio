@@ -1,15 +1,6 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 
-type NavItem = Readonly<{ path: string; title: string; glyph: string }>;
-
-const sections: NavItem[] = [
-  { path: "/portal", title: "Overview", glyph: "▦" },
-  { path: "/portal/projects", title: "Projects", glyph: "◈" },
-  { path: "/portal/calendar", title: "Calendar", glyph: "▦" },
-  { path: "/portal/invoices", title: "Invoices", glyph: "▤" },
-  { path: "/portal/updates", title: "Updates", glyph: "◉" }
-];
+import { PortalNavigation } from "./PortalNavigation";
 
 export function PortalShell({
   children,
@@ -34,14 +25,7 @@ export function PortalShell({
           </div>
         </div>
         <div className="portal-nav-caption">YOUR WORKSPACE</div>
-        <nav aria-label="Client portal navigation">
-          {sections.map((section) => (
-            <Link href={section.path} key={section.path}>
-              <span aria-hidden="true">{section.glyph}</span>
-              {section.title}
-            </Link>
-          ))}
-        </nav>
+        <PortalNavigation />
         <div className="portal-sidebar-bottom">
           <div className="portal-help">
             <small>NEED SOMETHING?</small>
@@ -70,13 +54,7 @@ export function PortalShell({
                 : "Your space"}
           </div>
         </header>
-        <nav className="portal-mobile-nav" aria-label="Mobile client portal navigation">
-          {sections.map((section) => (
-            <Link href={section.path} key={section.path}>
-              {section.title}
-            </Link>
-          ))}
-        </nav>
+        <PortalNavigation mobile />
         <main id="portal-main" className="portal-page">
           {children}
         </main>

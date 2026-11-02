@@ -1,3 +1,4 @@
+import "@/modules/admin/ui/shell/delivery.css";
 import "@/modules/admin/ui/shell/workspace.css";
 
 import type { Metadata } from "next";
@@ -6,6 +7,7 @@ import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { AdminShell } from "@/modules/admin/ui/shell/AdminShell";
+import { isClientPortalEnabled } from "@/modules/portal/server/client-data";
 import {
   getAuthenticationAssurance,
   getOptionalSession
@@ -48,5 +50,9 @@ export default async function AdministrationLayout({
     role: principal.role
   };
 
-  return <AdminShell user={user}>{children}</AdminShell>;
+  return (
+    <AdminShell user={user} clientPortalEnabled={isClientPortalEnabled()}>
+      {children}
+    </AdminShell>
+  );
 }
