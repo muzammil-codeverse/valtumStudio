@@ -18,7 +18,7 @@ type ScheduleBoardProps = Readonly<{
   title?: string;
   description?: string;
   view?: ScheduleView;
-  selectedDate?: string;
+  selectedDate?: string | undefined;
 }>;
 
 function offsetMonth(month: string, offset: number): string {
@@ -156,15 +156,24 @@ export function ScheduleBoard({
             </Link>
           </nav>
           <div className="schedule-month-switcher" aria-label="Calendar dates">
-            <Link href={previousHref} aria-label={view === "week" ? "Previous week" : "Previous month"}>
+            <Link
+              href={previousHref}
+              aria-label={view === "week" ? "Previous week" : "Previous month"}
+            >
               ←
             </Link>
             <strong>{view === "week" ? weekLabel : monthName}</strong>
-            <Link href={nextHref} aria-label={view === "week" ? "Next week" : "Next month"}>
+            <Link
+              href={nextHref}
+              aria-label={view === "week" ? "Next week" : "Next month"}
+            >
               →
             </Link>
           </div>
-          <Link className="schedule-today" href={hrefFor(today.slice(0, 7), view, today)}>
+          <Link
+            className="schedule-today"
+            href={hrefFor(today.slice(0, 7), view, today)}
+          >
             Today
           </Link>
         </div>
@@ -178,7 +187,10 @@ export function ScheduleBoard({
         ) : (
           activeKinds.map((kind) => (
             <span key={kind.key} className="schedule-legend-item">
-              <i className={"schedule-indicator schedule-indicator--" + kind.key} aria-hidden="true" />
+              <i
+                className={"schedule-indicator schedule-indicator--" + kind.key}
+                aria-hidden="true"
+              />
               {kind.label}
             </span>
           ))
@@ -188,7 +200,11 @@ export function ScheduleBoard({
       <div className="schedule-columns">
         <div className="schedule-calendar-scroll">
           {view === "week" ? (
-            <div className="schedule-week-grid" role="group" aria-label={weekLabel + " calendar"}>
+            <div
+              className="schedule-week-grid"
+              role="group"
+              aria-label={weekLabel + " calendar"}
+            >
               {weekDates.map((date) => {
                 const events = byDay.get(date) ?? [];
                 const fullDate = new Date(date + "T00:00:00.000Z");
@@ -197,17 +213,26 @@ export function ScheduleBoard({
                     className={
                       "schedule-week-cell" +
                       (date === today ? " schedule-week-cell--today" : "") +
-                      (date.slice(0, 7) !== month ? " schedule-week-cell--adjacent" : "")
+                      (date.slice(0, 7) !== month
+                        ? " schedule-week-cell--adjacent"
+                        : "")
                     }
                     key={date}
                   >
                     <div className="schedule-week-cell-header">
                       <time dateTime={date}>
-                        <span>{new Intl.DateTimeFormat("en-AU", { weekday: "short", timeZone: "UTC" }).format(fullDate)}</span>
+                        <span>
+                          {new Intl.DateTimeFormat("en-AU", {
+                            weekday: "short",
+                            timeZone: "UTC"
+                          }).format(fullDate)}
+                        </span>
                         <strong>{Number(date.slice(8, 10))}</strong>
                       </time>
                       <span className="schedule-week-count">
-                        {events.length === 0 ? "Clear" : events.length + (events.length === 1 ? " item" : " items")}
+                        {events.length === 0
+                          ? "Clear"
+                          : events.length + (events.length === 1 ? " item" : " items")}
                       </span>
                     </div>
                     <div className="schedule-week-events">
@@ -218,7 +243,9 @@ export function ScheduleBoard({
                           <Link
                             key={event.id}
                             href={event.href}
-                            className={"schedule-week-event schedule-week-event--" + event.kind}
+                            className={
+                              "schedule-week-event schedule-week-event--" + event.kind
+                            }
                           >
                             <strong>{event.title}</strong>
                             <small>{event.context}</small>
@@ -231,23 +258,44 @@ export function ScheduleBoard({
               })}
             </div>
           ) : (
-            <div className="schedule-calendar" role="group" aria-label={monthName + " calendar"}>
+            <div
+              className="schedule-calendar"
+              role="group"
+              aria-label={monthName + " calendar"}
+            >
               {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-                <div className="schedule-weekday" key={day}>{day}</div>
+                <div className="schedule-weekday" key={day}>
+                  {day}
+                </div>
               ))}
               {daysInMonth(month).map((date, index) => {
                 if (!date) {
-                  return <div className="schedule-day schedule-day--outside" aria-hidden="true" key={"empty-" + index} />;
+                  return (
+                    <div
+                      className="schedule-day schedule-day--outside"
+                      aria-hidden="true"
+                      key={"empty-" + index}
+                    />
+                  );
                 }
                 const events = byDay.get(date) ?? [];
                 const fullDate = new Date(date + "T00:00:00.000Z");
                 return (
                   <div
-                    className={"schedule-day" + (date === today ? " schedule-day--today" : "")}
+                    className={
+                      "schedule-day" + (date === today ? " schedule-day--today" : "")
+                    }
                     key={date}
-                    aria-label={dayLabel.format(fullDate) + ", " + events.length + " scheduled items"}
+                    aria-label={
+                      dayLabel.format(fullDate) +
+                      ", " +
+                      events.length +
+                      " scheduled items"
+                    }
                   >
-                    <time dateTime={date} className="schedule-date">{Number(date.slice(8, 10))}</time>
+                    <time dateTime={date} className="schedule-date">
+                      {Number(date.slice(8, 10))}
+                    </time>
                     <div className="schedule-day-events">
                       {events.slice(0, 2).map((event) => (
                         <Link
@@ -280,21 +328,32 @@ export function ScheduleBoard({
             </div>
           )}
         </div>
-        <aside className="schedule-agenda" aria-label={view === "week" ? "Weekly schedule" : "Monthly schedule"}>
+        <aside
+          className="schedule-agenda"
+          aria-label={view === "week" ? "Weekly schedule" : "Monthly schedule"}
+        >
           <div className="schedule-agenda-heading">
             <h3>{view === "week" ? "This week" : "This month"}</h3>
-            <span>{displayed.length} {displayed.length === 1 ? "item" : "items"}</span>
+            <span>
+              {displayed.length} {displayed.length === 1 ? "item" : "items"}
+            </span>
           </div>
           <div className="schedule-agenda-body">
             {displayed.length === 0 ? (
               <div className="schedule-no-events">
                 <strong>Nothing scheduled yet.</strong>
-                <p>Tasks, milestones and confirmed dates appear as they are recorded.</p>
+                <p>
+                  Tasks, milestones and confirmed dates appear as they are recorded.
+                </p>
               </div>
             ) : (
               displayed.map((event) => (
                 <div className="schedule-agenda-event" key={event.id}>
-                  <span className={"schedule-agenda-date schedule-agenda-date--" + event.kind}>
+                  <span
+                    className={
+                      "schedule-agenda-date schedule-agenda-date--" + event.kind
+                    }
+                  >
                     {dateFormat.format(new Date(event.date + "T00:00:00.000Z"))}
                   </span>
                   <div>

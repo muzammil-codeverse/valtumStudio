@@ -19,8 +19,7 @@ export default async function ClientCalendarPage({
   const requested = params.month;
   const view = params.view === "month" ? "month" : "week";
   const month =
-    typeof requested === "string" &&
-    /^(20\d{2}|2100)-(0[1-9]|1[0-2])$/.test(requested)
+    typeof requested === "string" && /^(20\d{2}|2100)-(0[1-9]|1[0-2])$/.test(requested)
       ? requested
       : new Date().toISOString().slice(0, 7);
 
@@ -30,7 +29,7 @@ export default async function ClientCalendarPage({
       .map((item) => ({
         id: "milestone-" + item.id,
         title: item.title,
-        date: item.dueDate!.toISOString().slice(0, 10),
+        date: item.dueDate?.toISOString().slice(0, 10) ?? "",
         context: item.engagement.title + " · Milestone",
         kind: "milestone" as const,
         href: "/portal/projects/" + item.engagement.id
@@ -40,7 +39,7 @@ export default async function ClientCalendarPage({
       .map((item) => ({
         id: "task-" + item.id,
         title: item.title,
-        date: item.dueDate!.toISOString().slice(0, 10),
+        date: item.dueDate?.toISOString().slice(0, 10) ?? "",
         context: item.engagement.title + " · Task",
         kind: "task" as const,
         href: "/portal/projects/" + item.engagement.id
@@ -50,7 +49,7 @@ export default async function ClientCalendarPage({
       .map((project) => ({
         id: "project-" + project.id,
         title: project.title + " · Target",
-        date: project.targetDate!.toISOString().slice(0, 10),
+        date: project.targetDate?.toISOString().slice(0, 10) ?? "",
         context: project.workspace.name + " · Project target",
         kind: "project" as const,
         href: "/portal/projects/" + project.id

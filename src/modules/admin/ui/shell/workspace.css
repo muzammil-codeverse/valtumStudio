@@ -677,4 +677,6 @@
 }
 
 /* Private operations pages use headings rather than ornamental eyebrow labels. */
-.admin-root .ds-kicker { display: none !important; }
+.admin-root .ds-kicker {
+  display: none !important;
+}
