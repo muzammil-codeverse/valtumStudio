@@ -9,7 +9,10 @@ export type CookieChoices = Readonly<{
   updatedAt: number;
 }>;
 
-export function parseCookieChoices(input: string | undefined): CookieChoices | null {
+export function parseCookieChoices(
+  input: string | undefined,
+  now = Date.now()
+): CookieChoices | null {
   if (!input || input.length > 400) return null;
   try {
     const value: unknown = JSON.parse(input);
@@ -26,6 +29,9 @@ export function parseCookieChoices(input: string | undefined): CookieChoices | n
       typeof value.updatedAt !== "number" ||
       !Number.isFinite(value.updatedAt)
     ) {
+      return null;
+    }
+    if (value.updatedAt > now || now - value.updatedAt > CONSENT_AGE_SECONDS * 1000) {
       return null;
     }
     return {
