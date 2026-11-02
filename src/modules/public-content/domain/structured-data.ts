@@ -27,7 +27,8 @@ export function buildOrganizationJsonLd(
   // Use only independently verified, public profiles of this same studio.
   const sameAs: string[] = [
     "https://clutch.co/profile/valtum-studio",
-    "https://themanifest.com/company/valtum-studio"
+    "https://themanifest.com/company/valtum-studio",
+    "https://abr.business.gov.au/ABN/View?id=24207947663"
   ];
   if (
     settings.publicSocialLinks?.linkedinUrl &&

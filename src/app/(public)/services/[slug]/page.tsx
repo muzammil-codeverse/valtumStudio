@@ -55,7 +55,7 @@ export default async function ServicePage({
             name: service.title,
             description: service.intro,
             url: publicCanonical("/services/" + service.slug),
-            provider: { "@id": SEO_ORIGIN + "/#organization" }
+            provider: { "@id": SEO_ORIGIN + "#organization" }
           })
         }}
       />

@@ -6,7 +6,8 @@ import { stories } from "./content";
 import { serviceStories } from "./services";
 
 export const SEO_ORIGIN = "https://valtumstudio.com.au";
-export const SEO_SOCIAL_IMAGE = SEO_ORIGIN + "/opengraph-image";
+export const SEO_SOCIAL_IMAGE =
+  "https://res.cloudinary.com/z9nut7zm/image/upload/v1793629199/valtum-studio/seo/social-hero-2026-11.png";
 
 export type SeoCopy = Readonly<{ title: string; description: string }>;
 
@@ -176,7 +177,7 @@ export function publicPageMetadata(
           url: socialImage,
           width: 1200,
           height: 630,
-          alt: "Valtum Studio software and design work"
+          alt: "Valtum Studio homepage hero. Good ideas. Beautifully built."
         }
       ]
     },

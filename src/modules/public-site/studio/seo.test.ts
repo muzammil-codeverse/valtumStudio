@@ -7,7 +7,8 @@ import {
   projectSeo,
   publicCanonical,
   publicPageMetadata,
-  serviceSeo
+  serviceSeo,
+  SEO_SOCIAL_IMAGE
 } from "./seo";
 
 afterEach(() => vi.unstubAllEnvs());
@@ -47,6 +48,14 @@ describe("Valtum public SEO", () => {
     expect(meta.alternates).toEqual({ canonical: "https://valtumstudio.com.au" });
     expect(meta.robots).toMatchObject({ index: false, follow: false });
     expect(meta.openGraph).toMatchObject({ siteName: "Valtum Studio" });
+  });
+
+  it("uses the approved homepage hero for social sharing", () => {
+    const metadata = publicPageMetadata(pageSeo.home, "/");
+    expect(SEO_SOCIAL_IMAGE).toContain("/social-hero-2026-11.png");
+    expect(metadata.openGraph?.images).toMatchObject([
+      { url: SEO_SOCIAL_IMAGE, width: 1200, height: 630 }
+    ]);
   });
 
   it("gives each live service and case study a distinct, useful SEO title", () => {

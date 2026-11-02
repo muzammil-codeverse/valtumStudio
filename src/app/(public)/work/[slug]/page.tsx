@@ -47,7 +47,7 @@ export default async function ProjectPage({
             description: story.intro,
             url: publicCanonical("/work/" + story.slug),
             image: publicCanonical(story.image),
-            creator: { "@id": SEO_ORIGIN + "/#organization" }
+            creator: { "@id": SEO_ORIGIN + "#organization" }
           })
         }}
       />
