@@ -1,0 +1,77 @@
+/* Consent interface: editorial, quiet, accessible and equally easy to refuse. */
+.x-cookie-banner {
+  position: fixed; left: clamp(16px,2.7vw,44px); bottom: clamp(16px,2.7vw,44px);
+  z-index: 11000; width: min(690px,calc(100vw - 32px));
+  background: #f1f2f5; color: #1b2027;
+  border: 1px solid #9da6b5; box-shadow: 0 20px 70px rgba(12,18,28,.20);
+  padding: clamp(23px,3vw,37px); display:grid;grid-template-columns:1.2fr .8fr;gap:27px;
+}
+.x-cookie-banner-content {min-width:0;}
+.x-cookie-eyebrow {font-size:10px;font-weight:600;letter-spacing:.12em;color:#5e6978;}
+.x-cookie-banner h2,.x-cookie-dialog h2 {
+  font-family:"Cabinet Grotesk","DM Sans",Arial,sans-serif;
+  font-size:clamp(28px,2.55vw,39px);font-weight:400;letter-spacing:-.05em;line-height:1.1;
+  margin:16px 0;
+}
+.x-cookie-banner p,.x-cookie-dialog-copy {
+  font-size:12px;line-height:1.75;color:#475464;
+}
+.x-cookie-banner p a,.x-cookie-dialog a {text-decoration:underline;text-underline-offset:3px;}
+.x-cookie-banner-actions {display:flex;flex-direction:column;gap:9px;align-self:end;}
+.x-cookie-button {border:1px solid #29313c;padding:12px 15px;min-height:44px;
+  font-size:12px;font-weight:500;cursor:pointer;text-align:center;
+}
+.x-cookie-button--dark {background:#212831;color:white;}
+.x-cookie-button--light {background:transparent;color:#242c37;}
+.x-cookie-button--text {background:transparent;border-color:transparent;color:#283340;padding:9px 4px;}
+.x-cookie-button:hover {text-decoration:underline;text-underline-offset:4px;}
+.x-cookie-button:focus-visible,.x-cookie-dialog button:focus-visible,
+.x-cookie-dialog input:focus-visible {outline:3px solid #57709d;outline-offset:2px;}
+.x-cookie-dialog {
+  border:1px solid #a5aebc;background:#f0f2f6;color:#19212c;
+  width:min(590px,calc(100vw - 32px));max-height:min(90vh,900px);
+  padding:0;box-shadow:0 30px 110px rgba(10,15,25,.35);
+}
+.x-cookie-dialog::backdrop {background:rgba(15,20,28,.65);}
+.x-cookie-dialog-inner {padding:clamp(24px,4vw,43px);}
+.x-cookie-dialog-header {display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.x-cookie-dialog-header button {border:0;background:transparent;font-size:29px;
+  cursor:pointer;width:44px;height:44px;color:#252e39;
+}
+.x-cookie-dialog-copy {max-width:490px;font-size:14px;margin-bottom:31px;}
+.x-cookie-option {display:flex;align-items:center;justify-content:space-between;gap:25px;
+  padding:24px 0;border-top:1px solid #bbc3ce;}
+.x-cookie-option h3 {font-size:18px;font-weight:500;margin:0 0 8px;}
+.x-cookie-option p {font-size:12px;color:#5c6776;line-height:1.65;max-width:370px;margin:0;}
+.x-cookie-always {font-size:11px;color:#626d7b;white-space:nowrap;}
+.x-cookie-option--interactive {cursor:pointer;}
+.x-cookie-option input {flex:0 0 auto;appearance:none;width:44px;height:26px;position:relative;
+  border-radius:20px;background:#9ba6b4;border:1px solid #8c99ab;cursor:pointer;
+}
+.x-cookie-option input::after {content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;
+  border-radius:100%;background:white;transition:transform .2s ease;
+}
+.x-cookie-option input:checked {background:#252f3d;border-color:#252f3d;}
+.x-cookie-option input:checked::after {transform:translateX(18px);}
+.x-cookie-dialog-note {font-size:12px;line-height:1.7;color:#586475;padding:20px 0;}
+.x-cookie-dialog-actions {display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.x-cookie-dialog-actions button {min-height:48px;flex:1;border:1px solid #26313e;
+  font-size:12px;font-weight:500;cursor:pointer;padding:12px 15px;background:transparent;
+}
+.x-cookie-dialog-actions button:last-child {background:#26313e;color:#f4f5f7;}
+.vf-cookie-settings {border:0;background:transparent;color:inherit;cursor:pointer;
+  font:inherit;font-size:12px;padding:0;text-align:left;
+}
+.vf-cookie-settings:hover {text-decoration:underline;text-underline-offset:4px;}
+.vf-cookie-settings:focus-visible {outline:2px solid #aeb9cd;outline-offset:4px;}
+@media(max-width:600px) {
+  .x-cookie-banner {grid-template-columns:1fr;gap:17px;bottom:12px;left:12px;
+    width:calc(100vw - 24px);padding:21px;}
+  .x-cookie-banner h2 {font-size:30px;margin:10px 0;}
+  .x-cookie-banner-actions {display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .x-cookie-button--text {grid-column:1/-1;}
+  .x-cookie-dialog-inner {padding:25px 20px;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .x-cookie-option input::after {transition:none;}
+}
