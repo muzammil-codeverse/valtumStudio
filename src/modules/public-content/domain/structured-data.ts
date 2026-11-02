@@ -44,6 +44,10 @@ export function buildOrganizationJsonLd(
     "@id": orgId,
     name: settings.studioName,
     url: baseCanonical,
+    logo: {
+      "@type": "ImageObject",
+      url: generateCanonicalUrl("/branding/valtum-symbol-black.svg", appBaseUrl)
+    },
     ...(settings.tagline && settings.tagline.trim() !== ""
       ? { description: settings.tagline.trim() }
       : {}),

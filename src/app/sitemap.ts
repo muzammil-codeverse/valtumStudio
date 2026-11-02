@@ -1,13 +1,14 @@
 import type { MetadataRoute } from "next";
 
-import { getPublicSitemapEntries } from "@/modules/public-content/server/sitemap";
+import {
+  indexablePublicPaths,
+  mayIndexPublicSite,
+  publicCanonical
+} from "@/modules/public-site/studio/seo";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const entries = await getPublicSitemapEntries();
-  return entries.map((entry) => ({
-    url: entry.url,
-    ...(entry.lastModified ? { lastModified: new Date(entry.lastModified) } : {}),
-    ...(entry.changeFrequency ? { changeFrequency: entry.changeFrequency } : {}),
-    ...(entry.priority !== undefined ? { priority: entry.priority } : {})
-  }));
+export const dynamic = "force-dynamic";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  if (!mayIndexPublicSite()) return [];
+  return indexablePublicPaths().map((path) => ({ url: publicCanonical(path) }));
 }

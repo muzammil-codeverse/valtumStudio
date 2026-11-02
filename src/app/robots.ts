@@ -1,28 +1,20 @@
 import type { MetadataRoute } from "next";
 
-import { getTrustedBaseUrl } from "@/modules/public-content/domain/routes";
+import { mayIndexPublicSite, SEO_ORIGIN } from "@/modules/public-site/studio/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const appEnv = process.env["APP_ENV"] || "local";
-  const isProd = appEnv === "production";
-  const appBaseUrl = getTrustedBaseUrl();
-
-  // Fail-closed policy: disallow indexing unless APP_ENV is explicitly production and base URL is valid
-  if (!appBaseUrl || !isProd) {
-    return {
-      rules: {
-        userAgent: "*",
-        disallow: "/"
-      }
-    };
+  if (!mayIndexPublicSite()) {
+    return { rules: { userAgent: "*", disallow: "/" } };
   }
 
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin", "/auth", "/api", "/preview", "/_next", "/static"]
+      // Keep JavaScript, CSS and image resources crawlable for Google's renderer.
+      disallow: ["/admin", "/portal", "/auth", "/api", "/preview"]
     },
-    sitemap: `${appBaseUrl.replace(/\/+$/, "")}/sitemap.xml`
+    sitemap: SEO_ORIGIN + "/sitemap.xml",
+    host: SEO_ORIGIN
   };
 }

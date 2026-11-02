@@ -9,13 +9,9 @@ import {
   MediaTakeover,
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 import { TurningBook } from "@/modules/public-site/studio/TurningBook";
-export const metadata: Metadata = {
-  alternates: { canonical: "/approach" },
-  title: "Approach | Valtum Studio",
-  description:
-    "A clear brief, visible decisions and working software. Inside the Valtum Studio approach."
-};
+export const metadata: Metadata = publicPageMetadata(pageSeo.approach, "/approach");
 export default function ApproachPage(): React.JSX.Element {
   return (
     <main className="x-approach-page" id="main-content">

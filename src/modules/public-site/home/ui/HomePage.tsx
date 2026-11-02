@@ -41,13 +41,15 @@ export function HomePage({ team }: HomePageData): React.JSX.Element {
         </h2>
         <div className="x-intro-prose" data-reveal>
           <p>
-            You might be making your first product, untangling a difficult process or
-            giving a good business the website it deserves.
+            You might be building a customer platform, replacing disconnected
+            spreadsheets or giving an established business a more distinctive digital
+            presence. The right starting point is what needs to work better.
           </p>
           <p>
-            Valtum brings the creative thinking and the engineering into one
-            conversation. From Australia, we work directly with founders and teams
-            around the world, staying close to the idea and the people it is for.
+            From Australia, Valtum combines product design, custom software engineering
+            and creative frontend development. We work directly with founders and teams
+            internationally, keeping the experience and the systems behind it in the
+            same conversation.
           </p>
           <Link className="x-link" href="/studio">
             Meet the studio ↗

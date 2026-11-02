@@ -4,12 +4,8 @@ import Link from "next/link";
 
 import { DevicePreview } from "@/modules/public-site/studio/DevicePreview";
 import { InlinePhoto, MediaTakeover } from "@/modules/public-site/studio/SceneElements";
-export const metadata: Metadata = {
-  alternates: { canonical: "/solutions" },
-  title: "Solutions | Valtum Studio",
-  description:
-    "A new product, a connected operation or a clearer decision. Software designed around the change your business needs."
-};
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+export const metadata: Metadata = publicPageMetadata(pageSeo.solutions, "/solutions");
 const situations = [
   {
     id: "01",

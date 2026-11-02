@@ -7,13 +7,9 @@ import {
   MediaTakeover,
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 import { serviceStories } from "@/modules/public-site/studio/services";
-export const metadata: Metadata = {
-  title: "Services | Valtum Studio",
-  alternates: { canonical: "/services" },
-  description:
-    "Product design, software engineering, creative websites and connected systems. Explore the Valtum Studio practice."
-};
+export const metadata: Metadata = publicPageMetadata(pageSeo.services, "/services");
 export default function ServicesPage(): React.JSX.Element {
   return (
     <main className="x-services-page" id="main-content">

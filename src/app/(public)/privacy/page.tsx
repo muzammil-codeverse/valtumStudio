@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/privacy" },
-  title: "Privacy information | Valtum Studio"
-};
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+
+export const metadata: Metadata = publicPageMetadata(pageSeo.privacy, "/privacy");
 export default function PrivacyPage(): React.JSX.Element {
   return (
     <main className="v-legal" id="main-content">

@@ -2,7 +2,6 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Prisma } from "@/generated/prisma/client";
-import { logger } from "@/lib/logging";
 import type {
   PublicServiceDTO,
   PublicSettingsDTO
@@ -10,6 +9,7 @@ import type {
 import type { HomePageData } from "@/modules/public-site/home/data/home-data";
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
 import { HomePage } from "@/modules/public-site/home/ui/HomePage";
+import { pageSeo } from "@/modules/public-site/studio/seo";
 
 import PublicHomePage, { dynamic, generateMetadata } from "./page";
 
@@ -129,37 +129,18 @@ describe("PublicHomePage Route Configuration & Resilience", () => {
     expect(dynamic).toBe("force-dynamic");
   });
 
-  it("resolves default metadata when getPublicSettings throws a database availability error", async () => {
-    const p1001Error = new Prisma.PrismaClientKnownRequestError(
-      "Can't reach database server at 127.0.0.1:5434",
-      {
-        clientVersion: "5.0.0",
-        code: "P1001"
-      }
-    );
-    vi.mocked(getPublicSettings).mockRejectedValueOnce(p1001Error);
-
-    const metadata = await generateMetadata();
-
-    expect(metadata.title).toBe("Valtum Studio");
-    expect(metadata.description).toBe(
-      "Software, systems and digital experiences. An independent Australian studio bringing product thinking, design and engineering together."
-    );
-    expect(logger.warn).toHaveBeenCalledWith(
-      expect.stringContaining("Public settings query failed for homepage metadata"),
-      {
-        classification: "database_unavailable",
-        domain: "homepage-metadata",
-        event: "homepage_metadata_db_unavailable"
-      }
-    );
+  it("renders canonical search metadata even when the CMS is unavailable", async () => {
+    const meta = await generateMetadata();
+    expect(meta.title).toBe(pageSeo.home.title);
+    expect(meta.description).toBe(pageSeo.home.description);
+    expect(meta.alternates).toEqual({ canonical: "https://valtumstudio.com.au" });
+    expect(getPublicSettings).not.toHaveBeenCalled();
   });
 
-  it("rethrows non-availability errors in generateMetadata", async () => {
-    const programmingError = new TypeError("Cannot read properties of undefined");
-    vi.mocked(getPublicSettings).mockRejectedValueOnce(programmingError);
-
-    await expect(generateMetadata()).rejects.toThrow(programmingError);
+  it("does not depend on database configuration for SEO metadata", async () => {
+    const meta = await generateMetadata();
+    expect(meta.title).toBe(pageSeo.home.title);
+    expect(getPublicSettings).not.toHaveBeenCalled();
   });
 
   it("provides safe fallbacks for loadHomePageData when all queries encounter database availability errors", async () => {

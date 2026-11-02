@@ -3,10 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  buildBreadcrumbListJsonLd,
+  serializeJsonLd
+} from "@/modules/public-content/domain/structured-data";
 import { getStory } from "@/modules/public-site/studio/content";
 import { DevicePreview } from "@/modules/public-site/studio/DevicePreview";
 import { RevealText } from "@/modules/public-site/studio/RevealText";
 import { InlinePhoto, MediaTakeover } from "@/modules/public-site/studio/SceneElements";
+import {
+  publicCanonical,
+  publicPageMetadata,
+  SEO_ORIGIN,
+  serviceSeo
+} from "@/modules/public-site/studio/seo";
 import { getService } from "@/modules/public-site/studio/services";
 export async function generateMetadata({
   params
@@ -15,12 +25,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = getService(slug);
-  return {
-    title: `${service?.title ?? "Service"} | Valtum Studio`,
-    description: service?.intro,
-    alternates: { canonical: `/services/${slug}` }
+  if (!service)
+    return { title: "Service not found", robots: { index: false, follow: false } };
+  const copy = serviceSeo[slug] ?? {
+    title: service.title + " | Valtum Studio",
+    description: service.intro
   };
+  return publicPageMetadata(copy, "/services/" + service.slug);
 }
+
 export default async function ServicePage({
   params
 }: {
@@ -32,6 +45,32 @@ export default async function ServicePage({
   const proof = getStory(service.proof);
   return (
     <main className="x-service-detail" id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "@id": publicCanonical("/services/" + service.slug) + "#service",
+            name: service.title,
+            description: service.intro,
+            url: publicCanonical("/services/" + service.slug),
+            provider: { "@id": SEO_ORIGIN + "/#organization" }
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(
+            buildBreadcrumbListJsonLd(SEO_ORIGIN, [
+              { name: "Home", path: "/" },
+              { name: "Services", path: "/services" },
+              { name: service.title, path: "/services/" + service.slug }
+            ])
+          )
+        }}
+      />
       <header className="x-editorial-heading">
         <div>
           <Link className="x-link" href="/services">

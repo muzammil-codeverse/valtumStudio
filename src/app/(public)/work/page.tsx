@@ -3,12 +3,8 @@ import Link from "next/link";
 
 import { Archive } from "@/modules/public-site/studio/Archive";
 import { stories } from "@/modules/public-site/studio/content";
-export const metadata: Metadata = {
-  alternates: { canonical: "/work" },
-  title: "Work | Valtum Studio",
-  description:
-    "Products, platforms and considered digital experiences. Explore the work and the decisions behind it."
-};
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+export const metadata: Metadata = publicPageMetadata(pageSeo.work, "/work");
 export const dynamic = "force-dynamic";
 export default function WorkPage(): React.JSX.Element {
   return (

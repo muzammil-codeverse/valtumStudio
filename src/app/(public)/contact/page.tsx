@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/contact" },
-  title: "Start a conversation | Valtum Studio",
-  description:
-    "Tell Valtum Studio about your next product, system or digital experience."
-};
+export const metadata: Metadata = publicPageMetadata(pageSeo.contact, "/contact");
 export const dynamic = "force-dynamic";
 export default async function ContactPage(): Promise<React.JSX.Element> {
   const { settings } = await loadHomePageData();

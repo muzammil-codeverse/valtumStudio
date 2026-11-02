@@ -7,13 +7,9 @@ import {
   MediaTakeover,
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
+import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/studio" },
-  title: "The studio | Valtum Studio",
-  description:
-    "An independent Australian software studio bringing creative thinking and engineering into one conversation."
-};
+export const metadata: Metadata = publicPageMetadata(pageSeo.studio, "/studio");
 export default function StudioPage(): React.JSX.Element {
   return (
     <main className="x-studio-page" id="main-content">

@@ -1,43 +1,44 @@
 import type { Metadata } from "next";
 
-import { isDatabaseUnavailableError } from "@/lib/errors";
-import { buildSiteMetadata } from "@/modules/public-content/domain/metadata";
+import {
+  buildOrganizationJsonLd,
+  buildWebSiteJsonLd,
+  serializeJsonLd
+} from "@/modules/public-content/domain/structured-data";
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
 import { HomePage } from "@/modules/public-site/home/ui/HomePage";
+import {
+  pageSeo,
+  publicPageMetadata,
+  SEO_ORIGIN
+} from "@/modules/public-site/studio/seo";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata(): Promise<Metadata> {
-  try {
-    const { getPublicSettings } =
-      await import("@/modules/public-content/server/settings");
-    const settings = await getPublicSettings();
-    return buildSiteMetadata({
-      canonicalPath: "/",
-      description: settings.defaultSeoDescription,
-      socialImage: settings.defaultSocialImageAsset,
-      title: settings.defaultSeoTitle ?? settings.studioName
-    });
-  } catch (error) {
-    if (isDatabaseUnavailableError(error)) {
-      const { logger } = await import("@/lib/logging");
-      logger.warn(
-        "Public settings query failed for homepage metadata due to database unavailability; using fallback defaults.",
-        {
-          classification: "database_unavailable",
-          domain: "homepage-metadata",
-          event: "homepage_metadata_db_unavailable"
-        }
-      );
-      return buildSiteMetadata({
-        canonicalPath: "/"
-      });
-    }
-    throw error;
-  }
+export function generateMetadata(): Metadata {
+  // Metadata never waits for the CMS or database to become reachable.
+  return publicPageMetadata(pageSeo.home, "/");
 }
 
 export default async function PublicHomePage(): Promise<React.JSX.Element> {
   const data = await loadHomePageData();
-  return <HomePage {...data} />;
+  return (
+    <>
+      <script
+        id="valtum-organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(buildOrganizationJsonLd(SEO_ORIGIN, data.settings))
+        }}
+      />
+      <script
+        id="valtum-website-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(buildWebSiteJsonLd(SEO_ORIGIN, data.settings))
+        }}
+      />
+      <HomePage {...data} />
+    </>
+  );
 }
