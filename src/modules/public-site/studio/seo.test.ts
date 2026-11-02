@@ -60,7 +60,7 @@ describe("Valtum public SEO", () => {
 
   it("uses authentic project screenshots for case-study link previews", () => {
     const metadata = publicPageMetadata(
-      projectSeo["aegis-sentinel"]!,
+      projectSeo["aegis-sentinel"] ?? pageSeo.work,
       "/work/aegis-sentinel",
       "/products/aegis.webp"
     );
