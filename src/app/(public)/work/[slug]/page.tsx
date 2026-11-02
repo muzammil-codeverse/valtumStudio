@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Properties): Promise<Metadata
     title: story.title + " | Valtum Studio",
     description: story.intro
   };
-  return publicPageMetadata(copy, "/work/" + story.slug);
+  return publicPageMetadata(copy, "/work/" + story.slug, story.image);
 }
 
 export default async function ProjectPage({

@@ -27,7 +27,7 @@ export const stories: ReadonlyArray<ProjectStory> = [
     premise: "From a fleeting observation to a record worth examining.",
     headline: "Seeing is only\nthe beginning.",
     image: "/products/aegis.webp",
-    alt: "Actual aegis website",
+    alt: "Aegis Sentinel drone-led website and computer vision platform preview",
     theme: "aegis",
     intro:
       "A camera can capture a moment. Understanding it takes context. Aegis Sentinel brings computer vision, case management and evidence integrity into one considered workflow.",
@@ -60,7 +60,7 @@ export const stories: ReadonlyArray<ProjectStory> = [
     premise: "A quiet escape. A carefully coordinated transaction.",
     headline: "The stay begins\nbefore arrival.",
     image: "/products/lodge.webp",
-    alt: "Actual lodge website",
+    alt: "Laugh & Lodge hospitality booking marketplace website preview",
     theme: "lodge",
     intro:
       "The guest sees a room, chooses a date and imagines being there. Behind that simple act, availability, payments and property operations have to agree. Laugh & Lodge brings both sides of the reservation together.",
@@ -99,7 +99,7 @@ export const stories: ReadonlyArray<ProjectStory> = [
     premise: "One delivery. Every handoff accounted for.",
     headline: "A parcel moves.\nA system follows.",
     image: "/products/courier.webp",
-    alt: "Actual courier website",
+    alt: "KT Couriers logistics and order management website preview",
     theme: "courier",
     intro:
       "A delivery passes through many hands, but it should never lose its story. KT Couriers connects the customer, merchant, dispatcher and driver around the same order.",
@@ -132,7 +132,7 @@ export const stories: ReadonlyArray<ProjectStory> = [
     premise: "Change an assumption. See what follows.",
     headline: "A better question.\nA different possibility.",
     image: "/products/math.webp",
-    alt: "Actual math website",
+    alt: "Math Intellect mathematical simulation and learning website preview",
     theme: "math",
     intro:
       "The most interesting part of a calculation is often the assumption that came before it. Math Intellect makes mathematical experiments something you can explore, compare and interrogate.",
@@ -165,7 +165,7 @@ export const stories: ReadonlyArray<ProjectStory> = [
     premise: "An answer becomes useful when you can follow its meaning.",
     headline: "A person is more\nthan a result.",
     image: "/products/personality.webp",
-    alt: "Actual personality website",
+    alt: "Personality Assessor assessment and career exploration website preview",
     theme: "personality",
     intro:
       "One answer can reveal more than one kind of evidence. Personality Assessor brings those contributions into a living record, connecting structured scoring with understandable career guidance.",

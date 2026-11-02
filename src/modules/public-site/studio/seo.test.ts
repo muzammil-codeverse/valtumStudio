@@ -58,6 +58,21 @@ describe("Valtum public SEO", () => {
     ]);
   });
 
+  it("uses authentic project screenshots for case-study link previews", () => {
+    const metadata = publicPageMetadata(
+      projectSeo["aegis-sentinel"]!,
+      "/work/aegis-sentinel",
+      "/products/aegis.webp"
+    );
+    expect(metadata.openGraph?.images).toMatchObject([
+      {
+        url: "https://valtumstudio.com.au/products/aegis.webp",
+        width: 1440,
+        height: 900
+      }
+    ]);
+  });
+
   it("gives each live service and case study a distinct, useful SEO title", () => {
     const all = [
       ...Object.values(pageSeo),

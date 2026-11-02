@@ -161,6 +161,11 @@ export function publicPageMetadata(
 ): Metadata {
   const canonical = publicCanonical(path);
   const socialImage = imagePath ? publicCanonical(imagePath) : SEO_SOCIAL_IMAGE;
+  const socialWidth = imagePath ? 1440 : 1200;
+  const socialHeight = imagePath ? 900 : 630;
+  const socialAlt = imagePath
+    ? "Valtum Studio project website screenshot"
+    : "Valtum Studio homepage hero. Good ideas. Beautifully built.";
   return {
     title: copy.title,
     description: copy.description,
@@ -175,9 +180,9 @@ export function publicPageMetadata(
       images: [
         {
           url: socialImage,
-          width: 1200,
-          height: 630,
-          alt: "Valtum Studio homepage hero. Good ideas. Beautifully built."
+          width: socialWidth,
+          height: socialHeight,
+          alt: socialAlt
         }
       ]
     },
