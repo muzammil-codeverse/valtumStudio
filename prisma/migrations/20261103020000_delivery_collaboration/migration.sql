@@ -1,3 +1,10 @@
+-- Customer accounts are a supported authentication role. The inherited
+-- user_role_check omitted client even though the application and the phase-one
+-- customer-registration defaults use this role.
+ALTER TABLE "user" DROP CONSTRAINT IF EXISTS "user_role_check";
+ALTER TABLE "user" ADD CONSTRAINT "user_role_check"
+  CHECK ("role" IS NULL OR "role" IN ('owner', 'admin', 'editor', 'client'));
+
 -- Phase 2 adds verified customer collaboration records without changing existing data.
 -- Production migration requires a tested restorable backup.
 CREATE TYPE "ClientDecisionStatus" AS ENUM ('REQUESTED','APPROVED','CHANGES_REQUESTED','CANCELLED');
