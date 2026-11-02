@@ -263,3 +263,180 @@
   :is(.admin-root, .portal-root) .schedule-calendar { min-width: 595px; }
   :is(.admin-root, .portal-root) .schedule-day { min-height: 110px; }
 }
+
+
+/* Static weekly planning canvas. All states change only after activation. */
+:is(.admin-root, .portal-root) .schedule-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+:is(.admin-root, .portal-root) .schedule-view-switcher {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #f0eff6;
+}
+:is(.admin-root, .portal-root) .schedule-view-switcher a {
+  padding: 8px 13px;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  color: #5b5b70;
+  border-radius: 999px;
+}
+:is(.admin-root, .portal-root) .schedule-view-switcher a[aria-current="page"] {
+  background: #242336;
+  color: #fff;
+}
+:is(.admin-root, .portal-root) .schedule-today {
+  border: 1px solid #e2dfec;
+  border-radius: 999px;
+  padding: 11px 14px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 750;
+  color: #37324e;
+  text-decoration: none;
+}
+:is(.admin-root, .portal-root) .schedule-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(145px, 1fr));
+  min-width: 950px;
+  min-height: 520px;
+}
+:is(.admin-root, .portal-root) .schedule-week-cell {
+  min-width: 0;
+  min-height: 430px;
+  padding: 15px 9px;
+  border-right: 1px solid #e8e7ef;
+  background: #fff;
+}
+:is(.admin-root, .portal-root) .schedule-week-cell:last-child { border-right: 0; }
+:is(.admin-root, .portal-root) .schedule-week-cell--adjacent { background: #faf9fc; }
+:is(.admin-root, .portal-root) .schedule-week-cell--today { background: #f7f5ff; }
+:is(.admin-root, .portal-root) .schedule-week-cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4px;
+  min-height: 76px;
+  padding: 2px 4px 13px;
+  border-bottom: 1px solid #e8e7ef;
+}
+:is(.admin-root, .portal-root) .schedule-week-cell-header time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+:is(.admin-root, .portal-root) .schedule-week-cell-header time span {
+  color: #66687b;
+  font-size: 11px;
+  font-weight: 650;
+}
+:is(.admin-root, .portal-root) .schedule-week-cell-header time strong {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+  font-weight: 780;
+  letter-spacing: -0.05em;
+  border-radius: 50%;
+}
+:is(.admin-root, .portal-root) .schedule-week-cell--today time strong {
+  background: #242336;
+  color: white;
+}
+:is(.admin-root, .portal-root) .schedule-week-count {
+  font-size: 9px;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: #6c687a;
+}
+:is(.admin-root, .portal-root) .schedule-week-events {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding-top: 15px;
+}
+:is(.admin-root, .portal-root) .schedule-week-empty {
+  padding: 4px;
+  color: #858398;
+  font-size: 11px;
+  line-height: 1.5;
+}
+:is(.admin-root, .portal-root) .schedule-week-event {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px 10px;
+  border-radius: 10px;
+  border-left: 3px solid;
+  text-decoration: none;
+}
+:is(.admin-root, .portal-root) .schedule-week-event strong {
+  color: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+:is(.admin-root, .portal-root) .schedule-week-event small {
+  color: inherit;
+  font-size: 10px;
+  line-height: 1.35;
+  opacity: 0.85;
+  overflow-wrap: anywhere;
+}
+:is(.admin-root, .portal-root) .schedule-week-event--milestone {
+  background: #eee8ff;
+  border-color: #765bcc;
+  color: #483185;
+}
+:is(.admin-root, .portal-root) .schedule-week-event--task {
+  background: #dff7f3;
+  border-color: #247d7b;
+  color: #175b5c;
+}
+:is(.admin-root, .portal-root) .schedule-week-event--project {
+  background: #ffede3;
+  border-color: #c46f46;
+  color: #80452b;
+}
+:is(.admin-root, .portal-root) .schedule-week-event--enquiry {
+  background: #fff1d3;
+  border-color: #b88b36;
+  color: #76511d;
+}
+:is(.admin-root, .portal-root) .schedule-overflow summary {
+  padding: 5px 3px;
+  color: #48425c;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+:is(.admin-root, .portal-root) .schedule-overflow .schedule-event {
+  margin-top: 5px;
+}
+@media (max-width: 700px) {
+  :is(.admin-root, .portal-root) .schedule-controls { justify-content: flex-start; }
+  :is(.admin-root, .portal-root) .schedule-week-grid {
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+  }
+  :is(.admin-root, .portal-root) .schedule-week-cell {
+    min-height: 180px;
+    border-bottom: 1px solid #e8e7ef;
+  }
+}
+@media (max-width: 420px) {
+  :is(.admin-root, .portal-root) .schedule-week-grid { grid-template-columns: 1fr; }
+  :is(.admin-root, .portal-root) .schedule-week-cell { min-height: 135px; }
+}

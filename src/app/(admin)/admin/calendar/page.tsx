@@ -21,13 +21,31 @@ export const metadata: Metadata = {
 export default async function CalendarPage({
   searchParams
 }: {
-  searchParams: Promise<{ month?: string }>;
+  searchParams: Promise<{ month?: string; view?: string; date?: string }>;
 }): Promise<React.JSX.Element> {
   const principal = await requirePermission(await headers(), "leads", "read");
-  const month = parseDashboardMonth((await searchParams).month);
+  const params = await searchParams;
+  const month = parseDashboardMonth(params.month);
+  const view = params.view === "month" ? "month" : "week";
   const insight = await fetchDashboardInsight(principal.role, month);
-  const start = new Date(month + "-01T00:00:00.000Z");
-  const end = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 1, 1));
+  const monthStart = new Date(month + "-01T00:00:00.000Z");
+  const monthEnd = new Date(Date.UTC(monthStart.getUTCFullYear(), monthStart.getUTCMonth() + 1, 1));
+  const requestedDate = params.date;
+  const today = new Date().toISOString().slice(0, 10);
+  const selectedDay =
+    requestedDate &&
+    /^\d{4}-\d{2}-\d{2}$/.test(requestedDate) &&
+    !Number.isNaN(Date.parse(requestedDate + "T00:00:00.000Z")) &&
+    new Date(requestedDate + "T00:00:00.000Z").toISOString().slice(0, 10) === requestedDate &&
+    requestedDate.startsWith(month)
+      ? requestedDate
+      : month === today.slice(0, 7) ? today : month + "-01";
+  const weekStart = new Date(selectedDay + "T00:00:00.000Z");
+  weekStart.setUTCDate(weekStart.getUTCDate() - ((weekStart.getUTCDay() + 6) % 7));
+  const weekEnd = new Date(weekStart);
+  weekEnd.setUTCDate(weekEnd.getUTCDate() + 7);
+  const start = view === "week" ? new Date(Math.min(monthStart.getTime(), weekStart.getTime())) : monthStart;
+  const end = view === "week" ? new Date(Math.max(monthEnd.getTime(), weekEnd.getTime())) : monthEnd;
   const includeDelivery =
     isClientPortalEnabled() &&
     can(principal.role, { resource: "clients", action: "read" });
@@ -61,8 +79,19 @@ export default async function CalendarPage({
       ])
     : [[], [], []];
 
+  const leadDates = await prisma.lead.groupBy({
+    by: ["createdAt"],
+    where: { archivedAt: null, createdAt: { gte: start, lt: end } },
+    _count: { _all: true }
+  });
+  const dailyCounts: Record<string, number> = {};
+  for (const lead of leadDates) {
+    const date = lead.createdAt.toISOString().slice(0, 10);
+    dailyCounts[date] = (dailyCounts[date] ?? 0) + lead._count._all;
+  }
+
   const events: ScheduleItem[] = [
-    ...Object.entries(insight.dailyCounts).map(([date, count]) => ({
+    ...Object.entries(dailyCounts).map(([date, count]) => ({
       id: "leads-" + date,
       date,
       title: count + (count === 1 ? " new enquiry" : " new enquiries"),
@@ -119,23 +148,25 @@ export default async function CalendarPage({
         </div>
         <div className="ds-stat ds-stat--lilac">
           <span className="ds-stat-top">Client milestones</span>
-          <strong>{milestones.length}</strong>
+          <strong>{milestones.filter((item) => item.dueDate?.toISOString().startsWith(month)).length}</strong>
           <span className="ds-stat-note">Dated checkpoints for the selected month</span>
         </div>
         <div className="ds-stat ds-stat--blue">
           <span className="ds-stat-top">Delivery tasks</span>
-          <strong>{tasks.length}</strong>
+          <strong>{tasks.filter((item) => item.dueDate?.toISOString().startsWith(month)).length}</strong>
           <span className="ds-stat-note">Tasks scheduled in the selected month</span>
         </div>
         <div className="ds-stat">
           <span className="ds-stat-top">Project targets</span>
-          <strong>{projects.length}</strong>
+          <strong>{projects.filter((item) => item.targetDate?.toISOString().startsWith(month)).length}</strong>
           <span className="ds-stat-note">Planned project completion dates</span>
         </div>
       </div>
       <div style={{ marginTop: 20 }}>
         <ScheduleBoard
           month={month}
+          view={view}
+          selectedDate={params.date}
           path="/admin/calendar"
           items={events}
           title="Operations and delivery"

@@ -11,11 +11,13 @@ export const dynamic = "force-dynamic";
 export default async function ClientCalendarPage({
   searchParams
 }: {
-  searchParams: Promise<{ month?: string }>;
+  searchParams: Promise<{ month?: string; view?: string; date?: string }>;
 }): Promise<React.JSX.Element> {
   const principal = await requireRole(await headers(), "client");
   const data = await getClientDashboard(principal.userId);
-  const requested = (await searchParams).month;
+  const params = await searchParams;
+  const requested = params.month;
+  const view = params.view === "month" ? "month" : "week";
   const month =
     typeof requested === "string" &&
     /^(20\d{2}|2100)-(0[1-9]|1[0-2])$/.test(requested)
@@ -85,6 +87,8 @@ export default async function ClientCalendarPage({
       </div>
       <ScheduleBoard
         month={month}
+        view={view}
+        selectedDate={params.date}
         path="/portal/calendar"
         items={events}
         title="Delivery schedule"
