@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
 
+import { fetchLeadDemand } from "@/modules/admin/server/lead-demand";
 import { fetchDashboardInsight } from "@/modules/admin/server/overview-insights";
+import { DemandAndOutcomes } from "@/modules/admin/ui/analytics/DemandAndOutcomes";
 import {
   LeadVolumeChart,
   PipelinePanel,
@@ -18,7 +20,10 @@ export const metadata: Metadata = {
 
 export default async function AnalyticsPage(): Promise<React.JSX.Element> {
   const principal = await requirePermission(await headers(), "leads", "read");
-  const insight = await fetchDashboardInsight(principal.role);
+  const [insight, demand] = await Promise.all([
+    fetchDashboardInsight(principal.role),
+    fetchLeadDemand(principal.role)
+  ]);
   return (
     <div className="ds-workspace">
       <div className="ds-hero">
@@ -63,6 +68,7 @@ export default async function AnalyticsPage(): Promise<React.JSX.Element> {
         <LeadVolumeChart insight={insight} />
         <PipelinePanel insight={insight} />
       </div>
+      <DemandAndOutcomes demand={demand} insight={insight} />
       <div className="ds-bento-secondary">
         <RecentEnquiries insight={insight} />
         <section className="ds-panel">

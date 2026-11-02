@@ -1,0 +1,111 @@
+/* Read-only operational intelligence, without animations or hover. */
+.admin-root .ds-demand-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+.admin-root .ds-demand-panel,
+.admin-root .ds-outcome-panel {
+  min-width: 0;
+}
+.admin-root .ds-demand-rows {
+  display: grid;
+  gap: 21px;
+  margin-top: 28px;
+}
+.admin-root .ds-demand-row {
+  display: grid;
+  gap: 8px;
+}
+.admin-root .ds-demand-row-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 12px;
+}
+.admin-root .ds-demand-row-label strong {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.admin-root .ds-demand-track {
+  height: 9px;
+  border-radius: 99px;
+  background: #e9e8f0;
+  overflow: hidden;
+}
+.admin-root .ds-demand-track > span {
+  display: block;
+  height: 100%;
+  background: #6455c9;
+  border-radius: inherit;
+}
+.admin-root .ds-demand-row:nth-child(3n + 2) .ds-demand-track > span {
+  background: #95bde7;
+}
+.admin-root .ds-demand-row:nth-child(3n) .ds-demand-track > span {
+  background: #b2aad9;
+}
+.admin-root .ds-outcome-body {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(100px, 0.85fr);
+  align-items: center;
+  gap: 28px;
+  padding: 20px 0 25px;
+}
+.admin-root .ds-outcome-ring {
+  width: min(100%, 200px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 17px;
+}
+.admin-root .ds-outcome-ring > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #fff;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.admin-root .ds-outcome-ring strong {
+  font-size: 31px;
+  letter-spacing: -0.07em;
+}
+.admin-root .ds-outcome-ring span {
+  font-size: 11px;
+  color: #686979;
+}
+.admin-root .ds-outcome-key {
+  display: grid;
+  gap: 13px;
+}
+.admin-root .ds-outcome-key > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-bottom: 1px solid #e8e7f0;
+  padding-bottom: 10px;
+}
+.admin-root .ds-outcome-key span {
+  font-size: 11px;
+  color: #6b6b7b;
+}
+.admin-root .ds-outcome-key strong {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 1080px) {
+  .admin-root .ds-demand-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .admin-root .ds-outcome-body {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+}
