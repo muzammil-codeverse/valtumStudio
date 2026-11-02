@@ -21,7 +21,7 @@ export function serializeJsonLd(data: unknown): string {
  */
 export function buildOrganizationJsonLd(
   appBaseUrl: string,
-  settings: PublicSettingsDTO
+  _settings: PublicSettingsDTO
 ) {
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
   const orgId = `${baseCanonical}#organization`;
