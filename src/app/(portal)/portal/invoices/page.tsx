@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import Link from "next/link";
 
 import { requireRole } from "@/modules/auth/server/authorization";
 import {
@@ -21,6 +22,9 @@ export default async function ClientInvoicesPage(): Promise<React.JSX.Element> {
         eyebrow="WORKSPACE / BILLING"
         title="Your invoices."
         description="Only invoices issued by the studio are shown. Payment processing is not connected in this portal."
+        action={
+          <Link href="/portal/invoices/export">Export billing records (CSV) ↗</Link>
+        }
       />
       {billing.length > 0 ? (
         <div className="portal-finance-overview">

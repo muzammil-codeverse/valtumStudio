@@ -1,0 +1,64 @@
+/* Static client directory controls; no animated movement or transitions. */
+.admin-root .ds-directory-search {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 8px;
+}
+.admin-root .ds-directory-search label {
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+.admin-root .ds-directory-search-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.admin-root .ds-directory-search-row input {
+  flex: 1 1 180px;
+  min-width: 0;
+  border: 1px solid var(--admin-border-strong);
+  border-radius: 13px;
+  background: #fff;
+  padding: 12px 14px;
+  color: var(--admin-text);
+  font-size: 13px;
+}
+.admin-root .ds-directory-search-row button {
+  border: none;
+  border-radius: 13px;
+  background: var(--admin-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 750;
+  padding: 13px 18px;
+}
+.admin-root .ds-directory-search-row a,
+.admin-root .ds-directory-pagination a {
+  color: #4336a6;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.admin-root .ds-directory-search p {
+  color: var(--admin-text-muted);
+  font-size: 11px;
+}
+.admin-root .ds-directory-pagination {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  border-top: 1px solid var(--admin-border);
+  padding-top: 18px;
+}
+.admin-root .ds-directory-pagination span {
+  margin-right: auto;
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+}

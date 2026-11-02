@@ -5,6 +5,11 @@ import { notFound } from "next/navigation";
 
 import { prisma } from "@/lib/database";
 import { requirePermission } from "@/modules/auth/server/authorization";
+import {
+  CLIENT_DIRECTORY_PAGE_SIZE,
+  clientDirectoryUrl,
+  parseClientDirectoryQuery
+} from "@/modules/portal/domain/directory-query";
 import { createClientWorkspaceAction } from "@/modules/portal/server/admin-actions";
 import { isClientPortalEnabled } from "@/modules/portal/server/client-data";
 
@@ -14,14 +19,28 @@ export const metadata: Metadata = {
   robots: { index: false }
 };
 
-export default async function AdminClientsPage(): Promise<React.JSX.Element> {
+export default async function AdminClientsPage({
+  searchParams
+}: {
+  searchParams: Promise<{ q?: string; page?: string }>;
+}): Promise<React.JSX.Element> {
   if (!isClientPortalEnabled()) notFound();
   await requirePermission(await headers(), "clients", "read");
-  const workspaces = await prisma.clientWorkspace.findMany({
-    include: { _count: { select: { memberships: true, engagements: true } } },
-    orderBy: { createdAt: "desc" },
-    take: 100
-  });
+  const { search, page, skip } = parseClientDirectoryQuery(await searchParams);
+  const where = search
+    ? { name: { contains: search, mode: "insensitive" as const } }
+    : {};
+  const [count, workspaces] = await Promise.all([
+    prisma.clientWorkspace.count({ where }),
+    prisma.clientWorkspace.findMany({
+      where,
+      include: { _count: { select: { memberships: true, engagements: true } } },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+      skip,
+      take: CLIENT_DIRECTORY_PAGE_SIZE
+    })
+  ]);
+  const pages = Math.ceil(count / CLIENT_DIRECTORY_PAGE_SIZE);
   return (
     <div className="ds-workspace">
       <div className="ds-hero">
@@ -42,14 +61,38 @@ export default async function AdminClientsPage(): Promise<React.JSX.Element> {
               <span className="ds-kicker">CUSTOMER ACCOUNTS</span>
               <h2>Client workspaces</h2>
             </div>
-            <strong>{workspaces.length} total</strong>
+            <strong>{count} total</strong>
           </div>
+          <form
+            method="get"
+            action="/admin/clients"
+            className="ds-directory-search"
+            role="search"
+          >
+            <label htmlFor="client-directory-search">Find a client workspace</label>
+            <div className="ds-directory-search-row">
+              <input
+                id="client-directory-search"
+                type="search"
+                name="q"
+                defaultValue={search}
+                maxLength={80}
+                placeholder="Search by organization name"
+              />
+              <button type="submit">Search</button>
+              {search ? <Link href="/admin/clients">Clear</Link> : null}
+            </div>
+            <p role="status">
+              {count} matching client {count === 1 ? "workspace" : "workspaces"}
+            </p>
+          </form>
           {workspaces.length === 0 ? (
             <div className="ds-empty">
               <strong>No customer workspaces yet</strong>
               <p>
-                Start by creating a workspace for an actual contracted customer. No demo
-                customers have been added.
+                {search
+                  ? "No client workspaces match this search. Clear the filter to see all clients."
+                  : "Create a workspace for an actual contracted customer. No demo clients have been added."}
               </p>
             </div>
           ) : (
@@ -75,6 +118,22 @@ export default async function AdminClientsPage(): Promise<React.JSX.Element> {
               ))}
             </div>
           )}
+          {pages > 1 ? (
+            <nav
+              className="ds-directory-pagination"
+              aria-label="Client directory pages"
+            >
+              <span>
+                Page {page} of {pages}
+              </span>
+              {page > 1 ? (
+                <Link href={clientDirectoryUrl(search, page - 1)}>Previous</Link>
+              ) : null}
+              {page < pages ? (
+                <Link href={clientDirectoryUrl(search, page + 1)}>Next</Link>
+              ) : null}
+            </nav>
+          ) : null}
         </section>
         <section className="ds-panel">
           <div className="ds-block-heading">

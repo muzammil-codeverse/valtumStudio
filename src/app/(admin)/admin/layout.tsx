@@ -1,5 +1,6 @@
 import "@/modules/admin/ui/shell/delivery.css";
 import "@/modules/admin/ui/shell/workspace.css";
+import "@/modules/admin/ui/shell/directory.css";
 
 import type { Metadata } from "next";
 import { headers } from "next/headers";
