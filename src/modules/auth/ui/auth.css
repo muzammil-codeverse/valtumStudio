@@ -1,0 +1,312 @@
+/* Valtum Studio private identity system. No marketing motion is imported. */
+.valtum-auth-root {
+  --auth-ink: #202125;
+  --auth-paper: #e3e4e8;
+  --auth-line: #c9cbd1;
+  --auth-muted: #646873;
+  --auth-focus: #4d6083;
+  display: grid;
+  grid-template-columns: minmax(330px, 49%) minmax(420px, 51%);
+  min-height: 100svh;
+  background: #f7f7f8;
+  color: var(--auth-ink);
+  font-family: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.valtum-auth-root *,
+.valtum-auth-root *::before,
+.valtum-auth-root *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+.valtum-auth-root :focus-visible {
+  outline: 3px solid var(--auth-focus);
+  outline-offset: 4px;
+}
+.valtum-auth-root h1,
+.valtum-auth-root h2,
+.valtum-auth-root p {
+  margin: 0;
+}
+.valtum-auth-root .auth-editorial {
+  min-height: 100svh;
+  background: #25282d;
+  color: #f1f1f2;
+  padding: clamp(28px, 3.4vw, 64px) clamp(28px, 4.2vw, 82px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 72px;
+}
+.valtum-auth-root .auth-brand,
+.valtum-auth-root .auth-return {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  width: max-content;
+}
+.valtum-auth-root .auth-brand {
+  color: #f0f1f3;
+  gap: 12px;
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -0.07em;
+}
+.valtum-auth-root .auth-brand-mark {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #8a8e96;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  letter-spacing: -0.1em;
+  font-weight: 550;
+  border-radius: 10px;
+}
+.valtum-auth-root .auth-editorial-body {
+  max-width: 650px;
+  padding-bottom: min(5vh, 60px);
+}
+.valtum-auth-root .auth-editorial-body h2 {
+  font-size: clamp(54px, 6vw, 108px);
+  line-height: 0.98;
+  letter-spacing: -0.077em;
+  font-weight: 420;
+  text-wrap: balance;
+}
+.valtum-auth-root .auth-editorial-body h2 em {
+  display: block;
+  font-style: normal;
+  color: #a9b0bc;
+  font-weight: 400;
+}
+.valtum-auth-root .auth-editorial-body p {
+  max-width: 380px;
+  margin-top: 34px;
+  font-size: clamp(14px, 1.2vw, 17px);
+  color: #c0c3c9;
+  line-height: 1.75;
+}
+.valtum-auth-root .auth-editorial-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #a6aab3;
+  font-size: 12px;
+}
+.valtum-auth-root .auth-form-side {
+  min-width: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 3.4vw, 64px) clamp(30px, 6.5vw, 115px);
+}
+.valtum-auth-root .auth-form-top,
+.valtum-auth-root .auth-form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--auth-muted);
+}
+.valtum-auth-root .auth-form-top a,
+.valtum-auth-root .auth-form-footer a {
+  color: var(--auth-ink);
+  text-decoration: none;
+  font-weight: 650;
+}
+.valtum-auth-root .auth-form-top a {
+  border-bottom: 1px solid #858892;
+  padding-bottom: 3px;
+}
+.valtum-auth-root .auth-form-main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+}
+.valtum-auth-root .auth-card {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  width: min(100%, 490px);
+  max-width: 490px;
+  background: transparent;
+}
+.valtum-auth-root .auth-card > h1 {
+  font-weight: 500;
+  font-size: clamp(37px, 3.9vw, 62px);
+  letter-spacing: -0.063em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.valtum-auth-root .auth-intro {
+  margin-top: 18px;
+  color: var(--auth-muted);
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 410px;
+}
+.valtum-auth-root .auth-form {
+  display: grid;
+  gap: 11px;
+  margin-top: 42px;
+}
+.valtum-auth-root .auth-form label {
+  color: #30343b;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  margin-top: 8px;
+}
+.valtum-auth-root .auth-form input {
+  width: 100%;
+  height: 55px;
+  border: 1px solid var(--auth-line);
+  background: white;
+  border-radius: 8px;
+  padding: 13px 16px;
+  color: var(--auth-ink);
+  font-size: 15px;
+}
+.valtum-auth-root .auth-form input:focus {
+  border-color: #59647a;
+}
+.valtum-auth-root .auth-form button,
+.valtum-auth-root .auth-action-link {
+  margin-top: 18px;
+  min-height: 55px;
+  width: 100%;
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid #25282d;
+  border-radius: 8px;
+  background: #25282d;
+  color: white;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+.valtum-auth-root .auth-form button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.valtum-auth-root .auth-form button span {
+  font-size: 19px;
+}
+.valtum-auth-root .auth-help {
+  color: #6a6d76;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+.valtum-auth-root .auth-error {
+  background: #fff0f0;
+  border: 1px solid #e9b0b1;
+  padding: 12px 14px;
+  border-radius: 7px;
+  color: #9d292e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.valtum-auth-root .auth-switch,
+.valtum-auth-root .auth-bottom-note {
+  margin-top: 25px;
+  font-size: 13px;
+  color: var(--auth-muted);
+  line-height: 1.65;
+}
+.valtum-auth-root .auth-switch a,
+.valtum-auth-root .auth-bottom-note a {
+  color: #24272d;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.valtum-auth-root .auth-result {
+  display: grid;
+  gap: 18px;
+  margin-top: 42px;
+}
+.valtum-auth-root .auth-result-symbol {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  background: #e1e7dd;
+  color: #3f6846;
+  font-size: 24px;
+}
+.valtum-auth-root .auth-result h2 {
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+.valtum-auth-root .auth-result p {
+  color: var(--auth-muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.valtum-auth-root .auth-recovery-codes,
+.valtum-auth-root .auth-code {
+  overflow-wrap: anywhere;
+}
+.valtum-auth-root .auth-code {
+  background: #eceef1;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 11px;
+}
+.valtum-auth-root .auth-form-footer {
+  border-top: 1px solid #d9dade;
+  padding-top: 20px;
+}
+@media (max-width: 1020px) {
+  .valtum-auth-root {
+    grid-template-columns: minmax(280px, 42%) minmax(360px, 58%);
+  }
+  .valtum-auth-root .auth-editorial-body h2 {
+    font-size: clamp(46px, 5vw, 74px);
+  }
+  .valtum-auth-root .auth-form-side {
+    padding-inline: clamp(32px, 5vw, 70px);
+  }
+}
+@media (max-width: 780px) {
+  .valtum-auth-root {
+    display: block;
+    min-height: 100svh;
+  }
+  .valtum-auth-root .auth-editorial {
+    min-height: auto;
+    padding: 26px 6%;
+    gap: 0;
+  }
+  .valtum-auth-root .auth-editorial-body,
+  .valtum-auth-root .auth-editorial-footer {
+    display: none;
+  }
+  .valtum-auth-root .auth-form-side {
+    min-height: calc(100svh - 90px);
+    padding: 28px 6% 25px;
+  }
+  .valtum-auth-root .auth-form-main {
+    padding: 55px 0;
+  }
+  .valtum-auth-root .auth-card > h1 {
+    font-size: clamp(38px, 8.8vw, 54px);
+  }
+  .valtum-auth-root .auth-form {
+    margin-top: 30px;
+  }
+}

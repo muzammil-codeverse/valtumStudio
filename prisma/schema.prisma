@@ -767,13 +767,13 @@ model User {
   createdAt                   DateTime  @default(now())
   updatedAt                   DateTime  @updatedAt
   twoFactorEnabled            Boolean?  @default(false)
-  role                        String?   @default("editor")
+  role                        String?   @default("client")
   banned                      Boolean?  @default(false)
   banReason                   String?
   banExpires                  DateTime?
   lastPasswordChangedAt       DateTime?
   lastSuccessfulLoginAt       DateTime?
-  mustChangePassword          Boolean?  @default(true)
+  mustChangePassword          Boolean?  @default(false)
   recoveryCodesAcknowledgedAt DateTime?
 
   sessions          Session[]
