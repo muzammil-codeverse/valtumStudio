@@ -9,6 +9,7 @@ import {
 } from "@/modules/public-site/studio/SceneElements";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
 import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
+import { LeadershipSection } from "@/modules/public-site/studio/LeadershipSection";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.studio, "/studio");
 export default function StudioPage(): React.JSX.Element {
@@ -173,6 +174,7 @@ export default function StudioPage(): React.JSX.Element {
           </article>
         </div>
       </section>
+      <LeadershipSection />
       <PracticeReel />
       <MediaTakeover
         image="sculpture"
