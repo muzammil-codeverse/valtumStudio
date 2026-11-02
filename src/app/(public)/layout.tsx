@@ -5,6 +5,7 @@ import "@/modules/public-site/studio/experience.css";
 import "@/modules/public-site/studio/choreography.css";
 import "@/modules/public-site/studio/hero.css";
 import "@/modules/public-site/studio/device-polish.css";
+import "@/modules/public-site/studio/footer.css";
 
 import type { ReactNode } from "react";
 

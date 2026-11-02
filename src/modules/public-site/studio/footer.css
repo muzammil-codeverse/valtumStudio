@@ -1,0 +1,350 @@
+/* A restrained extension of the approved editorial Valtum footer. */
+.valtum .v-footer--presence {
+  background: #181a1e;
+  color: #eef0f4;
+}
+.valtum .v-footer--presence a {
+  color: inherit;
+}
+.v-footer--presence .v-footer-invite {
+  border-bottom: 1px solid rgba(238, 240, 244, 0.18);
+}
+.vf-direct {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+  gap: clamp(42px, 8vw, 120px);
+  padding: clamp(55px, 8vw, 120px) 0;
+  align-items: start;
+}
+.vf-direct-intro {
+  max-width: 480px;
+}
+.vf-direct-intro h2,
+.vf-network-intro h2 {
+  font-size: clamp(31px, 3.5vw, 56px);
+  line-height: 1.13;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+.vf-direct-intro > p,
+.vf-network-intro > p {
+  margin-top: 24px;
+  max-width: 390px;
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.8;
+  color: #b2b8c2;
+}
+.vf-project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 38px;
+  border-bottom: 1px solid #818893;
+  padding: 0 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.vf-project-link span,
+.vf-channel-arrow,
+.vf-profile-arrow {
+  transition: transform 220ms ease;
+}
+.vf-project-link:hover span,
+.vf-contact-method:hover .vf-channel-arrow,
+.vf-email:hover .vf-channel-arrow,
+.vf-profile-link:hover .vf-profile-arrow {
+  transform: translate(3px, -3px);
+}
+.vf-direct-channels {
+  min-width: 0;
+}
+.vf-email {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 19px 12px;
+  padding: 7px 0 32px;
+  border-bottom: 1px solid rgba(238, 240, 244, 0.23);
+  min-width: 0;
+}
+.vf-channel-label {
+  color: #aeb5c0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.045em;
+}
+.vf-email-address {
+  min-width: 0;
+  font-size: clamp(18px, 2.15vw, 33px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
+}
+.vf-email > .vf-channel-arrow {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  font-size: 26px;
+}
+.vf-direct-secondary {
+  display: flex;
+  align-items: stretch;
+  gap: 22px;
+  justify-content: space-between;
+  padding-top: 28px;
+}
+.vf-contact-method {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 13px;
+  align-content: start;
+  font-size: clamp(14px, 1.1vw, 17px);
+  font-weight: 400;
+}
+.vf-contact-method .vf-channel-label {
+  grid-column: 1 / -1;
+}
+.vf-contact-method--whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: end;
+  min-height: 44px;
+  border: 1px solid #66707c;
+  border-radius: 100px;
+  padding: 10px 17px;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.vf-contact-method--whatsapp img {
+  display: block;
+  width: 19px;
+  height: 19px;
+}
+.vf-contact-method--whatsapp .vf-channel-arrow {
+  margin-left: 12px;
+}
+.vf-network {
+  border-top: 1px solid rgba(238, 240, 244, 0.22);
+  padding: clamp(48px, 6vw, 86px) 0 clamp(64px, 8vw, 120px);
+}
+.vf-network-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  gap: 35px;
+  align-items: end;
+  margin-bottom: clamp(45px, 6vw, 85px);
+}
+.vf-network-intro > p {
+  margin: 0;
+  justify-self: end;
+}
+.vf-network-directory {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(22px, 4vw, 75px);
+}
+.vf-network-group,
+.vf-registered {
+  min-width: 0;
+}
+.vf-network-group h3 {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  margin-bottom: 18px;
+  color: #adb4bf;
+}
+.vf-network-group nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.vf-profile-link {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  min-height: 58px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(238, 240, 244, 0.14);
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.4;
+  color: #f2f3f6;
+}
+.vf-profile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+  border: 1px solid #535b66;
+  background: #252a31;
+}
+.vf-profile-icon img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.vf-profile-arrow {
+  font-size: 16px;
+  color: #abb3bf;
+}
+.vf-registered {
+  border-left: 1px solid rgba(238, 240, 244, 0.16);
+  padding-left: clamp(24px, 3vw, 52px);
+  align-self: start;
+}
+.vf-registered-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  font-size: 18px;
+  letter-spacing: -0.06em;
+  color: #dadde3;
+  border: 1px solid #646b76;
+  border-radius: 50%;
+}
+.vf-registered p {
+  font-size: clamp(18px, 1.55vw, 24px);
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  margin: 24px 0 21px;
+}
+.vf-registered a {
+  display: inline-flex;
+  gap: 20px;
+  justify-content: space-between;
+  border-bottom: 1px solid #777f8c;
+  padding-bottom: 10px;
+  font-size: 12px;
+  color: #bfc5ce !important;
+}
+.valtum .vf-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 30px;
+  padding: 24px 0 0;
+  border-top: 1px solid rgba(238, 240, 244, 0.2);
+  color: #bbc1cb;
+  font-size: 12px;
+}
+.vf-footer-bottom p {
+  white-space: nowrap;
+}
+.valtum .vf-footer-bottom nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 26px;
+}
+.vf-footer-bottom nav a:hover,
+.vf-footer-bottom nav a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.v-footer--presence .v-footer-word {
+  user-select: text;
+}
+.v-contact-reach {
+  margin-top: 17px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.v-contact-reach a {
+  color: #222832;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+@media (max-width: 1050px) {
+  .vf-direct {
+    gap: 48px;
+  }
+  .vf-network-directory {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
+  .vf-registered {
+    grid-column: 1 / -1;
+    border-left: 0;
+    border-top: 1px solid rgba(238, 240, 244, 0.16);
+    padding: 26px 0 0;
+  }
+  .vf-registered p {
+    max-width: 420px;
+  }
+}
+@media (max-width: 760px) {
+  .vf-direct {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    padding: 60px 0 70px;
+  }
+  .vf-direct-intro h2,
+  .vf-network-intro h2 {
+    font-size: clamp(35px, 8vw, 49px);
+  }
+  .vf-network-intro {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .vf-network-intro > p {
+    justify-self: start;
+  }
+  .vf-network-directory {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+  .vf-network-group {
+    max-width: 540px;
+  }
+  .vf-registered {
+    grid-column: auto;
+  }
+  .vf-direct-secondary {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .vf-contact-method--whatsapp {
+    align-self: auto;
+  }
+  .valtum .vf-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .vf-footer-bottom > span {
+    display: none;
+  }
+}
+@media (max-width: 440px) {
+  .vf-direct-secondary {
+    display: grid;
+    gap: 26px;
+  }
+  .vf-contact-method--whatsapp {
+    justify-self: start;
+  }
+  .vf-email-address {
+    font-size: clamp(17px, 4.2vw, 23px);
+  }
+  .vf-profile-link {
+    min-height: 54px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vf-project-link span,
+  .vf-profile-arrow,
+  .vf-channel-arrow {
+    transition: none;
+  }
+}

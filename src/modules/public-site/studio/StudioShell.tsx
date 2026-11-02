@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { PreviewMotionContext } from "./DevicePreview";
+import { StudioFooter } from "./StudioFooter";
 import { mountStudioMotion } from "./motion";
 import { RouteSequence } from "./route-sequence";
 import { mountSmoothScroll } from "./smooth-scroll";
@@ -340,33 +341,7 @@ export function StudioShell({ children }: { children: ReactNode }): React.JSX.El
           </div>
         </dialog>
         {children}
-        <footer className="v-footer">
-          <div className="v-footer-invite" data-reveal>
-            <Link href="/contact">
-              What are you
-              <br />
-              <em>imagining?</em>
-              <span aria-hidden="true">↗</span>
-            </Link>
-          </div>
-          <div className="v-footer-meta">
-            <Link href="/">Valtum Studio</Link>
-            <p>
-              An Australian software studio for products, systems and digital
-              experiences.
-            </p>
-            <nav aria-label="Footer navigation">
-              <Link href="/work">Work</Link>
-              <Link href="/contact">Get in touch</Link>
-              <Link href="/privacy">Privacy</Link>
-            </nav>
-            <span>© {new Date().getFullYear()}</span>
-          </div>
-          <div className="v-footer-word">
-            <span className="v-footer-name">VALTUM</span>
-            <span className="v-footer-studio">STUDIO</span>
-          </div>
-        </footer>{" "}
+        <StudioFooter />
         <div
           className="v-route-curtain x-route-curtain"
           ref={curtain}
