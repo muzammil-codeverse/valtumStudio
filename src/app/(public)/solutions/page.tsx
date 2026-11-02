@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DevicePreview } from "@/modules/public-site/studio/DevicePreview";
 import { InlinePhoto, MediaTakeover } from "@/modules/public-site/studio/SceneElements";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 export const metadata: Metadata = publicPageMetadata(pageSeo.solutions, "/solutions");
 const situations = [
   {
@@ -71,6 +72,7 @@ const situations = [
 export default function SolutionsPage(): React.JSX.Element {
   return (
     <main className="x-solutions" id="main-content">
+      <SeoBreadcrumb title="Solutions" path="/solutions" />
       <header className="m-solutions-opening">
         <h1>
           What if

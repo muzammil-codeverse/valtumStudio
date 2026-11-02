@@ -4,11 +4,13 @@ import Link from "next/link";
 import { Archive } from "@/modules/public-site/studio/Archive";
 import { stories } from "@/modules/public-site/studio/content";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 export const metadata: Metadata = publicPageMetadata(pageSeo.work, "/work");
 export const dynamic = "force-dynamic";
 export default function WorkPage(): React.JSX.Element {
   return (
     <main className="x-work-page" id="main-content">
+      <SeoBreadcrumb title="Work" path="/work" />
       <header className="x-editorial-heading">
         <h1>
           The work,

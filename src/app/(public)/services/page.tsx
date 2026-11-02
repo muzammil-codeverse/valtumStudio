@@ -8,11 +8,13 @@ import {
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 import { serviceStories } from "@/modules/public-site/studio/services";
 export const metadata: Metadata = publicPageMetadata(pageSeo.services, "/services");
 export default function ServicesPage(): React.JSX.Element {
   return (
     <main className="x-services-page" id="main-content">
+      <SeoBreadcrumb title="Services" path="/services" />
       <header className="m-services-opening">
         <div className="m-services-title">
           <h1>
