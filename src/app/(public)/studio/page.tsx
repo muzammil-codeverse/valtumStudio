@@ -88,9 +88,7 @@ export default function StudioPage(): React.JSX.Element {
               Australian Business Register
             </a>
             . For enquiries, email{" "}
-            <a href="mailto:hello@valtumstudio.com.au">
-              hello@valtumstudio.com.au
-            </a>
+            <a href="mailto:hello@valtumstudio.com.au">hello@valtumstudio.com.au</a>
             .
           </p>
         </div>
