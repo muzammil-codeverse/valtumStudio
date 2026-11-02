@@ -64,7 +64,6 @@ export function PortalShell({
 }
 
 export function PortalHeader({
-  eyebrow,
   title,
   description,
   action
@@ -77,7 +76,6 @@ export function PortalHeader({
   return (
     <div className="portal-page-header">
       <div>
-        <span className="portal-kicker">{eyebrow}</span>
         <h1>{title}</h1>
         {description ? <p>{description}</p> : null}
       </div>

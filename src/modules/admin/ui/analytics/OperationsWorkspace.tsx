@@ -47,7 +47,6 @@ function StatTile({
 }
 
 function BlockHeading({
-  kicker,
   title,
   description,
   href,
@@ -62,7 +61,6 @@ function BlockHeading({
   return (
     <div className="ds-block-heading">
       <div>
-        <span className="ds-kicker">{kicker}</span>
         <h2>{title}</h2>
         {description ? <p>{description}</p> : null}
       </div>

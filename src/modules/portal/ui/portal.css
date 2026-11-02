@@ -91,7 +91,7 @@
   font-size: 13px;
   text-decoration: none;
 }
-.portal-root .portal-sidebar nav a:hover,
+.portal-root .portal-sidebar nav a:focus-visible,
 .portal-root .portal-sidebar nav a:focus-visible {
   background: #373152;
   color: #fff;
@@ -589,3 +589,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Editorial headings, without decorative eyebrow labels. */
+.portal-root .portal-kicker,
+.portal-root .portal-nav-caption { display: none !important; }
+.portal-root .portal-brand { margin-bottom: 27px; }
+.portal-root .portal-page-header h1 { margin-top: 0; }

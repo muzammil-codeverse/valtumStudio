@@ -190,8 +190,8 @@
   text-decoration: none;
   font-weight: 750;
 }
-.portal-root .portal-insight-project-heading a:hover,
-.portal-root .portal-insight-upcoming a:hover {
+.portal-root .portal-insight-project-heading a:focus-visible,
+.portal-root .portal-insight-upcoming a:focus-visible {
   text-decoration: underline;
 }
 .portal-root .portal-insight-meter {

@@ -122,7 +122,7 @@
   box-shadow: 0 6px 24px rgb(18 16 48 / 3%);
 }
 .admin-root .ds-stat:focus-visible,
-.admin-root .ds-stat:hover {
+.admin-root .ds-stat:focus-visible {
   border-color: #8276da;
 }
 .admin-root .ds-stat-top {
@@ -401,7 +401,7 @@
   text-decoration: none;
   font-size: 21px;
 }
-.admin-root .ds-month-nav a:hover {
+.admin-root .ds-month-nav a:focus-visible {
   background: #e7e2fb;
 }
 .admin-root .ds-month-nav span {
@@ -675,3 +675,6 @@
 .admin-root .ds-panel button {
   cursor: pointer;
 }
+
+/* Private operations pages use headings rather than ornamental eyebrow labels. */
+.admin-root .ds-kicker { display: none !important; }

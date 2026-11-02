@@ -65,7 +65,7 @@ export function AdminMobileDrawer({
         <button
           onClick={onClose}
           aria-label="Close menu"
-          className="absolute right-4 top-4 p-1.5 hover:bg-[var(--admin-surface-hover)] text-[var(--admin-text-secondary)] rounded-md focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 z-50"
+          className="absolute right-4 top-4 p-1.5 focus-visible:bg-[var(--admin-surface-hover)] text-[var(--admin-text-secondary)] rounded-md focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 z-50"
         >
           <CloseIcon size={18} />
         </button>

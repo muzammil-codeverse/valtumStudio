@@ -132,7 +132,7 @@
   font-weight: 750;
   text-decoration: none;
 }
-.admin-root .delivery-admin-schedule a:hover {
+.admin-root .delivery-admin-schedule a:focus-visible {
   text-decoration: underline;
 }
 .admin-root .delivery-admin-schedule small {

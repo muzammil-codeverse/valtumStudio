@@ -86,7 +86,7 @@ export function AdminSidebar({
                         className={`flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md transition-all focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2 ${
                           isActive
                             ? "bg-[var(--admin-surface-selected)] text-[var(--admin-text)] border-l-2 border-[var(--admin-accent)] pl-2.5"
-                            : "text-[var(--admin-text-secondary)] hover:bg-[var(--admin-surface-hover)] hover:text-[var(--admin-text)]"
+                            : "text-[var(--admin-text-secondary)] focus-visible:bg-[var(--admin-surface-hover)] focus-visible:text-[var(--admin-text)]"
                         }`}
                       >
                         <AdminIcon

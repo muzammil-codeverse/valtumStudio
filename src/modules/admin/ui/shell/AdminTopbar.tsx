@@ -24,7 +24,7 @@ export function AdminTopbar({
         <button
           onClick={onOpenMobileDrawer}
           aria-label="Open navigation menu"
-          className="lg:hidden p-1.5 hover:bg-[var(--admin-surface-hover)] text-[var(--admin-text-secondary)] rounded-md focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
+          className="lg:hidden p-1.5 focus-visible:bg-[var(--admin-surface-hover)] text-[var(--admin-text-secondary)] rounded-md focus-visible:outline-2 focus-visible:outline-[var(--admin-accent)] focus-visible:outline-offset-2"
         >
           <MenuIcon size={20} />
         </button>
