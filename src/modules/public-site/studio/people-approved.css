@@ -173,7 +173,7 @@
   transition: transform 0.6s cubic-bezier(0.22, 0.72, 0.31, 1);
 }
 .vp-person--technical .vp-person-photo img {
-  object-position: center 23%;
+  object-position: center top;
   transform: none;
 }
 .vp-person summary:hover .vp-person-photo img {
