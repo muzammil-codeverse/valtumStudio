@@ -20,9 +20,10 @@ export default function StudioPage(): React.JSX.Element {
           <em>what comes next.</em>
         </h1>
         <p>
-          Valtum is an independent Australian software studio. We work directly with the
-          people shaping a business to create software and digital experiences with a
-          clear purpose.
+          Valtum Studio is an Australian-registered software and digital product studio
+          founded in 2026 by Abdur Rehman Khalid. We build custom applications, SaaS
+          platforms, connected business systems and distinctive digital experiences
+          for teams in Australia and internationally.
         </p>
       </header>
       <div className="x-studio-collage">
@@ -73,6 +74,22 @@ export default function StudioPage(): React.JSX.Element {
             You should know why a decision was made, where the work stands and what
             happens next. We keep those conversations close, wherever you are in the
             world.
+          </p>
+          <p>
+            Our business name is registered in Australia. You can verify the public
+            record through the{" "}
+            <a
+              href="https://abr.business.gov.au/ABN/View?id=24207947663"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Australian Business Register
+            </a>
+            . For enquiries, email{" "}
+            <a href="mailto:hello@valtumstudio.com.au">
+              hello@valtumstudio.com.au
+            </a>
+            .
           </p>
         </div>
       </section>

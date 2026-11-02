@@ -711,6 +711,9 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
         expect(jsonLd.telephone).toBeUndefined();
         expect(jsonLd.name).toBe("Valtum Studio");
         expect(jsonLd.alternateName).toBe("Valtum");
+        expect(jsonLd.founder.name).toBe("Abdur Rehman Khalid");
+        expect(jsonLd.foundingDate).toBe("2026");
+        expect(jsonLd.identifier.value).toBe("24 207 947 663");
         expect(jsonLd.description).toContain("Australian software");
         expect(jsonLd.sameAs).toEqual([
           "https://clutch.co/profile/valtum-studio",

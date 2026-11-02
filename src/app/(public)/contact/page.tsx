@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { siteConfig } from "@/config/site";
 import { loadHomePageData } from "@/modules/public-site/home/data/home-loader";
 import { ContactForm } from "@/modules/public-site/studio/ContactForm";
 import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
@@ -8,6 +9,7 @@ export const metadata: Metadata = publicPageMetadata(pageSeo.contact, "/contact"
 export const dynamic = "force-dynamic";
 export default async function ContactPage(): Promise<React.JSX.Element> {
   const { settings } = await loadHomePageData();
+  const publicEmail = settings.publicEmail?.trim() || siteConfig.publicEmail;
   return (
     <main className="v-contact" id="main-content">
       <div className="v-contact-intro">
@@ -20,15 +22,13 @@ export default async function ContactPage(): Promise<React.JSX.Element> {
           An idea, a difficult process or a business ready for something better. Tell us
           where you are and what you want to change.
         </p>
-        {settings.publicEmail && (
-          <a
-            className="v-text-link"
-            href={`mailto:${settings.publicEmail}`}
-            style={{ marginTop: 35 }}
-          >
-            {settings.publicEmail} ↗
-          </a>
-        )}
+        <a
+          className="v-text-link"
+          href={`mailto:${publicEmail}`}
+          style={{ marginTop: 35 }}
+        >
+          {publicEmail} ↗
+        </a>
         <p className="v-contact-tip">
           An Australian studio for ideas with a wider horizon.
         </p>

@@ -49,6 +49,18 @@ export function buildOrganizationJsonLd(
     "@id": orgId,
     name: "Valtum Studio",
     alternateName: "Valtum",
+    foundingDate: "2026",
+    founder: {
+      "@type": "Person",
+      name: "Abdur Rehman Khalid",
+      url: "https://www.linkedin.com/in/abdurrehmankhalid/"
+    },
+    identifier: {
+      "@type": "PropertyValue",
+      propertyID: "Australian Business Number",
+      value: "24 207 947 663",
+      url: "https://abr.business.gov.au/ABN/View?id=24207947663"
+    },
     url: baseCanonical,
     logo: {
       "@type": "ImageObject",

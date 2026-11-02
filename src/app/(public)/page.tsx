@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { siteConfig } from "@/config/site";
 import {
   buildOrganizationJsonLd,
   buildWebSiteJsonLd,
@@ -28,7 +29,12 @@ export default async function PublicHomePage(): Promise<React.JSX.Element> {
         id="valtum-organization-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(buildOrganizationJsonLd(SEO_ORIGIN, data.settings))
+          __html: serializeJsonLd(
+            buildOrganizationJsonLd(SEO_ORIGIN, {
+              ...data.settings,
+              publicEmail: data.settings.publicEmail?.trim() || siteConfig.publicEmail
+            })
+          )
         }}
       />
       <script
