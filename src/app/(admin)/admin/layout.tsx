@@ -7,11 +7,11 @@ import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { AdminShell } from "@/modules/admin/ui/shell/AdminShell";
-import { isClientPortalEnabled } from "@/modules/portal/server/client-data";
 import {
   getAuthenticationAssurance,
   getOptionalSession
 } from "@/modules/auth/server/authorization";
+import { isClientPortalEnabled } from "@/modules/portal/server/client-data";
 
 export const metadata: Metadata = {
   robots: {
