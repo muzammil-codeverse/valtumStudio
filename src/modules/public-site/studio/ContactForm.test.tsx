@@ -16,12 +16,9 @@ async function fillForm(): Promise<ReturnType<typeof userEvent.setup>> {
   const user = userEvent.setup();
   await user.type(screen.getByLabelText("Your name"), "Example Person");
   await user.type(screen.getByLabelText("Email address"), "example@example.com");
-  await user.selectOptions(
-    screen.getByLabelText("What do you have in mind?"),
-    "AI_OR_AUTOMATION"
-  );
+  await user.click(screen.getByRole("radio", { name: "AI and automation" }));
   await user.type(
-    screen.getByLabelText("Tell us a little about it"),
+    screen.getByLabelText(/Tell us what needs to change/),
     "A considered workflow for a new product idea."
   );
   await user.click(screen.getByRole("checkbox"));
@@ -34,7 +31,7 @@ describe("Project enquiry", () => {
     vi.stubGlobal("fetch", fetcher);
     render(<ContactForm />);
     const user = await fillForm();
-    await user.click(screen.getByRole("button", { name: /Begin a conversation/ }));
+    await user.click(screen.getByRole("button", { name: /Send your enquiry/ }));
     expect(fetcher).toHaveBeenCalledOnce();
     const call = fetcher.mock.calls[0];
     if (!call) throw new Error("The form did not submit");
@@ -43,6 +40,8 @@ describe("Project enquiry", () => {
     const payload = JSON.parse(options.body);
     expect(leadSubmissionSchema.safeParse(payload).success).toBe(true);
     expect(payload.projectType).toBe("AI_OR_AUTOMATION");
+    expect(payload.serviceInterests).toEqual(["AI_AND_AUTOMATION"]);
+    expect(payload.consentVersion).toBe("valtum-contact-v3");
     expect(
       await screen.findByRole("heading", { name: "A good place to begin." })
     ).toBeInTheDocument();
