@@ -7,6 +7,7 @@ import "@/modules/public-site/studio/hero.css";
 import "@/modules/public-site/studio/device-polish.css";
 import "@/modules/public-site/studio/footer.css";
 import "@/modules/public-site/studio/leadership.css";
+import "@/modules/public-site/studio/leadership.css";
 import "@/modules/public-site/studio/contact-editorial.css";
 import "@/modules/public-site/studio/cookie-consent.css";
 import "@/modules/public-site/studio/cookie-notice.css";

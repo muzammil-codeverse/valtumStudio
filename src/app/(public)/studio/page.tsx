@@ -203,6 +203,76 @@ export default function StudioPage(): React.JSX.Element {
           </article>
         ))}
       </section>
+      <section className="x-leadership" id="team" aria-labelledby="leadership-title">
+        <div className="x-leadership-heading" data-reveal>
+          <div>
+            <span className="x-leadership-index">Valtum Studio / Leadership</span>
+            <h2 id="leadership-title">
+              The people
+              <br />
+              <em>behind the work.</em>
+            </h2>
+          </div>
+          <p>
+            A close collaboration between product direction and engineering. Two
+            perspectives, one responsibility: to build things that stand up to use.
+          </p>
+        </div>
+        <div className="x-leadership-grid">
+          <article className="x-person" data-reveal>
+            <div className="x-person-image">
+              <Image
+                src="/team/abdurrehman-khalid.webp"
+                alt="Portrait of Abdurrehman Khalid, founder and CEO of Valtum Studio"
+                fill
+                sizes="(max-width: 760px) 86vw, 42vw"
+              />
+              <span className="x-person-number" aria-hidden="true">
+                01
+              </span>
+            </div>
+            <div className="x-person-details">
+              <div>
+                <h3>Abdurrehman Khalid</h3>
+                <p className="x-person-role">Founder &amp; CEO</p>
+              </div>
+              <p className="x-person-bio">
+                Leads the studio’s direction and client relationships, bringing
+                business questions and product decisions into the same conversation.
+              </p>
+            </div>
+          </article>
+          <article className="x-person x-person--offset" data-reveal>
+            <div className="x-person-image">
+              <Image
+                src="/team/muzammil-hassan.webp"
+                alt="Portrait of Muzammil Hassan, CTO of Valtum Studio"
+                fill
+                sizes="(max-width: 760px) 86vw, 42vw"
+              />
+              <span className="x-person-number" aria-hidden="true">
+                02
+              </span>
+            </div>
+            <div className="x-person-details">
+              <div>
+                <h3>Muzammil Hassan</h3>
+                <p className="x-person-role">Chief Technology Officer</p>
+              </div>
+              <p className="x-person-bio">
+                Guides technical architecture and engineering delivery, with
+                attention to the decisions that make software reliable and useful.
+              </p>
+            </div>
+          </article>
+        </div>
+        <div className="x-leadership-bottom">
+          <span>Small by design. Close to the work.</span>
+          <Link href="/contact">
+            Start a conversation <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+      </section>
       <section className="x-studio-place">
         <Image
           src="/editorial/sydney.webp"
