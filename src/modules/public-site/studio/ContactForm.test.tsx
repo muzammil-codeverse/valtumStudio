@@ -14,11 +14,11 @@ afterEach(() => {
 
 async function fillForm(): Promise<ReturnType<typeof userEvent.setup>> {
   const user = userEvent.setup();
-  await user.type(screen.getByLabelText("Your name"), "Example Person");
-  await user.type(screen.getByLabelText("Email address"), "example@example.com");
-  await user.click(screen.getByRole("radio", { name: "AI and automation" }));
+  await user.type(screen.getByLabelText(/Your name/), "Example Person");
+  await user.type(screen.getByLabelText(/Email address/), "example@example.com");
+  await user.click(screen.getByRole("radio", { name: /AI or automation/ }));
   await user.type(
-    screen.getByLabelText(/Tell us what needs to change/),
+    screen.getByLabelText(/Tell us about the challenge/),
     "A considered workflow for a new product idea."
   );
   await user.click(screen.getByRole("checkbox"));
@@ -31,7 +31,7 @@ describe("Project enquiry", () => {
     vi.stubGlobal("fetch", fetcher);
     render(<ContactForm />);
     const user = await fillForm();
-    await user.click(screen.getByRole("button", { name: /Send your enquiry/ }));
+    await user.click(screen.getByRole("button", { name: /Start the conversation/ }));
     expect(fetcher).toHaveBeenCalledOnce();
     const call = fetcher.mock.calls[0];
     if (!call) throw new Error("The form did not submit");
@@ -43,7 +43,7 @@ describe("Project enquiry", () => {
     expect(payload.serviceInterests).toEqual(["AI_AND_AUTOMATION"]);
     expect(payload.consentVersion).toBe("valtum-contact-v3");
     expect(
-      await screen.findByRole("heading", { name: "A good place to begin." })
+      await screen.findByRole("heading", { name: "Your idea is with us." })
     ).toBeInTheDocument();
   });
 
@@ -52,12 +52,12 @@ describe("Project enquiry", () => {
     vi.stubGlobal("fetch", fetcher);
     render(<ContactForm />);
     const user = await fillForm();
-    await user.click(screen.getByRole("button", { name: /Begin a conversation/ }));
+    await user.click(screen.getByRole("button", { name: /Start the conversation/ }));
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(screen.getByLabelText("Tell us a little about it")).toHaveValue(
+    expect(screen.getByLabelText(/Tell us about the challenge/)).toHaveValue(
       "A considered workflow for a new product idea."
     );
-    await user.click(screen.getByRole("button", { name: /Begin a conversation/ }));
+    await user.click(screen.getByRole("button", { name: /Start the conversation/ }));
     const first = JSON.parse(fetcher.mock.calls[0]?.[1].body ?? "{}");
     const second = JSON.parse(fetcher.mock.calls[1]?.[1].body ?? "{}");
     expect(second.submissionToken).toBe(first.submissionToken);
