@@ -29,14 +29,8 @@ export default async function ContactPage(): Promise<React.JSX.Element> {
           {studioContact.email} ↗
         </a>
         <div className="v-contact-reach">
-          <a href={`tel:${studioContact.phone}`}>
-            Call {studioContact.phoneDisplay}
-          </a>
-          <a
-            href={studioContact.whatsApp}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={`tel:${studioContact.phone}`}>Call {studioContact.phoneDisplay}</a>
+          <a href={studioContact.whatsApp} target="_blank" rel="noopener noreferrer">
             Message on WhatsApp ↗
           </a>
         </div>

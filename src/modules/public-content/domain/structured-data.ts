@@ -1,7 +1,4 @@
-import {
-  studioContact,
-  studioOrganizationProfiles
-} from "@/config/studio-presence";
+import { studioContact, studioOrganizationProfiles } from "@/config/studio-presence";
 
 import type {
   PublicFaqGroupDTO,

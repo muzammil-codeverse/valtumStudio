@@ -30,10 +30,7 @@ const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map((value) => new URL(value))
   .filter(
     (url) =>
-      url.protocol === "https:" &&
-      url.hostname === host &&
-      !url.search &&
-      !url.hash
+      url.protocol === "https:" && url.hostname === host && !url.search && !url.hash
   )
   .map((url) => url.toString());
 

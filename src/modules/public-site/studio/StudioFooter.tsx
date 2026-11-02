@@ -16,7 +16,12 @@ type PresenceProfile = Readonly<{
 
 function ProfileLink({ profile }: { profile: PresenceProfile }): React.JSX.Element {
   return (
-    <a href={profile.url} target="_blank" rel="noopener noreferrer" className="vf-profile-link">
+    <a
+      href={profile.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="vf-profile-link"
+    >
       <span className="vf-profile-icon" aria-hidden="true">
         <Image
           src={`/icons/presence/${profile.icon}.svg`}
@@ -27,7 +32,9 @@ function ProfileLink({ profile }: { profile: PresenceProfile }): React.JSX.Eleme
         />
       </span>
       <span>{profile.label}</span>
-      <span className="vf-profile-arrow" aria-hidden="true">↗</span>
+      <span className="vf-profile-arrow" aria-hidden="true">
+        ↗
+      </span>
     </a>
   );
 }
@@ -48,8 +55,8 @@ export function StudioFooter(): React.JSX.Element {
         <div className="vf-direct-intro">
           <h2>One conversation can change the direction.</h2>
           <p>
-            An operational challenge, a product worth building or an experience
-            that needs to feel different. Start wherever your thinking is.
+            An operational challenge, a product worth building or an experience that
+            needs to feel different. Start wherever your thinking is.
           </p>
           <Link href="/contact" className="vf-project-link">
             Tell us about your project <span aria-hidden="true">↗</span>
@@ -59,13 +66,17 @@ export function StudioFooter(): React.JSX.Element {
           <a className="vf-email" href={`mailto:${studioContact.email}`}>
             <span className="vf-channel-label">Email the studio</span>
             <span className="vf-email-address">{studioContact.email}</span>
-            <span className="vf-channel-arrow" aria-hidden="true">↗</span>
+            <span className="vf-channel-arrow" aria-hidden="true">
+              ↗
+            </span>
           </a>
           <div className="vf-direct-secondary">
             <a href={`tel:${studioContact.phone}`} className="vf-contact-method">
               <span className="vf-channel-label">Call us</span>
               <span>{studioContact.phoneDisplay}</span>
-              <span className="vf-channel-arrow" aria-hidden="true">↗</span>
+              <span className="vf-channel-arrow" aria-hidden="true">
+                ↗
+              </span>
             </a>
             <a
               href={studioContact.whatsApp}
@@ -81,7 +92,9 @@ export function StudioFooter(): React.JSX.Element {
                 unoptimized
               />
               <span>WhatsApp</span>
-              <span className="vf-channel-arrow" aria-hidden="true">↗</span>
+              <span className="vf-channel-arrow" aria-hidden="true">
+                ↗
+              </span>
             </a>
           </div>
         </div>
@@ -90,9 +103,7 @@ export function StudioFooter(): React.JSX.Element {
       <div className="vf-network">
         <div className="vf-network-intro">
           <h2>Elsewhere, in good company.</h2>
-          <p>
-            Follow the studio, explore our work or connect with the founder.
-          </p>
+          <p>Follow the studio, explore our work or connect with the founder.</p>
         </div>
         <div className="vf-network-directory">
           <section className="vf-network-group" aria-labelledby="vf-social-title">
@@ -113,7 +124,9 @@ export function StudioFooter(): React.JSX.Element {
             </nav>
           </section>
           <div className="vf-registered">
-            <span className="vf-registered-symbol" aria-hidden="true">VS</span>
+            <span className="vf-registered-symbol" aria-hidden="true">
+              VS
+            </span>
             <p>An Australian-registered studio working across borders.</p>
             <a
               href="https://abr.business.gov.au/ABN/View?id=24207947663"
