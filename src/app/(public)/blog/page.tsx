@@ -4,13 +4,13 @@ import Link from "next/link";
 
 import { serializeJsonLd } from "@/modules/public-content/domain/structured-data";
 import { journalArticles } from "@/modules/public-site/studio/articles";
-import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 import {
   pageSeo,
   publicCanonical,
   publicPageMetadata,
   SEO_ORIGIN
 } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.blog, "/blog");
 
