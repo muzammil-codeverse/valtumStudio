@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { buildAboutPageJsonLd, serializeJsonLd } from "@/modules/public-content/domain/structured-data";
 import {
   InlinePhoto,
   MediaTakeover,
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
-import { pageSeo, publicPageMetadata } from "@/modules/public-site/studio/seo";
+import { pageSeo, publicPageMetadata, SEO_ORIGIN } from "@/modules/public-site/studio/seo";
 import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 import { StudioPeople } from "@/modules/public-site/studio/StudioPeople";
 
@@ -15,6 +16,13 @@ export const metadata: Metadata = publicPageMetadata(pageSeo.studio, "/studio");
 export default function StudioPage(): React.JSX.Element {
   return (
     <main className="x-studio-page" id="main-content">
+      <script
+        id="valtum-about-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(buildAboutPageJsonLd(SEO_ORIGIN))
+        }}
+      />
       <SeoBreadcrumb title="Studio" path="/studio" />
       <header className="x-editorial-heading">
         <h1>
