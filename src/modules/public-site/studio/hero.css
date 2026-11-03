@@ -33,6 +33,9 @@
 .h-hero-copy h1 span {
   display: block;
 }
+.h-hero-copy h1 span:nth-child(2) {
+  color: #46519c;
+}
 .h-hero-copy > p {
   max-width: 350px;
   margin: 36px 0 0;

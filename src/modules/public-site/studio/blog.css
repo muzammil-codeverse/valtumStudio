@@ -431,3 +431,360 @@
     transition: none;
   }
 }
+
+/* Editorial journal: quieter hierarchy, stronger chapter structure and useful reading paths. */
+.b-journal-heading {
+  position: relative;
+  min-height: min(82svh, 820px);
+  background: #dce2ee;
+}
+
+.b-journal-heading h1 em,
+.b-article-heading h1 em,
+.b-journal-interval h2 em {
+  color: #46519c;
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.b-journal-discover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: fit-content;
+  margin-top: 24px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid currentColor;
+  color: #252b4b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.b-journal-discover span {
+  font-size: 21px;
+}
+
+.b-journal-list {
+  scroll-margin-top: 90px;
+}
+
+.b-journal-card {
+  min-width: 0;
+}
+
+.b-journal-card:first-child {
+  padding-bottom: 45px;
+  border-bottom: 1px solid rgba(32, 37, 33, 0.15);
+}
+
+.b-journal-card:first-child .b-journal-card-image {
+  aspect-ratio: 1.3;
+}
+
+.b-journal-card-index {
+  color: #46519c;
+  font-weight: 700;
+}
+
+.b-journal-card-meta {
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.b-journal-card-copy h3 {
+  text-wrap: balance;
+}
+
+.b-journal-interval {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 610px;
+  background: #e2e6ee;
+}
+
+.b-journal-interval-media {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  margin: 0;
+  background: #c4c9d4;
+}
+
+.b-journal-interval-media img {
+  object-fit: cover;
+}
+
+.b-journal-interval-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(46px, 7vw, 120px);
+}
+
+.b-journal-interval-copy h2 {
+  max-width: 620px;
+  font-size: clamp(39px, 4.8vw, 74px);
+  line-height: 1.02;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.b-journal-interval-copy p {
+  max-width: 440px;
+  margin-top: 28px;
+  color: #424752;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.75;
+}
+
+.b-journal-interval-copy a {
+  display: inline-flex;
+  gap: 25px;
+  margin-top: 30px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid currentColor;
+  font-size: 14px;
+}
+
+.b-article-heading {
+  background: #dce2ee;
+}
+
+.b-article-title-row h1 {
+  text-wrap: balance;
+}
+
+.b-article-heading h1 em {
+  display: inline;
+}
+
+.b-article-cover {
+  max-width: 1500px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.b-article-layout {
+  max-width: 1380px;
+  grid-template-columns: minmax(180px, 0.38fr) minmax(0, 1fr);
+}
+
+.b-article-toc {
+  top: 115px;
+}
+
+.b-article-toc a {
+  display: block;
+  padding: 5px 0;
+}
+
+.b-article-toc a:focus-visible,
+.b-back-link:focus-visible,
+.b-journal-discover:focus-visible,
+.b-journal-card-link:focus-visible,
+.b-article-related-card:focus-visible,
+.b-journal-interval-copy a:focus-visible {
+  outline: 2px solid #46519c;
+  outline-offset: 5px;
+}
+
+.b-article-section {
+  scroll-margin-top: 120px;
+  border-bottom: 1px solid rgba(32, 37, 33, 0.1);
+  padding-bottom: 32px;
+}
+
+.b-article-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 25px;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.b-article-chapter-number {
+  flex: 0 0 auto;
+  color: #46519c;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.b-article-inline-media {
+  margin: 42px 0 14px;
+}
+
+.b-article-inline-media > div {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.65;
+  background: #ccd2dd;
+}
+
+.b-article-inline-media img {
+  object-fit: cover;
+}
+
+.b-article-inline-media figcaption {
+  margin-top: 12px;
+  color: #5c626d;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.b-article-observation {
+  margin-top: 38px;
+  padding: clamp(28px, 4vw, 50px);
+  border-left: 4px solid #6473cb;
+  background: #242b3c;
+  color: #f1f2f6;
+}
+
+.b-article-observation p {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(21px, 2.15vw, 30px);
+  line-height: 1.42;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.b-article-related {
+  padding: 75px 8% 112px;
+  background: #dde3ee;
+}
+
+.b-article-related-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(32, 37, 33, 0.2);
+}
+
+.b-article-related-heading h2 {
+  font-size: clamp(36px, 5vw, 68px);
+  letter-spacing: -0.06em;
+}
+
+.b-article-related-heading a {
+  padding-bottom: 5px;
+  border-bottom: 1px solid currentColor;
+  font-size: 14px;
+}
+
+.b-article-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 35px;
+  padding-top: 30px;
+}
+
+.b-article-related-card {
+  display: block;
+  min-width: 0;
+  color: inherit;
+}
+
+.b-article-related-card figure {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.65;
+  margin: 0 0 18px;
+  background: #bdc6d4;
+}
+
+.b-article-related-card img {
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.b-article-related-card:hover img {
+  transform: scale(1.035);
+}
+
+.b-article-related-card > span {
+  color: #595f6a;
+  font-size: 12px;
+}
+
+.b-article-related-card h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 10px;
+  font-size: clamp(25px, 3vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.b-article-related-card h3 span {
+  font-size: 22px;
+}
+
+@media (max-width: 760px) {
+  .b-journal-heading {
+    min-height: auto;
+    gap: 28px;
+  }
+
+  .b-journal-discover {
+    margin-top: 0;
+  }
+
+  .b-journal-card:first-child {
+    padding-bottom: 0;
+    border: 0;
+  }
+
+  .b-journal-card:first-child .b-journal-card-image {
+    aspect-ratio: 1.45;
+  }
+
+  .b-journal-interval {
+    grid-template-columns: 1fr;
+  }
+
+  .b-journal-interval-media {
+    min-height: 0;
+    aspect-ratio: 1.25;
+  }
+
+  .b-journal-interval-copy {
+    padding: 55px 7% 67px;
+  }
+
+  .b-article-cover {
+    margin-right: 6%;
+    margin-left: 6%;
+  }
+
+  .b-article-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .b-article-section h2 {
+    gap: 14px;
+  }
+
+  .b-article-related {
+    padding: 60px 7% 85px;
+  }
+
+  .b-article-related-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-article-related-card img {
+    transition: none;
+  }
+}

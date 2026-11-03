@@ -4,13 +4,13 @@ import Link from "next/link";
 
 import { serializeJsonLd } from "@/modules/public-content/domain/structured-data";
 import { journalArticles } from "@/modules/public-site/studio/articles";
-import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 import {
   pageSeo,
   publicCanonical,
   publicPageMetadata,
   SEO_ORIGIN
 } from "@/modules/public-site/studio/seo";
+import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 
 export const metadata: Metadata = publicPageMetadata(pageSeo.blog, "/blog");
 
@@ -49,7 +49,6 @@ export default function JournalPage(): React.JSX.Element {
       <SeoBreadcrumb title="Journal" path="/blog" />
       <header className="b-journal-heading">
         <div>
-          <p className="b-eyebrow">Valtum Studio · Journal</p>
           <h1>
             Ideas made
             <br />
@@ -61,9 +60,16 @@ export default function JournalPage(): React.JSX.Element {
           experience. Written from the questions we work through with founders and
           teams.
         </p>
+        <Link className="b-journal-discover" href="#journal-list">
+          Explore the journal <span aria-hidden="true">↘</span>
+        </Link>
       </header>
 
-      <section className="b-journal-list" aria-label="Journal articles">
+      <section
+        className="b-journal-list"
+        id="journal-list"
+        aria-label="Journal articles"
+      >
         <div className="b-journal-list-heading">
           <h2>Recent thinking</h2>
           <span>{String(journalArticles.length).padStart(2, "0")} articles</span>
@@ -87,6 +93,9 @@ export default function JournalPage(): React.JSX.Element {
                 </figure>
                 <div className="b-journal-card-copy">
                   <div className="b-journal-card-meta">
+                    <span className="b-journal-card-index">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     <span>{article.topic}</span>
                     <span>{article.readTime}</span>
                   </div>
@@ -102,8 +111,33 @@ export default function JournalPage(): React.JSX.Element {
         </div>
       </section>
 
+      <section className="b-journal-interval" aria-labelledby="journal-interval-title">
+        <figure className="b-journal-interval-media">
+          <Image
+            src="/editorial/paper.webp"
+            alt="A close-up of paper and working materials"
+            fill
+            sizes="(max-width: 760px) 100vw, 50vw"
+          />
+        </figure>
+        <div className="b-journal-interval-copy">
+          <h2 id="journal-interval-title">
+            Better questions.
+            <br />
+            <em>Better decisions.</em>
+          </h2>
+          <p>
+            Thoughtful digital work starts before the first screen. Explore the
+            questions behind useful software, clearer workflows and more purposeful
+            experiences.
+          </p>
+          <Link href="/approach">
+            How we work <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+      </section>
+
       <section className="b-journal-contact">
-        <p className="b-eyebrow">A question from your work?</p>
         <h2>Bring the real problem.</h2>
         <p>
           A useful conversation starts with the part that is difficult to explain. We
