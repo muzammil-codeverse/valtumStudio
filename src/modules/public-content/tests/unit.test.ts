@@ -711,7 +711,7 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
         expect(jsonLd.telephone).toBe("+61404412079");
         expect(jsonLd.contactPoint.contactType).toBe("sales");
         expect(jsonLd.name).toBe("Valtum Studio");
-        expect(jsonLd.alternateName).toEqual(["Valtum", "VLTM"]);
+        expect(jsonLd.alternateName).toEqual(["VLTM"]);
         expect(jsonLd.founder.name).toBe("Abdur Rehman Khalid");
         expect(jsonLd.foundingDate).toBe("2026");
         expect(jsonLd.identifier.value).toBe("24 207 947 663");
