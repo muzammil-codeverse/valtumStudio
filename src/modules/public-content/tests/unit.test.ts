@@ -388,9 +388,7 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
     it("connects the public studio page to the same organization and website", () => {
       const page = buildAboutPageJsonLd("https://valtumstudio.com.au");
       expect(page.url).toBe("https://valtumstudio.com.au/studio");
-      expect(page.mainEntity["@id"]).toBe(
-        "https://valtumstudio.com.au#organization"
-      );
+      expect(page.mainEntity["@id"]).toBe("https://valtumstudio.com.au#organization");
       expect(page.isPartOf["@id"]).toBe("https://valtumstudio.com.au#website");
     });
 
