@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { studioContact, studioOrganizationProfiles } from "@/config/studio-presence";
 
 import type {
@@ -37,7 +38,7 @@ export function buildOrganizationJsonLd(
     "@type": "Organization",
     "@id": orgId,
     name: "Valtum Studio",
-    alternateName: "Valtum",
+    alternateName: ["Valtum", "VLTM"],
     foundingDate: "2026",
     founder: {
       "@type": "Person",
@@ -73,17 +74,45 @@ export function buildOrganizationJsonLd(
 /**
  * Builds WebSite structured data.
  */
-export function buildWebSiteJsonLd(appBaseUrl: string, settings: PublicSettingsDTO) {
+export function buildWebSiteJsonLd(
+  appBaseUrl: string,
+  _settings: PublicSettingsDTO
+) {
+  // The public brand identity must never drift with CMS display settings.
+  void _settings;
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
-  const siteId = `${baseCanonical}#website`;
 
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": siteId,
-    name: settings.studioName,
-    alternateName: "Valtum",
-    url: baseCanonical
+    "@id": `${baseCanonical}#website`,
+    name: siteConfig.name,
+    alternateName: ["Valtum", "VLTM", "valtumstudio.com.au"],
+    url: baseCanonical,
+    inLanguage: "en-AU",
+    publisher: { "@id": `${baseCanonical}#organization` }
+  };
+}
+
+/**
+ * Describes the visible studio/about page as being about the same organization
+ * identified on the homepage.
+ */
+export function buildAboutPageJsonLd(appBaseUrl: string) {
+  const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
+  const aboutCanonical = generateCanonicalUrl("/studio", appBaseUrl);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${aboutCanonical}#about`,
+    url: aboutCanonical,
+    name: "About Valtum Studio",
+    description:
+      "Meet Valtum Studio, an independent Australian software and digital product studio.",
+    inLanguage: "en-AU",
+    isPartOf: { "@id": `${baseCanonical}#website` },
+    mainEntity: { "@id": `${baseCanonical}#organization` }
   };
 }
 
