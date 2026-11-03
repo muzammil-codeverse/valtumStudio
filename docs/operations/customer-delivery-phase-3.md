@@ -37,10 +37,12 @@ for size, SHA-256, content signature, and a clean ClamAV INSTREAM result before
 atomically becoming READY. Downloads require a scan completion marker. Scanner outages
 and infected files fail closed.
 
-PDF support remains blocked without an independently verified content disarm and
-reconstruction workflow. Accepted image files and the private bucket still need live
-test coverage for CORS, ACL, antivirus definitions, storage timeouts, private network
-restrictions and authenticated cross-tenant access.
+PDF support is blocked at the upload API regardless of environment flags. A future
+implementation must actually transform PDFs through a sandboxed content disarm and
+reconstruction workflow and scan the transformed output; a boolean environment flag does
+not constitute a working CDR integration. Accepted image files and the private bucket
+still need live test coverage for CORS, ACL, antivirus definitions, storage timeouts,
+private network restrictions and authenticated cross-tenant access.
 
 A daily protected Vercel Cron route can remove abandoned uploads and stale
 verified-source copies. It is gated behind a long bearer secret and a disabled
@@ -76,3 +78,10 @@ activation.
 
 References: OWASP File Upload and Authorization Cheat Sheets; Prisma cursor pagination
 documentation; Vercel Cron Jobs usage and security documentation.
+
+## Follow-up security audit
+
+The scanner host configuration rejects public IP addresses and arbitrary public DNS
+names. Only local, RFC1918/private, Railway internal, or Kubernetes service endpoints
+may be configured. This is defense in depth, not proof of network isolation: production
+firewall/private-service policies and ClamAV signature updates still need verification.

@@ -99,11 +99,10 @@ export async function reserveDeliveryFile(rawInput: unknown) {
   } catch {
     throw new DeliveryFileError(400, "Choose a PDF, PNG, or JPG under 10 MB.");
   }
-  if (
-    payload.contentType === "application/pdf" &&
-    process.env["DELIVERY_PDF_CDR_VERIFIED"] !== "true"
-  ) {
-    throw new DeliveryFileError(400, "PDF uploads require content-disarm approval.");
+  // A feature flag is not a content-disarm pipeline. PDF files are blocked
+  // until an actual sandboxed CDR transformation and post-transform scan exists.
+  if (payload.contentType === "application/pdf") {
+    throw new DeliveryFileError(400, "PDF uploads are not supported yet.");
   }
   const actor = await fileActor();
   await allowedProject(engagementId, actor);

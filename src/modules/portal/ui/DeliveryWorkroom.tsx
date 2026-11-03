@@ -341,10 +341,7 @@ export async function DeliveryWorkroom({
             </ul>
           )}
           {isDeliveryFileExchangeEnabled() ? (
-            <DeliveryFileUploader
-              engagementId={engagementId}
-              pdfEnabled={process.env["DELIVERY_PDF_CDR_VERIFIED"] === "true"}
-            />
+            <DeliveryFileUploader engagementId={engagementId} />
           ) : (
             <p className="delivery-empty">
               File uploads will open after the studio verifies private storage and

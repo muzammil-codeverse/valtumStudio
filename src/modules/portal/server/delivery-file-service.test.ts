@@ -37,8 +37,8 @@ import { downloadDeliveryFile, reserveDeliveryFile } from "./delivery-file-servi
 
 const input = {
   engagementId: "engagement-001",
-  filename: "review.pdf",
-  contentType: "application/pdf",
+  filename: "review.png",
+  contentType: "image/png",
   byteSize: 128,
   checksumSha256: "a".repeat(64)
 };
@@ -50,7 +50,6 @@ beforeEach(() => {
   vi.stubEnv("DELIVERY_CLAMAV_ENABLED", "true");
   vi.stubEnv("DELIVERY_CLAMAV_HOST", "127.0.0.1");
   vi.stubEnv("DELIVERY_CLAMAV_PORT", "3310");
-  vi.stubEnv("DELIVERY_PDF_CDR_VERIFIED", "true");
   mocks.isClientPortalEnabled.mockReturnValue(true);
   mocks.getOptionalSession.mockResolvedValue({ role: "client", userId: "client-001" });
   mocks.getMediaStorage.mockReturnValue({ createPresignedUpload: vi.fn() });
@@ -58,6 +57,19 @@ beforeEach(() => {
 });
 
 describe("private customer file access", () => {
+  it("rejects PDFs even when a legacy verification flag is set", async () => {
+    vi.stubEnv("DELIVERY_PDF_CDR_VERIFIED", "true");
+    await expect(
+      reserveDeliveryFile({
+        ...input,
+        filename: "unsafe.pdf",
+        contentType: "application/pdf"
+      })
+    ).rejects.toMatchObject({ status: 400 });
+    expect(mocks.getMediaStorage).not.toHaveBeenCalled();
+    expect(mocks.createFile).not.toHaveBeenCalled();
+  });
+
   it("remains unavailable until the portal and storage flags are explicitly enabled", async () => {
     vi.stubEnv("DELIVERY_FILES_ENABLED", "false");
     await expect(reserveDeliveryFile(input)).rejects.toMatchObject({ status: 503 });
