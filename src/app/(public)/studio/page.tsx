@@ -2,13 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { buildAboutPageJsonLd, serializeJsonLd } from "@/modules/public-content/domain/structured-data";
+import {
+  buildAboutPageJsonLd,
+  serializeJsonLd
+} from "@/modules/public-content/domain/structured-data";
 import {
   InlinePhoto,
   MediaTakeover,
   PracticeReel
 } from "@/modules/public-site/studio/SceneElements";
-import { pageSeo, publicPageMetadata, SEO_ORIGIN } from "@/modules/public-site/studio/seo";
+import {
+  pageSeo,
+  publicPageMetadata,
+  SEO_ORIGIN
+} from "@/modules/public-site/studio/seo";
 import { SeoBreadcrumb } from "@/modules/public-site/studio/SeoBreadcrumb";
 import { StudioPeople } from "@/modules/public-site/studio/StudioPeople";
 
