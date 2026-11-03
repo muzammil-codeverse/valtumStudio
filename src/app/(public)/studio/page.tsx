@@ -37,10 +37,10 @@ export default function StudioPage(): React.JSX.Element {
           <em>what comes next.</em>
         </h1>
         <p>
-          Valtum Studio (VLTM) is an independent Australian software and digital
-          product studio working where product thinking, engineering and creative
-          technology meet. We take on complex digital problems, make the decisions clear
-          and build with the people who will use what comes next.
+          Valtum Studio (VLTM) is an independent Australian software and digital product
+          studio working where product thinking, engineering and creative technology
+          meet. We take on complex digital problems, make the decisions clear and build
+          with the people who will use what comes next.
         </p>
       </header>
       <div className="x-studio-collage">
