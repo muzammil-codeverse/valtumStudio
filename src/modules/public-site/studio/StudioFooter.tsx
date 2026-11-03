@@ -130,8 +130,8 @@ export function StudioFooter(): React.JSX.Element {
               VS
             </span>
             <p>
-              Valtum Studio (VLTM) is an Australian-registered software studio working
-              internationally.
+              Valtum Studio (VLTM) is an Australian-registered software and digital
+              product studio working internationally.
             </p>
             <a
               href="https://abr.business.gov.au/ABN/View?id=24207947663"
@@ -149,6 +149,7 @@ export function StudioFooter(): React.JSX.Element {
         <nav aria-label="Footer navigation">
           <Link href="/work">Work</Link>
           <Link href="/services">Services</Link>
+          <Link href="/blog">Journal</Link>
           <Link href="/studio">Studio</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/auth/sign-in">Client login</Link>

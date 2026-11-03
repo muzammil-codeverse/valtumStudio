@@ -15,7 +15,7 @@ export const pageSeo = {
   home: {
     title: "Valtum Studio | Custom Software & Digital Products",
     description:
-      "Valtum Studio is an Australian software studio designing custom web applications, SaaS products, booking platforms, operational systems and distinctive digital experiences."
+      "Valtum Studio is an Australian software studio building custom web apps, SaaS platforms, booking systems and connected business operations."
   },
   solutions: {
     title: "Software Solutions for Products & Operations | Valtum Studio",
@@ -56,6 +56,11 @@ export const pageSeo = {
     title: "Cookies & Privacy Preferences | Valtum Studio",
     description:
       "Understand essential storage, optional analytics and how to change cookie preferences on the Valtum Studio website."
+  },
+  blog: {
+    title: "Valtum Studio Journal | Software & Digital Product Thinking",
+    description:
+      "Practical notes from Valtum Studio on custom software, digital products, websites, motion, connected operations and responsible AI."
   }
 } as const satisfies Record<string, SeoCopy>;
 
@@ -142,6 +147,10 @@ export function indexablePublicPaths(): string[] {
     "/contact",
     "/privacy",
     "/cookies",
+    "/blog",
+    "/blog/before-you-commission-custom-software",
+    "/blog/motion-that-helps-a-website",
+    "/blog/automate-the-handoff-not-the-mess",
     ...serviceStories.map((service) => "/services/" + service.slug),
     ...stories.map((story) => "/work/" + story.slug)
   ];

@@ -24,7 +24,6 @@ export default function StudioPage(): React.JSX.Element {
   return (
     <main className="x-studio-page" id="main-content">
       <script
-        id="valtum-about-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: serializeJsonLd(buildAboutPageJsonLd(SEO_ORIGIN))
@@ -38,10 +37,10 @@ export default function StudioPage(): React.JSX.Element {
           <em>what comes next.</em>
         </h1>
         <p>
-          An independent Australian software studio working where product thinking,
-          engineering and creative technology meet. We take on complex digital problems,
-          make the decisions clear and build with the people who will use what comes
-          next.
+          Valtum Studio (VLTM) is an independent Australian software and digital
+          product studio working where product thinking, engineering and creative
+          technology meet. We take on complex digital problems, make the decisions clear
+          and build with the people who will use what comes next.
         </p>
       </header>
       <div className="x-studio-collage">

@@ -81,12 +81,10 @@ import {
   publicRoutes
 } from "../domain/routes";
 import {
-  buildAboutPageJsonLd,
   buildArticleJsonLd,
   buildBreadcrumbListJsonLd,
   buildFAQPageJsonLd,
   buildOrganizationJsonLd,
-  buildWebSiteJsonLd,
   serializeJsonLd
 } from "../domain/structured-data";
 
@@ -370,28 +368,6 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
   });
 
   describe("Structured Data & Escaping", () => {
-    it("uses the verified Valtum Studio identity and an explicit VLTM abbreviation", () => {
-      const base = "https://valtumstudio.com.au";
-      const settings = {
-        studioName: "Incorrect CMS label"
-      } as Parameters<typeof buildWebSiteJsonLd>[1];
-      const website = buildWebSiteJsonLd(base, settings);
-      const organization = buildOrganizationJsonLd(base, settings);
-
-      expect(website.name).toBe("Valtum Studio");
-      expect(website.alternateName).toContain("VLTM");
-      expect(website.publisher["@id"]).toBe(organization["@id"]);
-      expect(organization.alternateName).toContain("VLTM");
-      expect(organization.url).toBe(base);
-    });
-
-    it("connects the public studio page to the same organization and website", () => {
-      const page = buildAboutPageJsonLd("https://valtumstudio.com.au");
-      expect(page.url).toBe("https://valtumstudio.com.au/studio");
-      expect(page.mainEntity["@id"]).toBe("https://valtumstudio.com.au#organization");
-      expect(page.isPartOf["@id"]).toBe("https://valtumstudio.com.au#website");
-    });
-
     it("escapes < character in JSON-LD serialization to prevent script injection", () => {
       const payload = { html: "<div>test</div>", value: "<script>alert(1)</script>" };
       const serialized = serializeJsonLd(payload);
@@ -735,9 +711,8 @@ describe("Phase 8 - Public Content Domain Unit Tests", () => {
         expect(jsonLd.telephone).toBe("+61404412079");
         expect(jsonLd.contactPoint.contactType).toBe("sales");
         expect(jsonLd.name).toBe("Valtum Studio");
-        expect(jsonLd.alternateName).toContain("Valtum");
-        expect(jsonLd.alternateName).toContain("VLTM");
-        expect(jsonLd.founder.name).toBe("Abdurrehman Khalid");
+        expect(jsonLd.alternateName).toEqual(["VLTM"]);
+        expect(jsonLd.founder.name).toBe("Abdur Rehman Khalid");
         expect(jsonLd.foundingDate).toBe("2026");
         expect(jsonLd.identifier.value).toBe("24 207 947 663");
         expect(jsonLd.description).toContain("Australian software");

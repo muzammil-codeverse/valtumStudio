@@ -144,6 +144,9 @@ export function HomePage({ team }: HomePageData): React.JSX.Element {
           </p>
         </div>
         <TurningBook pages={journal} label="The Valtum working journal" />
+        <Link className="x-link" href="/blog">
+          Read the studio journal ↗
+        </Link>
       </section>
       <section className="x-partnership" data-section-shift>
         <div className="x-partnership-photo">

@@ -1,4 +1,3 @@
-import { siteConfig } from "@/config/site";
 import { studioContact, studioOrganizationProfiles } from "@/config/studio-presence";
 
 import type {
@@ -38,11 +37,11 @@ export function buildOrganizationJsonLd(
     "@type": "Organization",
     "@id": orgId,
     name: "Valtum Studio",
-    alternateName: ["Valtum", "VLTM"],
+    alternateName: ["VLTM"],
     foundingDate: "2026",
     founder: {
       "@type": "Person",
-      name: "Abdurrehman Khalid",
+      name: "Abdur Rehman Khalid",
       url: "https://www.linkedin.com/in/abdurrehmankhalid/"
     },
     identifier: {
@@ -74,42 +73,48 @@ export function buildOrganizationJsonLd(
 /**
  * Builds WebSite structured data.
  */
-export function buildWebSiteJsonLd(appBaseUrl: string, _settings: PublicSettingsDTO) {
-  // The public brand identity must never drift with CMS display settings.
-  void _settings;
+export function buildWebSiteJsonLd(appBaseUrl: string, settings: PublicSettingsDTO) {
+  // Keep the public entity name stable even if an internal CMS label changes.
+  void settings;
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
+  const siteId = `${baseCanonical}#website`;
+  const organizationId = `${baseCanonical}#organization`;
 
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": `${baseCanonical}#website`,
-    name: siteConfig.name,
-    alternateName: ["Valtum", "VLTM", "valtumstudio.com.au"],
+    "@id": siteId,
+    name: "Valtum Studio",
+    alternateName: ["VLTM"],
     url: baseCanonical,
     inLanguage: "en-AU",
-    publisher: { "@id": `${baseCanonical}#organization` }
+    publisher: {
+      "@type": "Organization",
+      "@id": organizationId
+    }
   };
 }
 
 /**
- * Describes the visible studio/about page as being about the same organization
- * identified on the homepage.
+ * Builds the public studio profile page structured data.
  */
 export function buildAboutPageJsonLd(appBaseUrl: string) {
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
-  const aboutCanonical = generateCanonicalUrl("/studio", appBaseUrl);
+  const pageUrl = generateCanonicalUrl("/studio", appBaseUrl);
+  const organizationId = `${baseCanonical}#organization`;
 
   return {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    "@id": `${aboutCanonical}#about`,
-    url: aboutCanonical,
+    "@id": `${pageUrl}#about`,
     name: "About Valtum Studio",
     description:
-      "Meet Valtum Studio, an independent Australian software and digital product studio.",
-    inLanguage: "en-AU",
+      "Meet Valtum Studio, an independent Australian software and digital product studio working internationally.",
+    url: pageUrl,
     isPartOf: { "@id": `${baseCanonical}#website` },
-    mainEntity: { "@id": `${baseCanonical}#organization` }
+    about: { "@id": organizationId },
+    mainEntity: { "@id": organizationId },
+    inLanguage: "en-AU"
   };
 }
 
