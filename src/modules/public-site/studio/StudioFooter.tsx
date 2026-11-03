@@ -129,7 +129,10 @@ export function StudioFooter(): React.JSX.Element {
             <span className="vf-registered-symbol" aria-hidden="true">
               VS
             </span>
-            <p>Valtum Studio (VLTM) is an Australian-registered software studio working internationally.</p>
+            <p>
+              Valtum Studio (VLTM) is an Australian-registered software studio working
+              internationally.
+            </p>
             <a
               href="https://abr.business.gov.au/ABN/View?id=24207947663"
               target="_blank"
