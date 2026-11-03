@@ -32,7 +32,7 @@ export async function getDeliveryCollaboration(engagementId: string) {
       take: 80
     }),
     prisma.clientFile.findMany({
-      where: { ...where, status: "READY" },
+      where: { ...where, status: "READY", scanCompletedAt: { not: null } },
       include: { uploader: { select: { name: true } } },
       orderBy: { createdAt: "desc" },
       take: 60

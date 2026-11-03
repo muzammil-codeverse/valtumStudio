@@ -55,7 +55,9 @@ export function AdminSidebar({
             (route) =>
               route.group === group.name &&
               (clientPortalEnabled ||
-                !["/admin/clients", "/admin/delivery"].includes(route.path)) &&
+                !["/admin/clients", "/admin/delivery", "/admin/notifications"].includes(
+                  route.path
+                )) &&
               can(user.role, {
                 resource: route.requiredResource,
                 action: route.requiredAction

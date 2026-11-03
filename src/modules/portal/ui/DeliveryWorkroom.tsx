@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { historyUrl, type HistoryView } from "@/modules/portal/domain/history-query";
 import { getDeliveryCollaboration } from "@/modules/portal/server/collaboration-read";
 import {
   cancelClientDecisionAction,
@@ -37,6 +38,11 @@ export async function DeliveryWorkroom({
   const { access, decisions, messages, files, activity } =
     await getDeliveryCollaboration(engagementId);
   const customer = access.customer;
+  const base = customer
+    ? "/portal/projects/" + engagementId + "/history"
+    : "/admin/clients/" + access.engagement.workspaceId + "/history";
+  const historyLink = (view: HistoryView) =>
+    historyUrl(base, engagementId, { view }, !customer);
   const pending = decisions.filter((item) => item.status === "REQUESTED").length;
 
   return (
@@ -58,6 +64,7 @@ export async function DeliveryWorkroom({
           <a href="#conversation">Conversation</a>
           <a href="#project-files">Files</a>
           <a href="#delivery-activity">Activity</a>
+          <Link href={historyLink("activity")}>Full history</Link>
         </nav>
       </header>
       <div className="delivery-workroom-grid">
@@ -70,6 +77,9 @@ export async function DeliveryWorkroom({
             <div>
               <h3 id="delivery-approvals-title">Decisions and approvals</h3>
               <p>Clear requests with a recorded response, not implied sign-off.</p>
+              <Link className="delivery-history-more" href={historyLink("decisions")}>
+                Browse all decisions →
+              </Link>
             </div>
             <span className="delivery-count">{pending} pending</span>
           </div>
@@ -221,6 +231,9 @@ export async function DeliveryWorkroom({
             <div>
               <h3 id="delivery-messages-title">Project conversation</h3>
               <p>Ask questions, clarify tasks and keep decisions in one place.</p>
+              <Link className="delivery-history-more" href={historyLink("messages")}>
+                Browse all messages →
+              </Link>
             </div>
             <span className="delivery-count">Latest {messages.length}</span>
           </div>
@@ -285,6 +298,9 @@ export async function DeliveryWorkroom({
             <div>
               <h3 id="delivery-files-title">Shared project files</h3>
               <p>Private documents attached to this engagement.</p>
+              <Link className="delivery-history-more" href={historyLink("files")}>
+                Browse all files →
+              </Link>
             </div>
             <span className="delivery-count">{files.length} verified</span>
           </div>
@@ -325,7 +341,10 @@ export async function DeliveryWorkroom({
             </ul>
           )}
           {isDeliveryFileExchangeEnabled() ? (
-            <DeliveryFileUploader engagementId={engagementId} />
+            <DeliveryFileUploader
+              engagementId={engagementId}
+              pdfEnabled={process.env["DELIVERY_PDF_CDR_VERIFIED"] === "true"}
+            />
           ) : (
             <p className="delivery-empty">
               File uploads will open after the studio verifies private storage and
@@ -342,6 +361,9 @@ export async function DeliveryWorkroom({
             <div>
               <h3 id="delivery-activity-title">Recorded activity</h3>
               <p>Changes and interactions preserved in the project history.</p>
+              <Link className="delivery-history-more" href={historyLink("activity")}>
+                Browse all activity →
+              </Link>
             </div>
           </div>
           {activity.length === 0 ? (

@@ -137,6 +137,16 @@ export const ADMIN_ROUTES = {
     requiredResource: "clients",
     requiredAction: "read"
   },
+  notifications: {
+    path: "/admin/notifications",
+    label: "Project Inbox",
+    description: "Customer replies, approval responses and shared files.",
+    breadcrumbLabel: "Inbox",
+    group: "Operations",
+    iconKey: "leads",
+    requiredResource: "clients",
+    requiredAction: "read"
+  },
   clients: {
     path: "/admin/clients",
     label: "Clients & Delivery",

@@ -26,8 +26,9 @@ async function jsonResponse(response: Response) {
 }
 
 export function DeliveryFileUploader({
-  engagementId
-}: Readonly<{ engagementId: string }>): React.JSX.Element {
+  engagementId,
+  pdfEnabled = false
+}: Readonly<{ engagementId: string; pdfEnabled?: boolean }>): React.JSX.Element {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string>();
@@ -114,7 +115,11 @@ export function DeliveryFileUploader({
           id={"project-file-" + engagementId}
           type="file"
           name="file"
-          accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+          accept={
+            pdfEnabled
+              ? ".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+              : ".jpg,.jpeg,.png,image/jpeg,image/png"
+          }
           required
           disabled={busy}
         />
@@ -122,7 +127,11 @@ export function DeliveryFileUploader({
           {busy ? "Uploading…" : "Share file"}
         </button>
       </div>
-      <p>PDF, PNG or JPG. Up to 10 MB. Authorized members only.</p>
+      <p>
+        {pdfEnabled
+          ? "PDF, PNG or JPG. Up to 10 MB. Authorized members only."
+          : "PNG or JPG, up to 10 MB. PDFs require additional document security checks."}
+      </p>
       {message ? (
         <p role={failure ? "alert" : "status"} aria-live="polite">
           {message}

@@ -2,22 +2,24 @@ import { headers } from "next/headers";
 import Link from "next/link";
 
 import { requireRole } from "@/modules/auth/server/authorization";
-import { summarizeDelivery } from "@/modules/portal/domain/delivery-insights";
 import {
   clientReadableStatus,
   formatClientMoney,
   getClientDashboard
 } from "@/modules/portal/server/client-data";
-import { summarizeClientInvoices } from "@/modules/portal/server/invoice-insights";
+import { getClientBillingInsights } from "@/modules/portal/server/delivery-billing";
+import { getClientDeliveryMetrics } from "@/modules/portal/server/delivery-metrics";
 import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
 
 export const dynamic = "force-dynamic";
 
 export default async function ClientAnalyticsPage(): Promise<React.JSX.Element> {
   const principal = await requireRole(await headers(), "client");
-  const data = await getClientDashboard(principal.userId);
-  const insight = summarizeDelivery(data);
-  const invoices = summarizeClientInvoices(data.invoices);
+  const [data, insight, invoices] = await Promise.all([
+    getClientDashboard(principal.userId),
+    getClientDeliveryMetrics(principal.userId),
+    getClientBillingInsights(principal.userId)
+  ]);
   const hasWork = data.engagements.length > 0;
   const dateFormat = new Intl.DateTimeFormat("en-AU", {
     day: "numeric",
@@ -49,7 +51,7 @@ export default async function ClientAnalyticsPage(): Promise<React.JSX.Element> 
               <span>Tasks completed</span>
               <strong>
                 {insight.tasksDone}
-                <i> / {data.tasks.length}</i>
+                <i> / {insight.taskTotal}</i>
               </strong>
               <small>
                 {insight.taskPercent === null
@@ -61,7 +63,7 @@ export default async function ClientAnalyticsPage(): Promise<React.JSX.Element> 
               <span>Milestones completed</span>
               <strong>
                 {insight.milestonesDone}
-                <i> / {data.milestones.length}</i>
+                <i> / {insight.milestoneTotal}</i>
               </strong>
               <small>
                 {insight.milestonePercent === null
@@ -112,13 +114,13 @@ export default async function ClientAnalyticsPage(): Promise<React.JSX.Element> 
                   <div>
                     <span>Tasks</span>
                     <strong>
-                      {insight.tasksDone} of {data.tasks.length}
+                      {insight.tasksDone} of {insight.taskTotal}
                     </strong>
                   </div>
                   <div>
                     <span>Milestones</span>
                     <strong>
-                      {insight.milestonesDone} of {data.milestones.length}
+                      {insight.milestonesDone} of {insight.milestoneTotal}
                     </strong>
                   </div>
                   <div>

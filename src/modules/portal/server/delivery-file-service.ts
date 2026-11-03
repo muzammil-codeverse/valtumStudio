@@ -13,11 +13,14 @@ import {
 import { getMediaStorage } from "@/modules/cms/media/server/storage";
 
 import {
+  incomingDeliveryFileKey,
   matchesPrivateFileSignature,
   recordId,
-  validatePrivateFile
+  validatePrivateFile,
+  verifiedDeliveryFileKey
 } from "../domain/collaboration";
 import { isClientPortalEnabled } from "./client-data";
+import { configuredClamAv, scanWithClamAv } from "./delivery-malware-scanner";
 
 const UPLOAD_TTL_SECONDS = 5 * 60;
 const CHUNK_BYTES = 1024 * 1024;
@@ -26,7 +29,8 @@ export function isDeliveryFileExchangeEnabled(): boolean {
   return (
     isClientPortalEnabled() &&
     process.env["DELIVERY_FILES_ENABLED"] === "true" &&
-    process.env["MEDIA_STORAGE_ENABLED"] === "true"
+    process.env["MEDIA_STORAGE_ENABLED"] === "true" &&
+    configuredClamAv() !== null
   );
 }
 
@@ -95,6 +99,12 @@ export async function reserveDeliveryFile(rawInput: unknown) {
   } catch {
     throw new DeliveryFileError(400, "Choose a PDF, PNG, or JPG under 10 MB.");
   }
+  if (
+    payload.contentType === "application/pdf" &&
+    process.env["DELIVERY_PDF_CDR_VERIFIED"] !== "true"
+  ) {
+    throw new DeliveryFileError(400, "PDF uploads require content-disarm approval.");
+  }
   const actor = await fileActor();
   await allowedProject(engagementId, actor);
   const recent = await prisma.clientFile.count({
@@ -105,7 +115,7 @@ export async function reserveDeliveryFile(rawInput: unknown) {
   });
   if (recent >= 25) throw new DeliveryFileError(413, "Hourly file limit reached.");
   const id = randomUUID();
-  const key = "private/delivery/" + engagementId + "/" + id;
+  const key = incomingDeliveryFileKey(engagementId, id);
   const expiresAt = new Date(Date.now() + UPLOAD_TTL_SECONDS * 1000);
   const file = await prisma.clientFile.create({
     data: {
@@ -146,17 +156,21 @@ async function verifiedChecksum(
   storage: NonNullable<ReturnType<typeof getMediaStorage>>,
   key: string,
   byteSize: number
-): Promise<string> {
+): Promise<{ checksum: string; bytes: Buffer }> {
   const hash = createHash("sha256");
+  const chunks: Buffer[] = [];
   for (let start = 0; start < byteSize; start += CHUNK_BYTES) {
-    const bytes = await storage.readObjectRange({
-      key,
-      start,
-      endInclusive: Math.min(byteSize - 1, start + CHUNK_BYTES - 1)
-    });
+    const bytes = Buffer.from(
+      await storage.readObjectRange({
+        key,
+        start,
+        endInclusive: Math.min(byteSize - 1, start + CHUNK_BYTES - 1)
+      })
+    );
     hash.update(bytes);
+    chunks.push(bytes);
   }
-  return hash.digest("hex");
+  return { checksum: hash.digest("hex"), bytes: Buffer.concat(chunks, byteSize) };
 }
 
 export async function finalizeDeliveryFile(rawFileId: unknown) {
@@ -188,28 +202,93 @@ export async function finalizeDeliveryFile(rawFileId: unknown) {
     await actor.storage.deleteObject(file.storageKey).catch(() => undefined);
     throw new DeliveryFileError(409, "File contents did not match the upload details.");
   }
-  const signature = await actor.storage.readObjectRange({
-    key: file.storageKey,
-    start: 0,
-    endInclusive: Math.min(file.byteSize - 1, 15)
+  const claim = await prisma.clientFile.updateMany({
+    where: {
+      id: file.id,
+      status: "UPLOADING",
+      expiresAt: { gte: new Date() },
+      ...(actor.customer
+        ? {
+            uploaderUserId: actor.principal.userId,
+            engagement: {
+              workspace: {
+                memberships: { some: { userId: actor.principal.userId } }
+              }
+            }
+          }
+        : {})
+    },
+    data: { status: "VERIFYING" }
   });
-  const hash = await verifiedChecksum(actor.storage, file.storageKey, file.byteSize);
-  if (
-    !matchesPrivateFileSignature(file.contentType, signature) ||
-    hash !== file.checksumSha256
-  ) {
+  if (claim.count !== 1) {
+    throw new DeliveryFileError(409, "File verification is already in progress.");
+  }
+  const verifiedKey = verifiedDeliveryFileKey(file.engagementId, file.id);
+  try {
+    await actor.storage.copyObject({
+      sourceKey: file.storageKey,
+      destinationKey: verifiedKey,
+      cacheControl: "private, no-store",
+      contentType: file.contentType
+    });
+  } catch {
     await prisma.clientFile.updateMany({
-      where: { id: file.id, status: "UPLOADING" },
+      where: { id: file.id, status: "VERIFYING" },
       data: { status: "FAILED" }
     });
+    throw new DeliveryFileError(503, "Private file promotion failed.");
+  }
+  const copied = await actor.storage.headObject(verifiedKey).catch(() => null);
+  if (
+    !copied ||
+    copied.byteSize !== file.byteSize ||
+    (copied.contentType && copied.contentType !== file.contentType)
+  ) {
+    await actor.storage.deleteObject(verifiedKey).catch(() => undefined);
+    await prisma.clientFile.updateMany({
+      where: { id: file.id, status: "VERIFYING" },
+      data: { status: "FAILED" }
+    });
+    throw new DeliveryFileError(409, "Copied file failed verification.");
+  }
+  const verified = await verifiedChecksum(actor.storage, verifiedKey, file.byteSize);
+  if (
+    !matchesPrivateFileSignature(file.contentType, verified.bytes) ||
+    verified.checksum !== file.checksumSha256
+  ) {
+    await prisma.clientFile.updateMany({
+      where: { id: file.id, status: "VERIFYING" },
+      data: { status: "FAILED" }
+    });
+    await actor.storage.deleteObject(verifiedKey).catch(() => undefined);
     await actor.storage.deleteObject(file.storageKey).catch(() => undefined);
     throw new DeliveryFileError(409, "File verification failed.");
+  }
+  const daemon = configuredClamAv();
+  if (!daemon) {
+    throw new DeliveryFileError(503, "Malware scanning is not configured.");
+  }
+  let verdict: "clean" | "infected";
+  try {
+    verdict = await scanWithClamAv(verified.bytes, daemon);
+  } catch {
+    // Fail closed: the quarantined object is never made available as READY.
+    throw new DeliveryFileError(503, "Malware scanner is unavailable. Try later.");
+  }
+  if (verdict !== "clean") {
+    await prisma.clientFile.updateMany({
+      where: { id: file.id, status: "VERIFYING" },
+      data: { status: "FAILED" }
+    });
+    await actor.storage.deleteObject(verifiedKey).catch(() => undefined);
+    await actor.storage.deleteObject(file.storageKey).catch(() => undefined);
+    throw new DeliveryFileError(409, "The file failed its security scan.");
   }
   await prisma.$transaction(async (tx) => {
     const updated = await tx.clientFile.updateMany({
       where: {
         id: file.id,
-        status: "UPLOADING",
+        status: "VERIFYING",
         expiresAt: { gte: new Date() },
         ...(actor.customer
           ? {
@@ -222,7 +301,12 @@ export async function finalizeDeliveryFile(rawFileId: unknown) {
             }
           : {})
       },
-      data: { status: "READY", verifiedAt: new Date() }
+      data: {
+        status: "READY",
+        storageKey: verifiedKey,
+        verifiedAt: new Date(),
+        scanCompletedAt: new Date()
+      }
     });
     if (updated.count !== 1)
       throw new DeliveryFileError(409, "Upload no longer active.");
@@ -236,6 +320,17 @@ export async function finalizeDeliveryFile(rawFileId: unknown) {
       }
     });
   });
+  // A signed PUT remains reusable until it expires, so only the isolated,
+  // copied and scanned key may ever be served to customers.
+  try {
+    await actor.storage.deleteObject(file.storageKey);
+    await prisma.clientFile.updateMany({
+      where: { id: file.id, status: "READY", uploadDeletedAt: null },
+      data: { uploadDeletedAt: new Date() }
+    });
+  } catch {
+    // Retain READY state; maintenance retries source deletion.
+  }
   return { fileId: file.id, ready: true };
 }
 
@@ -247,6 +342,7 @@ export async function downloadDeliveryFile(rawFileId: string) {
     where: {
       id: id.data,
       status: "READY",
+      scanCompletedAt: { not: null },
       ...(actor.customer
         ? {
             engagement: {

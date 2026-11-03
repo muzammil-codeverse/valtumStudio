@@ -9,7 +9,8 @@ const routes = [
   { path: "/portal/projects", title: "Projects", glyph: "◈" },
   { path: "/portal/calendar", title: "Calendar", glyph: "▦" },
   { path: "/portal/invoices", title: "Invoices", glyph: "▤" },
-  { path: "/portal/updates", title: "Updates", glyph: "◉" }
+  { path: "/portal/updates", title: "Updates", glyph: "◉" },
+  { path: "/portal/notifications", title: "Inbox", glyph: "◌" }
 ] as const;
 
 export function PortalNavigation({

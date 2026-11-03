@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 
 import { requireRole } from "@/modules/auth/server/authorization";
-import { getClientDashboard } from "@/modules/portal/server/client-data";
+import { getClientCalendarData } from "@/modules/portal/server/client-calendar-data";
 import { PortalHeader } from "@/modules/portal/ui/PortalShell";
 import { ScheduleBoard, type ScheduleItem } from "@/modules/portal/ui/ScheduleBoard";
 
@@ -14,7 +14,6 @@ export default async function ClientCalendarPage({
   searchParams: Promise<{ month?: string; view?: string; date?: string }>;
 }): Promise<React.JSX.Element> {
   const principal = await requireRole(await headers(), "client");
-  const data = await getClientDashboard(principal.userId);
   const params = await searchParams;
   const requested = params.month;
   const view = params.view === "month" ? "month" : "week";
@@ -23,6 +22,7 @@ export default async function ClientCalendarPage({
       ? requested
       : new Date().toISOString().slice(0, 7);
 
+  const data = await getClientCalendarData(principal.userId, month);
   const events: ScheduleItem[] = [
     ...data.milestones
       .filter((item) => item.dueDate !== null)

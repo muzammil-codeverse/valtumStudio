@@ -47,6 +47,10 @@ beforeEach(() => {
   vi.resetAllMocks();
   vi.stubEnv("DELIVERY_FILES_ENABLED", "true");
   vi.stubEnv("MEDIA_STORAGE_ENABLED", "true");
+  vi.stubEnv("DELIVERY_CLAMAV_ENABLED", "true");
+  vi.stubEnv("DELIVERY_CLAMAV_HOST", "127.0.0.1");
+  vi.stubEnv("DELIVERY_CLAMAV_PORT", "3310");
+  vi.stubEnv("DELIVERY_PDF_CDR_VERIFIED", "true");
   mocks.isClientPortalEnabled.mockReturnValue(true);
   mocks.getOptionalSession.mockResolvedValue({ role: "client", userId: "client-001" });
   mocks.getMediaStorage.mockReturnValue({ createPresignedUpload: vi.fn() });
@@ -84,6 +88,7 @@ describe("private customer file access", () => {
         where: {
           id: "file-record-001",
           status: "READY",
+          scanCompletedAt: { not: null },
           engagement: {
             workspace: { memberships: { some: { userId: "client-001" } } }
           }

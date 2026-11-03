@@ -4,18 +4,27 @@ import Link from "next/link";
 import { requireRole } from "@/modules/auth/server/authorization";
 import {
   clientReadableStatus,
-  formatClientMoney,
-  getClientDashboard
+  formatClientMoney
 } from "@/modules/portal/server/client-data";
-import { summarizeClientInvoices } from "@/modules/portal/server/invoice-insights";
+import { getClientBillingInsights } from "@/modules/portal/server/delivery-billing";
+import { getClientInvoiceHistory } from "@/modules/portal/server/delivery-invoice-history";
 import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
 
 export const dynamic = "force-dynamic";
 
-export default async function ClientInvoicesPage(): Promise<React.JSX.Element> {
+export default async function ClientInvoicesPage({
+  searchParams
+}: {
+  searchParams: Promise<{ cursor?: string }>;
+}): Promise<React.JSX.Element> {
   const principal = await requireRole(await headers(), "client");
-  const data = await getClientDashboard(principal.userId);
-  const billing = summarizeClientInvoices(data.invoices);
+  const query = await searchParams;
+  const [billing, history] = await Promise.all([
+    getClientBillingInsights(principal.userId),
+    getClientInvoiceHistory(principal.userId, query.cursor)
+  ]);
+  const { invoices } = history;
+  const totalInvoices = billing.reduce((sum, group) => sum + group.invoiceCount, 0);
   return (
     <>
       <PortalHeader
@@ -109,15 +118,15 @@ export default async function ClientInvoicesPage(): Promise<React.JSX.Element> {
       <section className="portal-panel">
         <div className="portal-panel-heading">
           <h2>Billing history</h2>
-          <span className="portal-tag">{data.invoices.length} issued and paid</span>
+          <span className="portal-tag">{totalInvoices} issued and paid</span>
         </div>
-        {data.invoices.length === 0 ? (
+        {invoices.length === 0 ? (
           <PortalEmpty
             title="No invoices have been issued"
             description="This space will list your actual issued invoices and payment status."
           />
         ) : (
-          data.invoices.map((invoice) => (
+          invoices.map((invoice) => (
             <div className="portal-row" key={invoice.id}>
               <div className="portal-row-main">
                 <strong>{invoice.reference}</strong>
@@ -143,6 +152,21 @@ export default async function ClientInvoicesPage(): Promise<React.JSX.Element> {
           ))
         )}
       </section>
+      <nav
+        className="delivery-history-pagination"
+        aria-label="Invoice history pagination"
+      >
+        {query.cursor ? <Link href="/portal/invoices">Latest invoices</Link> : null}
+        {history.nextCursor ? (
+          <Link
+            href={"/portal/invoices?cursor=" + encodeURIComponent(history.nextCursor)}
+          >
+            Older invoices →
+          </Link>
+        ) : (
+          <span>End of available invoice records</span>
+        )}
+      </nav>
     </>
   );
 }

@@ -2,27 +2,22 @@ import { headers } from "next/headers";
 import Link from "next/link";
 
 import { requireRole } from "@/modules/auth/server/authorization";
-import { summarizeDelivery } from "@/modules/portal/domain/delivery-insights";
 import {
   clientReadableStatus,
   getClientDashboard
 } from "@/modules/portal/server/client-data";
+import { getClientDeliveryMetrics } from "@/modules/portal/server/delivery-metrics";
 import { PortalEmpty, PortalHeader } from "@/modules/portal/ui/PortalShell";
 
 export const dynamic = "force-dynamic";
 
 export default async function ClientOverviewPage(): Promise<React.JSX.Element> {
   const principal = await requireRole(await headers(), "client");
-  const data = await getClientDashboard(principal.userId);
-  const delivery = summarizeDelivery(data);
-  const activeProjects = data.engagements.filter(
-    (project) => project.status !== "COMPLETE" && project.status !== "ON_HOLD"
-  );
-  const openTasks = data.tasks.filter((task) => task.status !== "DONE");
-  const pendingMilestones = data.milestones.filter(
-    (milestone) => milestone.status !== "COMPLETE" && milestone.status !== "APPROVED"
-  );
-  const issuedInvoices = data.invoices.filter((invoice) => invoice.status === "ISSUED");
+  const [data, delivery] = await Promise.all([
+    getClientDashboard(principal.userId),
+    getClientDeliveryMetrics(principal.userId)
+  ]);
+  const pendingMilestones = delivery.upcomingMilestones;
   return (
     <>
       <PortalHeader
@@ -34,22 +29,22 @@ export default async function ClientOverviewPage(): Promise<React.JSX.Element> {
       <div className="portal-stat-row">
         <div className="portal-stat portal-stat--ink">
           <label>Active engagements</label>
-          <strong>{activeProjects.length}</strong>
+          <strong>{delivery.projectInProgress}</strong>
           <small>Client projects in progress or planning</small>
         </div>
         <div className="portal-stat portal-stat--lilac">
           <label>Open tasks</label>
-          <strong>{openTasks.length}</strong>
+          <strong>{delivery.taskTotal - delivery.tasksDone}</strong>
           <small>Recorded delivery tasks awaiting completion</small>
         </div>
         <div className="portal-stat portal-stat--blue">
           <label>Upcoming milestones</label>
-          <strong>{pendingMilestones.length}</strong>
+          <strong>{delivery.milestoneTotal - delivery.milestonesDone}</strong>
           <small>Awaiting completion or approval</small>
         </div>
         <div className="portal-stat">
           <label>Issued invoices</label>
-          <strong>{issuedInvoices.length}</strong>
+          <strong>{delivery.issuedInvoiceCount}</strong>
           <small>Unpaid invoices visible in your account</small>
         </div>
       </div>
@@ -83,13 +78,13 @@ export default async function ClientOverviewPage(): Promise<React.JSX.Element> {
               <div>
                 <span>Completed tasks</span>
                 <strong>
-                  {delivery.tasksDone} / {data.tasks.length}
+                  {delivery.tasksDone} / {delivery.taskTotal}
                 </strong>
               </div>
               <div>
                 <span>Completed milestones</span>
                 <strong>
-                  {delivery.milestonesDone} / {data.milestones.length}
+                  {delivery.milestonesDone} / {delivery.milestoneTotal}
                 </strong>
               </div>
               <div>
@@ -153,29 +148,23 @@ export default async function ClientOverviewPage(): Promise<React.JSX.Element> {
             />
           ) : (
             data.engagements.slice(0, 5).map((project) => {
-              const milestones = data.milestones.filter(
-                (item) => item.engagement.id === project.id
-              );
-              const complete = milestones.filter(
-                (item) => item.status === "COMPLETE" || item.status === "APPROVED"
-              ).length;
+              const full = delivery.projects.find((item) => item.id === project.id);
+              const milestoneCount = full?.milestoneCount ?? project._count.milestones;
+              const complete = full?.milestonesDone ?? 0;
               return (
                 <div className="portal-row" key={project.id}>
                   <div className="portal-row-main" style={{ flex: 1 }}>
                     <Link href={"/portal/projects/" + project.id}>{project.title}</Link>
                     <small>
                       {project.workspace.name} ·{" "}
-                      {milestones.length === 0
+                      {milestoneCount === 0
                         ? "No milestones scheduled"
-                        : complete +
-                          " of " +
-                          milestones.length +
-                          " milestones complete"}
+                        : complete + " of " + milestoneCount + " milestones complete"}
                     </small>
-                    {milestones.length > 0 ? (
+                    {milestoneCount > 0 ? (
                       <div className="portal-progress">
                         <span
-                          style={{ width: (complete / milestones.length) * 100 + "%" }}
+                          style={{ width: (complete / milestoneCount) * 100 + "%" }}
                         />
                       </div>
                     ) : null}

@@ -780,30 +780,31 @@ model User {
   accounts                Account[]
   twofactors              TwoFactor[]
   securityEvents          SecurityEvent[]
-  serviceCreated          ServiceOffering[]     @relation("ServiceCreatedBy")
-  serviceUpdated          ServiceOffering[]     @relation("ServiceUpdatedBy")
-  projectCreated          Project[]             @relation("ProjectCreatedBy")
-  projectUpdated          Project[]             @relation("ProjectUpdatedBy")
-  insightCreated          Insight[]             @relation("InsightCreatedBy")
-  insightUpdated          Insight[]             @relation("InsightUpdatedBy")
-  faqCreated              FAQGroup[]            @relation("FaqGroupCreatedBy")
-  faqUpdated              FAQGroup[]            @relation("FaqGroupUpdatedBy")
-  navigationCreated       NavigationItem[]      @relation("NavigationCreatedBy")
-  navigationUpdated       NavigationItem[]      @relation("NavigationUpdatedBy")
-  teamCreated             TeamMember[]          @relation("TeamCreatedBy")
-  teamUpdated             TeamMember[]          @relation("TeamUpdatedBy")
-  mediaAssets             MediaAsset[]          @relation("MediaCreatedBy")
-  auditEvents             AuditEvent[]          @relation("ContentAuditActor")
-  assignedLeads           Lead[]                @relation("LeadAssignee")
-  leadActivities          LeadActivity[]        @relation("LeadActivityActor")
-  leadNotes               LeadNote[]            @relation("LeadNoteAuthor")
+  serviceCreated          ServiceOffering[]        @relation("ServiceCreatedBy")
+  serviceUpdated          ServiceOffering[]        @relation("ServiceUpdatedBy")
+  projectCreated          Project[]                @relation("ProjectCreatedBy")
+  projectUpdated          Project[]                @relation("ProjectUpdatedBy")
+  insightCreated          Insight[]                @relation("InsightCreatedBy")
+  insightUpdated          Insight[]                @relation("InsightUpdatedBy")
+  faqCreated              FAQGroup[]               @relation("FaqGroupCreatedBy")
+  faqUpdated              FAQGroup[]               @relation("FaqGroupUpdatedBy")
+  navigationCreated       NavigationItem[]         @relation("NavigationCreatedBy")
+  navigationUpdated       NavigationItem[]         @relation("NavigationUpdatedBy")
+  teamCreated             TeamMember[]             @relation("TeamCreatedBy")
+  teamUpdated             TeamMember[]             @relation("TeamUpdatedBy")
+  mediaAssets             MediaAsset[]             @relation("MediaCreatedBy")
+  auditEvents             AuditEvent[]             @relation("ContentAuditActor")
+  assignedLeads           Lead[]                   @relation("LeadAssignee")
+  leadActivities          LeadActivity[]           @relation("LeadActivityActor")
+  leadNotes               LeadNote[]               @relation("LeadNoteAuthor")
   author                  Author?
   clientMemberships       ClientMembership[]
-  clientDecisionRequests  ClientDecision[]      @relation("ClientDecisionRequester")
-  clientDecisionResponses ClientDecision[]      @relation("ClientDecisionResponder")
-  clientMessages          ClientMessage[]       @relation("ClientMessageAuthor")
-  clientFiles             ClientFile[]          @relation("ClientFileUploader")
-  clientDeliveryEvents    ClientDeliveryEvent[] @relation("ClientDeliveryActor")
+  clientDecisionRequests  ClientDecision[]         @relation("ClientDecisionRequester")
+  clientDecisionResponses ClientDecision[]         @relation("ClientDecisionResponder")
+  clientMessages          ClientMessage[]          @relation("ClientMessageAuthor")
+  clientFiles             ClientFile[]             @relation("ClientFileUploader")
+  clientDeliveryEvents    ClientDeliveryEvent[]    @relation("ClientDeliveryActor")
+  deliveryReadState       ClientActivityReadState?
 
   @@unique([email])
   @@map("user")
@@ -1001,6 +1002,7 @@ enum ClientDecisionStatus {
 
 enum ClientFileStatus {
   UPLOADING
+  VERIFYING
   READY
   FAILED
 }
@@ -1146,6 +1148,7 @@ model ClientDecision {
 
   @@index([engagementId, status, createdAt])
   @@index([milestoneId])
+  @@index([engagementId, createdAt, id])
   @@map("client_decisions")
 }
 
@@ -1163,28 +1166,34 @@ model ClientMessage {
 
   @@index([engagementId, createdAt])
   @@index([taskId, createdAt])
+  @@index([engagementId, createdAt, id])
   @@map("client_messages")
 }
 
 model ClientFile {
-  id             String           @id @default(cuid())
-  engagementId   String           @map("engagement_id")
-  uploaderUserId String           @map("uploader_user_id")
-  filename       String
-  contentType    String           @map("content_type")
-  byteSize       Int              @map("byte_size")
-  checksumSha256 String           @map("checksum_sha256")
-  storageKey     String           @unique @map("storage_key")
-  status         ClientFileStatus @default(UPLOADING)
-  expiresAt      DateTime         @map("expires_at")
-  verifiedAt     DateTime?        @map("verified_at")
-  createdAt      DateTime         @default(now()) @map("created_at")
+  id               String           @id @default(cuid())
+  engagementId     String           @map("engagement_id")
+  uploaderUserId   String           @map("uploader_user_id")
+  filename         String
+  contentType      String           @map("content_type")
+  byteSize         Int              @map("byte_size")
+  checksumSha256   String           @map("checksum_sha256")
+  storageKey       String           @unique @map("storage_key")
+  status           ClientFileStatus @default(UPLOADING)
+  expiresAt        DateTime         @map("expires_at")
+  verifiedAt       DateTime?        @map("verified_at")
+  storageDeletedAt DateTime?        @map("storage_deleted_at")
+  scanCompletedAt  DateTime?        @map("scan_completed_at")
+  uploadDeletedAt  DateTime?        @map("upload_deleted_at")
+  createdAt        DateTime         @default(now()) @map("created_at")
 
   engagement ClientEngagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
   uploader   User             @relation("ClientFileUploader", fields: [uploaderUserId], references: [id], onDelete: Restrict)
 
   @@index([engagementId, status, createdAt])
   @@index([uploaderUserId, createdAt])
+  @@index([engagementId, createdAt, id])
+  @@index([status, expiresAt, storageDeletedAt])
   @@map("client_files")
 }
 
@@ -1202,7 +1211,20 @@ model ClientDeliveryEvent {
   actor      User?            @relation("ClientDeliveryActor", fields: [actorUserId], references: [id], onDelete: SetNull)
 
   @@index([engagementId, createdAt])
+  @@index([createdAt, id])
+  @@index([engagementId, createdAt, id])
   @@map("client_delivery_events")
+}
+
+model ClientActivityReadState {
+  userId     String   @id @map("user_id")
+  lastSeenAt DateTime @map("last_seen_at")
+  lastSeenId String   @map("last_seen_id")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("client_activity_read_state")
 }
 
 model ClientUpdate {

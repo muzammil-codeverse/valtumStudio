@@ -97,3 +97,11 @@ export function matchesPrivateFileSignature(mime: string, bytes: Uint8Array): bo
   }
   return false;
 }
+
+export function incomingDeliveryFileKey(engagementId: string, fileId: string): string {
+  return "private/delivery/" + engagementId + "/" + fileId;
+}
+
+export function verifiedDeliveryFileKey(engagementId: string, fileId: string): string {
+  return "private/delivery/verified/" + engagementId + "/" + fileId;
+}

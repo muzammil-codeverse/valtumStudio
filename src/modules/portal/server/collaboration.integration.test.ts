@@ -188,7 +188,8 @@ describe("Phase 2 tenant isolation and workflow consistency", () => {
           checksumSha256: "a".repeat(64),
           storageKey: "test/two/" + seed,
           expiresAt: new Date(Date.now() + 120000),
-          status: "READY"
+          status: "READY",
+          scanCompletedAt: new Date()
         }
       ]
     });
