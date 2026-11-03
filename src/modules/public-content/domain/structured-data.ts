@@ -74,10 +74,7 @@ export function buildOrganizationJsonLd(
 /**
  * Builds WebSite structured data.
  */
-export function buildWebSiteJsonLd(
-  appBaseUrl: string,
-  _settings: PublicSettingsDTO
-) {
+export function buildWebSiteJsonLd(appBaseUrl: string, _settings: PublicSettingsDTO) {
   // The public brand identity must never drift with CMS display settings.
   void _settings;
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
