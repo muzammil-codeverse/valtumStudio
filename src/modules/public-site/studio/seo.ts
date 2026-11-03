@@ -15,7 +15,7 @@ export const pageSeo = {
   home: {
     title: "Valtum Studio | Custom Software & Digital Products",
     description:
-      "Valtum Studio is an Australian software studio designing custom web applications, SaaS products, booking platforms, operational systems and distinctive digital experiences."
+      "Valtum Studio is an Australian software studio building custom web apps, SaaS platforms, booking systems and connected business operations."
   },
   solutions: {
     title: "Software Solutions for Products & Operations | Valtum Studio",
