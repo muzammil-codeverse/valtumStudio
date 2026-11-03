@@ -252,10 +252,7 @@ export default async function JournalArticlePage({
         </article>
       </div>
 
-      <section
-        className="b-article-related"
-        aria-labelledby="related-reading-title"
-      >
+      <section className="b-article-related" aria-labelledby="related-reading-title">
         <div className="b-article-related-heading">
           <h2 id="related-reading-title">Continue exploring.</h2>
           <Link href="/blog">All journal articles ↗</Link>
