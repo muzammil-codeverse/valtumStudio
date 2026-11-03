@@ -72,6 +72,15 @@ const nextConfig: NextConfig = {
   },
   output: "standalone",
   poweredByHeader: false,
+  async redirects() {
+    return [
+      { source: "/about", destination: "/studio", permanent: true },
+      { source: "/process", destination: "/approach", permanent: true },
+      { source: "/start-a-project", destination: "/contact", permanent: true },
+      { source: "/cookie", destination: "/cookies", permanent: true },
+      { source: "/journal", destination: "/blog", permanent: true }
+    ];
+  },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   }
