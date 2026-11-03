@@ -13,6 +13,7 @@ import "@/modules/public-site/studio/people-approved.css";
 import "@/modules/public-site/studio/contact-approved.css";
 import "@/modules/public-site/studio/cookie-preferences.css";
 import "@/modules/public-site/studio/cookie-approved.css";
+import "@/modules/public-site/studio/blog.css";
 
 import type { ReactNode } from "react";
 

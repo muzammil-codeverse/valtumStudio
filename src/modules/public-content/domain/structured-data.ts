@@ -37,11 +37,11 @@ export function buildOrganizationJsonLd(
     "@type": "Organization",
     "@id": orgId,
     name: "Valtum Studio",
-    alternateName: "Valtum",
+    alternateName: ["Valtum", "VLTM"],
     foundingDate: "2026",
     founder: {
       "@type": "Person",
-      name: "Abdurrehman Khalid",
+      name: "Abdur Rehman Khalid",
       url: "https://www.linkedin.com/in/abdurrehmankhalid/"
     },
     identifier: {
@@ -74,16 +74,47 @@ export function buildOrganizationJsonLd(
  * Builds WebSite structured data.
  */
 export function buildWebSiteJsonLd(appBaseUrl: string, settings: PublicSettingsDTO) {
+  // Keep the public entity name stable even if an internal CMS label changes.
+  void settings;
   const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
   const siteId = `${baseCanonical}#website`;
+  const organizationId = `${baseCanonical}#organization`;
 
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": siteId,
-    name: settings.studioName,
-    alternateName: "Valtum",
-    url: baseCanonical
+    name: "Valtum Studio",
+    alternateName: ["Valtum", "VLTM"],
+    url: baseCanonical,
+    inLanguage: "en-AU",
+    publisher: {
+      "@type": "Organization",
+      "@id": organizationId
+    }
+  };
+}
+
+/**
+ * Builds the public studio profile page structured data.
+ */
+export function buildAboutPageJsonLd(appBaseUrl: string) {
+  const baseCanonical = generateCanonicalUrl("/", appBaseUrl);
+  const pageUrl = generateCanonicalUrl("/studio", appBaseUrl);
+  const organizationId = `${baseCanonical}#organization`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${pageUrl}#about`,
+    name: "About Valtum Studio",
+    description:
+      "Meet Valtum Studio, an independent Australian software and digital product studio working internationally.",
+    url: pageUrl,
+    isPartOf: { "@id": `${baseCanonical}#website` },
+    about: { "@id": organizationId },
+    mainEntity: { "@id": organizationId },
+    inLanguage: "en-AU"
   };
 }
 

@@ -16,6 +16,7 @@ const navigation = [
   ["Services", "/services"],
   ["Solutions", "/solutions"],
   ["Approach", "/approach"],
+  ["Journal", "/blog"],
   ["Studio", "/studio"]
 ] as const;
 export function StudioShell({ children }: { children: ReactNode }): React.JSX.Element {
