@@ -111,7 +111,10 @@ export default function JournalPage(): React.JSX.Element {
         </div>
       </section>
 
-      <section className="b-journal-interval" aria-labelledby="journal-interval-title">
+      <section
+        className="b-journal-interval"
+        aria-labelledby="journal-interval-title"
+      >
         <figure className="b-journal-interval-media">
           <Image
             src="/editorial/paper.webp"
@@ -131,7 +134,9 @@ export default function JournalPage(): React.JSX.Element {
             questions behind useful software, clearer workflows and more purposeful
             experiences.
           </p>
-          <Link href="/approach">How we work <span aria-hidden="true">↗</span></Link>
+          <Link href="/approach">
+            How we work <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </section>
 
