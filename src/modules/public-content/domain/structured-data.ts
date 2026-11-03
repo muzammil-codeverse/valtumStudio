@@ -37,7 +37,7 @@ export function buildOrganizationJsonLd(
     "@type": "Organization",
     "@id": orgId,
     name: "Valtum Studio",
-    alternateName: ["Valtum", "VLTM"],
+    alternateName: ["VLTM"],
     foundingDate: "2026",
     founder: {
       "@type": "Person",
@@ -85,7 +85,7 @@ export function buildWebSiteJsonLd(appBaseUrl: string, settings: PublicSettingsD
     "@type": "WebSite",
     "@id": siteId,
     name: "Valtum Studio",
-    alternateName: ["Valtum", "VLTM"],
+    alternateName: ["VLTM"],
     url: baseCanonical,
     inLanguage: "en-AU",
     publisher: {
