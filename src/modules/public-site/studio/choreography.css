@@ -1560,3 +1560,60 @@ body:has(.x-shell) {
     transform: translateY(-50%) rotate(3deg) !important;
   }
 }
+
+/* Keep the full-bleed takeover readable while motion loads or is disabled. */
+.m-takeover-copy {
+  opacity: 1;
+}
+
+.m-takeover-media img {
+  object-position: center 45%;
+}
+
+@media (max-width: 760px) {
+  .m-takeover-stage {
+    height: 100svh;
+    min-height: 0;
+  }
+
+  .m-takeover-media {
+    inset: 22% 9%;
+    border-radius: 42px;
+  }
+
+  .m-takeover-copy {
+    max-width: 100%;
+    padding: 32px 7%;
+  }
+
+  .valtum .m-takeover-copy h2 {
+    font-size: clamp(40px, 10vw, 67px);
+    line-height: 1.03;
+    text-wrap: balance;
+  }
+
+  .m-takeover-copy p {
+    max-width: 340px;
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m-takeover-stage {
+    position: relative;
+    height: min(95svh, 820px);
+    min-height: 460px;
+  }
+
+  .m-takeover-media {
+    inset: 0;
+    border-radius: 0;
+  }
+
+  .m-takeover-copy {
+    opacity: 1;
+    transform: none;
+  }
+}
