@@ -11,7 +11,7 @@ const leadership = [
   {
     name: "Muzammil Hassan",
     role: "Chief Technology Officer",
-    portrait: "/team/muzammil-hassan.webp",
+    portrait: "https://res.cloudinary.com/z9nut7zm/image/upload/v1793929312/valtum-studio/team/muzammil-hassan-2026-11-06.jpg",
     bio: "Leads system architecture and software engineering, from the decisions that shape a product to the details that make it reliable."
   }
 ] as const;
@@ -72,6 +72,7 @@ export function StudioPeople(): React.JSX.Element {
                     src={member.portrait}
                     alt={`Portrait of ${member.name}`}
                     fill
+                    unoptimized={member.portrait.startsWith("https://res.cloudinary.com/")}
                     sizes="(max-width: 600px) 128px, (max-width: 1080px) 144px, 186px"
                   />
                 </span>
