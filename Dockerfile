@@ -20,11 +20,10 @@ ENV no_proxy="registry.npmjs.org"
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Resolve the immutable dependency graph before copying application source. The
-# cache persists only in BuildKit and is isolated to Siglum builds. Docker's
+# store is kept in the intermediate fetcher stage, independent of the builder. Docker's
 # local proxy cannot complete pnpm's 554-request policy pass reliably; this
 # build-only exception is governed by ADR 0011.
-RUN --mount=type=cache,id=siglum-pnpm-store-v2,target=/pnpm/store,sharing=locked \
-  corepack pnpm fetch --frozen-lockfile --trust-lockfile --store-dir=/pnpm/store --network-concurrency=1 --fetch-retries=3 --fetch-timeout=600000 \
+RUN corepack pnpm fetch --frozen-lockfile --trust-lockfile --store-dir=/pnpm/store --network-concurrency=1 --fetch-retries=3 --fetch-timeout=600000 \
   && touch /app/.pnpm-fetch-complete
 
 FROM base AS dependencies
@@ -32,13 +31,13 @@ FROM base AS dependencies
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # The marker creates an explicit BuildKit dependency so this stage cannot run
-# before fetcher has populated the shared, locked store cache.
+# before fetcher has populated the immutable dependency store.
+COPY --from=fetcher /pnpm/store /pnpm/store
 COPY --from=fetcher /app/.pnpm-fetch-complete /tmp/.pnpm-fetch-complete
 
 # This stage must make no registry requests: it installs solely from the verified
 # store populated by fetcher.
-RUN --mount=type=cache,id=siglum-pnpm-store-v2,target=/pnpm/store,sharing=locked \
-  corepack pnpm install --offline --frozen-lockfile --trust-lockfile --store-dir=/pnpm/store
+RUN corepack pnpm install --offline --frozen-lockfile --trust-lockfile --store-dir=/pnpm/store
 
 FROM base AS builder
 
@@ -85,11 +84,22 @@ ENV HOSTNAME=0.0.0.0
 
 WORKDIR /app
 
+RUN apt-get update \
+  && apt-get install --no-install-recommends --yes openssl \
+  && rm -rf /var/lib/apt/lists/*
+
 RUN groupadd --system --gid 1001 nodejs \
   && useradd --system --uid 1001 --gid nodejs nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+# Railway pre-deploy commands execute in this image. Keep the migration tooling
+# isolated from the standalone Next.js runtime and do not run seeds in production.
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./migration/node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/package.json /app/prisma.config.ts ./migration/
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./migration/prisma
 
 USER nextjs
 
