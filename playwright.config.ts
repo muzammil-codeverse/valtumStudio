@@ -22,7 +22,8 @@ export default defineConfig({
     trace: "on-first-retry"
   },
   webServer: {
-    command: "corepack pnpm exec next dev --webpack --port 3100",
+    command:
+      "corepack pnpm exec next build && node -e \"const fs=require('node:fs');fs.cpSync('.next-playwright/static','.next-playwright/standalone/.next-playwright/static',{recursive:true});fs.cpSync('public','.next-playwright/standalone/public',{recursive:true})\" && node .next-playwright/standalone/server.js",
     env: {
       ...process.env,
       APP_BASE_URL: testBaseUrl,
@@ -40,10 +41,12 @@ export default defineConfig({
       BETTER_AUTH_SECRET: process.env["BETTER_AUTH_SECRET"] || temporarySecret(),
       BETTER_AUTH_URL: testBaseUrl,
       CLOUDINARY_CLOUD_NAME: process.env["CLOUDINARY_CLOUD_NAME"] || "z9nut7zm",
-      NEXT_DIST_DIR: ".next-playwright"
+      NEXT_DIST_DIR: ".next-playwright",
+      PORT: "3100",
+      HOSTNAME: "127.0.0.1"
     },
     reuseExistingServer: false,
-    timeout: 120_000,
+    timeout: 240_000,
     url: testBaseUrl
   },
   projects: [chromiumProject]

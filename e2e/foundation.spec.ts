@@ -113,7 +113,9 @@ test("headings use one color and the footer excludes Fiverr", async ({ page }) =
 });
 
 test("hero cards rotate continuously through all five projects", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
+  await page.waitForLoadState("networkidle");
   const cards = page.locator(".h-hero-card");
   const front = page.locator('.h-hero-card[data-slot="front"]');
   const next = page.getByRole("button", { name: "Next project" });
@@ -153,6 +155,7 @@ test("shared media takeover expands during entry and keeps its final copy", asyn
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/services");
+  await page.waitForLoadState("networkidle");
   const scene = page.locator("[data-takeover]").first();
   const media = scene.locator(".m-takeover-media");
   const copy = scene.locator(".m-takeover-copy");
