@@ -10,7 +10,9 @@ export function createPrismaClient(connectionString: string): PrismaClient {
 
   if (ca || serverName) {
     if (!ca || !serverName) {
-      throw new Error("DATABASE_TLS_CA and DATABASE_TLS_SERVER_NAME must be configured together.");
+      throw new Error(
+        "DATABASE_TLS_CA and DATABASE_TLS_SERVER_NAME must be configured together."
+      );
     }
 
     // pg connection-string SSL options replace the explicit SSL configuration.
