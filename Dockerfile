@@ -100,6 +100,11 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./migration/node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/package.json /app/prisma.config.ts ./migration/
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./migration/prisma
+# Include the reviewed one-time owner bootstrap and operator CLI. It remains
+# disabled unless explicitly enabled in an authenticated service console.
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/auth ./migration/scripts/auth
+COPY --from=builder --chown=nextjs:nodejs /app/src ./migration/src
+COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./migration/tsconfig.json
 
 USER nextjs
 
