@@ -7,16 +7,14 @@ const leadership = [
     role: "Founder & CEO",
     portrait:
       "https://res.cloudinary.com/z9nut7zm/image/upload/v1793929707/valtum-studio/team/abdurrehman-khalid-2026-11-06.jpg",
-    bio:
-      "Leads the studio's direction and works closely with clients to turn the right business questions into better digital products."
+    bio: "Leads the studio's direction and works closely with clients to turn the right business questions into better digital products."
   },
   {
     name: "Muzammil Hassan",
     role: "Chief Technology Officer",
     portrait:
       "https://res.cloudinary.com/z9nut7zm/image/upload/v1793929312/valtum-studio/team/muzammil-hassan-2026-11-06.jpg",
-    bio:
-      "Leads system architecture and software engineering, from the decisions that shape a product to the details that make it reliable."
+    bio: "Leads system architecture and software engineering, from the decisions that shape a product to the details that make it reliable."
   }
 ] as const;
 
