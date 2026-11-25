@@ -39,6 +39,7 @@ export default defineConfig({
       AUTH_TRUSTED_ORIGINS: testBaseUrl,
       BETTER_AUTH_SECRET: process.env["BETTER_AUTH_SECRET"] || temporarySecret(),
       BETTER_AUTH_URL: testBaseUrl,
+      CLOUDINARY_CLOUD_NAME: process.env["CLOUDINARY_CLOUD_NAME"] || "z9nut7zm",
       NEXT_DIST_DIR: ".next-playwright"
     },
     reuseExistingServer: false,
