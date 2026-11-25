@@ -26,5 +26,6 @@ vi.mock("next/cache", () => ({
 }));
 
 vi.mock("next/headers", () => ({
+  cookies: async () => ({ set: () => {} }),
   draftMode: async () => ({ isEnabled: false })
 }));

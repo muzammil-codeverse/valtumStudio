@@ -62,7 +62,10 @@ function sanitizeMetadata(value: unknown, depth = 0): MetadataValue | undefined 
   return undefined;
 }
 
-export async function recordSecurityEvent(input: SecurityEventInput): Promise<void> {
+export async function recordSecurityEvent(
+  input: SecurityEventInput,
+  database: Pick<Prisma.TransactionClient, "securityEvent"> = prisma
+): Promise<void> {
   const metadata =
     input.metadata === undefined ? undefined : sanitizeMetadata(input.metadata);
 
@@ -93,5 +96,5 @@ export async function recordSecurityEvent(input: SecurityEventInput): Promise<vo
     ...(input.userId === undefined ? {} : { userId: input.userId })
   };
 
-  await prisma.securityEvent.create({ data });
+  await database.securityEvent.create({ data });
 }

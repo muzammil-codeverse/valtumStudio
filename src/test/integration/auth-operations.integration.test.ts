@@ -8,10 +8,12 @@ import {
   setUserBan
 } from "../../../scripts/auth/operations";
 import { prisma as operatorPrisma } from "../../../scripts/auth/schema-generation-config";
-import { POST as authPost } from "../../app/api/auth/[...all]/route";
+import { GET as authGet, POST as authPost } from "../../app/api/auth/[...all]/route";
+import { POST as passwordPost } from "../../app/api/security/password/route";
 
 let ownerEmail = "";
 let ownerPassword = "";
+let ownerSessionCookie = "";
 
 function authRequest(
   path: string,
@@ -82,11 +84,89 @@ describe("authentication operator workflows", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("set-cookie")).toContain("HttpOnly");
     expect(response.headers.get("set-cookie")).toContain("SameSite=Lax");
+    ownerSessionCookie = response.headers
+      .getSetCookie()
+      .map((cookie) => cookie.split(";", 1)[0])
+      .join("; ");
     await expect(
       operatorPrisma.securityEvent.count({
         where: { type: "UNTRUSTED_ORIGIN_REJECTED" }
       })
     ).resolves.toBe(1);
+  });
+
+  it("changes the initial owner password and retains only the replacement session", async () => {
+    const passwordRequest = (currentPassword: string, newPassword: string) =>
+      new Request("http://127.0.0.1:3000/api/security/password", {
+        body: JSON.stringify({ currentPassword, newPassword }),
+        headers: {
+          "content-type": "application/json",
+          cookie: ownerSessionCookie,
+          origin: "http://127.0.0.1:3000"
+        },
+        method: "POST"
+      });
+
+    const unchanged = await passwordPost(passwordRequest(ownerPassword, ownerPassword));
+    expect(unchanged.status).toBe(400);
+    expect(await unchanged.json()).toEqual({
+      message: "Choose a password you have not used for this account."
+    });
+
+    const secondLogin = await authPost(
+      authRequest("/api/auth/sign-in/email", {
+        email: ownerEmail,
+        password: ownerPassword
+      })
+    );
+    expect(secondLogin.status).toBe(200);
+
+    const nextPassword = "T7!changed-credential-for-integration";
+    const changed = await passwordPost(passwordRequest(ownerPassword, nextPassword));
+    expect(changed.status).toBe(200);
+    expect(await changed.json()).toEqual({ status: "ok" });
+    expect(changed.headers.get("set-cookie")).toContain("HttpOnly");
+    const replacementCookie = changed.headers
+      .getSetCookie()
+      .map((cookie) => cookie.split(";", 1)[0])
+      .join("; ");
+    expect(replacementCookie).not.toBe(ownerSessionCookie);
+
+    const owner = await operatorPrisma.user.findUniqueOrThrow({
+      where: { email: ownerEmail }
+    });
+    expect(owner.mustChangePassword).toBe(false);
+    expect(owner.lastPasswordChangedAt).not.toBeNull();
+    const sessions = await operatorPrisma.session.findMany({
+      where: { userId: owner.id }
+    });
+    expect(sessions).toHaveLength(1);
+    const [replacementSession] = sessions;
+    if (replacementSession === undefined) {
+      throw new Error("Expected a replacement session.");
+    }
+
+    const getSession = (cookie: string) =>
+      authGet(
+        new Request("http://127.0.0.1:3000/api/auth/get-session", {
+          headers: { cookie }
+        })
+      );
+    const revoked = await getSession(ownerSessionCookie);
+    expect(await revoked.json()).toBeNull();
+    const active = await getSession(replacementCookie);
+    expect(await active.json()).toMatchObject({
+      user: { email: ownerEmail, mustChangePassword: false }
+    });
+    await expect(
+      operatorPrisma.securityEvent.count({
+        where: {
+          sessionId: replacementSession.id,
+          type: { in: ["PASSWORD_CHANGED", "OTHER_SESSIONS_REVOKED"] },
+          userId: owner.id
+        }
+      })
+    ).resolves.toBe(2);
   });
 
   it("prevents losing the last owner and resets/revokes user security state", async () => {
