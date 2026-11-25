@@ -26,7 +26,7 @@
   letter-spacing: -0.065em;
 }
 .v-contact--editorial .vc-intro h1 em {
-  color: #8791a1;
+  color: inherit;
 }
 .vc-lead {
   max-width: 470px;

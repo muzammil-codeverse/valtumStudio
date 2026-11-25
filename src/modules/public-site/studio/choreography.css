@@ -51,7 +51,7 @@
 .valtum .m-hero h1 em {
   font-family: inherit;
   font-style: normal;
-  color: #626b7b;
+  color: inherit;
   letter-spacing: inherit;
 }
 .m-hero-copy p {
@@ -1239,7 +1239,7 @@
 .valtum .m-services-opening em,
 .valtum .m-solutions-opening em,
 .valtum .m-approach-opening em {
-  color: #667185;
+  color: inherit;
 }
 
 .x-arrival-center .v-sr-only {

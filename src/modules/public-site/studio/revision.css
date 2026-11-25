@@ -18,7 +18,7 @@
   font-family: inherit;
   font-style: normal;
   letter-spacing: inherit;
-  color: #878b96;
+  color: inherit;
 }
 .valtum h1,
 .valtum h2,
@@ -737,7 +737,7 @@
   color: #f5f5f7;
 }
 .v-footer-invite em {
-  color: #9da2b0;
+  color: inherit;
 }
 .v-footer-word {
   padding-top: 70px;

@@ -29,6 +29,12 @@ a {
   color: inherit;
 }
 
+/* Valtum typography invariant: every heading is a single foreground color.
+   Inline emphasis may change type style or weight, never the foreground color. */
+:is(h1, h2, h3, h4, h5, h6, [role="heading"]) * {
+  color: inherit !important;
+}
+
 button,
 input {
   font: inherit;

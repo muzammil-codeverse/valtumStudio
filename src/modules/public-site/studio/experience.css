@@ -16,7 +16,7 @@
 }
 .valtum em {
   font-style: normal;
-  color: #858d9d;
+  color: inherit;
 }
 .valtum [hidden] {
   display: none !important;
@@ -239,7 +239,7 @@
   letter-spacing: -0.055em;
 }
 .x-hero h1 em {
-  color: #7b8597;
+  color: inherit;
 }
 .x-hero-copy > p {
   font-size: 18px;

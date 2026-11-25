@@ -78,7 +78,7 @@
 .valtum-auth-root .auth-editorial-body h2 em {
   display: block;
   font-style: normal;
-  color: #a9b0bc;
+  color: inherit;
   font-weight: 400;
 }
 .valtum-auth-root .auth-editorial-body p {

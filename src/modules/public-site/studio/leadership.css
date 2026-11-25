@@ -28,7 +28,7 @@
   letter-spacing: -0.065em;
 }
 .x-leadership-heading h2 em {
-  color: #838d9d;
+  color: inherit;
 }
 .x-leadership-heading > p {
   max-width: 370px;

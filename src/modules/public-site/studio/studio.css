@@ -344,7 +344,7 @@
   max-width: 1100px;
 }
 .v-introduction h2 > span {
-  color: #676c79;
+  color: inherit;
 }
 .v-intro-bottom {
   display: grid;
@@ -759,7 +759,7 @@
   display: inline-block;
   line-height: 1.4;
   margin-left: 0.08em;
-  color: #abaeb8;
+  color: inherit;
 }
 .v-arrival {
   position: fixed;

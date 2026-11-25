@@ -31,7 +31,7 @@
   text-wrap: balance;
 }
 .x-studio-principles--reframed .x-principles-heading h2 em {
-  color: #718199;
+  color: inherit;
 }
 .x-studio-principles--reframed .x-principles-heading p {
   max-width: 430px;
@@ -112,7 +112,7 @@
   text-wrap: balance;
 }
 .vc-after--steps .vc-after-intro h2 em {
-  color: #788799;
+  color: inherit;
 }
 .vc-after--steps .vc-after-intro > p {
   margin-top: 30px;
@@ -191,10 +191,10 @@
   }
 }
 
-/* Ensure secondary editorial headline color clears WCAG AA for large text. */
+/* Editorial headings use one foreground color throughout. */
 .x-studio-page .x-editorial-heading h1 em,
 .v-contact.v-contact--editorial .vc-intro h1 em {
-  color: #6c7889;
+  color: inherit;
 }
 /* Strong visible keyboard focus for the project contact and leadership links. */
 .x-leadership a:focus-visible,

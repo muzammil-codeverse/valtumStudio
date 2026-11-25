@@ -120,9 +120,11 @@ export function StudioFooter(): React.JSX.Element {
           <section className="vf-network-group" aria-labelledby="vf-work-title">
             <h3 id="vf-work-title">Find our work</h3>
             <nav aria-label="Valtum Studio marketplace and directory profiles">
-              {studioMarketplaces.map((profile) => (
-                <ProfileLink key={profile.url} profile={profile} />
-              ))}
+              {studioMarketplaces
+                .filter((profile) => profile.icon !== "fiverr")
+                .map((profile) => (
+                  <ProfileLink key={profile.url} profile={profile} />
+                ))}
             </nav>
           </section>
           <div className="vf-registered">

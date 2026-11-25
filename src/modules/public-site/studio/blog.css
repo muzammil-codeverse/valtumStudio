@@ -442,7 +442,7 @@
 .b-journal-heading h1 em,
 .b-article-heading h1 em,
 .b-journal-interval h2 em {
-  color: #46519c;
+  color: inherit;
   font-style: normal;
   font-weight: inherit;
 }
@@ -606,7 +606,7 @@
 
 .b-article-chapter-number {
   flex: 0 0 auto;
-  color: #46519c;
+  color: inherit;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0;

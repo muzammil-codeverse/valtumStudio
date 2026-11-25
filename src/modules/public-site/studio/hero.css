@@ -34,7 +34,7 @@
   display: block;
 }
 .h-hero-copy h1 span:nth-child(2) {
-  color: #46519c;
+  color: inherit;
 }
 .h-hero-copy > p {
   max-width: 350px;

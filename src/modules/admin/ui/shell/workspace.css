@@ -59,7 +59,7 @@
 }
 .admin-root .ds-hero h1 em {
   font-style: normal;
-  color: #5b50cd;
+  color: inherit;
 }
 .admin-root .ds-hero p,
 .admin-root .ds-block-heading p,
