@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const projects = [
   { image: "aegis", name: "Aegis Sentinel", slug: "aegis-sentinel", colour: "#cbd5ce" },
@@ -20,15 +20,17 @@ type HeroProject = (typeof projects)[number];
 
 function ProjectPrint({
   project,
-  featured = false
+  featured = false,
+  priority = false
 }: {
   project: HeroProject;
   featured?: boolean;
+  priority?: boolean;
 }): React.JSX.Element {
   return (
     <div className="h-hero-print" style={{ backgroundColor: project.colour }}>
       <div className="h-hero-image">
-        <picture key={project.image}>
+        <picture>
           <source
             media="(max-width: 760px)"
             srcSet={`/products/${project.image}-mobile.webp`}
@@ -38,8 +40,8 @@ function ProjectPrint({
             alt={featured ? `${project.name} website preview` : ""}
             width={1440}
             height={900}
-            loading={featured ? "eager" : "lazy"}
-            fetchPriority={featured ? "high" : "auto"}
+            loading="eager"
+            fetchPriority={priority ? "high" : "low"}
             decoding="async"
           />
         </picture>
@@ -56,12 +58,20 @@ export function StudioHero(): React.JSX.Element {
   const [active, setActive] = useState(0);
   const start = useRef<number | null>(null);
   const dragged = useRef(false);
+  const work = useRef<HTMLDivElement>(null);
+  const focusNextCard = useRef(false);
   const current = projects[active] ?? projects[0];
-  const previous =
-    projects[(active + projects.length - 1) % projects.length] ?? projects[0];
-  const next = projects[(active + 1) % projects.length] ?? projects[0];
+  const slots = ["front", "next", "far-next", "far-previous", "previous"] as const;
   const advance = (direction: number) =>
     setActive((index) => (index + direction + projects.length) % projects.length);
+
+  useEffect(() => {
+    if (!focusNextCard.current) return;
+    focusNextCard.current = false;
+    work.current?.querySelector<HTMLElement>('[data-slot="front"]')?.focus({
+      preventScroll: true
+    });
+  }, [active]);
 
   return (
     <section className="h-hero" data-cinema aria-labelledby="hero-heading">
@@ -86,11 +96,13 @@ export function StudioHero(): React.JSX.Element {
         </div>
         <div
           className="h-hero-work"
+          ref={work}
           role="region"
           aria-label="Explore our projects"
           onKeyDown={(event) => {
             if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
               event.preventDefault();
+              focusNextCard.current = true;
               advance(event.key === "ArrowRight" ? 1 : -1);
             }
           }}
@@ -118,20 +130,28 @@ export function StudioHero(): React.JSX.Element {
             }
           }}
         >
-          <div className="h-hero-back h-hero-back-first" aria-hidden="true">
-            <ProjectPrint project={previous} />
-          </div>
-          <div className="h-hero-back h-hero-back-last" aria-hidden="true">
-            <ProjectPrint project={next} />
-          </div>
-          <Link
-            className="h-hero-front"
-            href={`/work/${current.slug}`}
-            aria-label={`View ${current.name} case study`}
-            draggable={false}
-          >
-            <ProjectPrint project={current} featured />
-          </Link>
+          {projects.map((project, index) => {
+            const slot = slots[(index - active + projects.length) % projects.length];
+            const featured = slot === "front";
+            return (
+              <Link
+                key={project.slug}
+                className={featured ? "h-hero-card h-hero-front" : "h-hero-card"}
+                data-slot={slot}
+                href={`/work/${project.slug}`}
+                aria-label={`View ${project.name} case study`}
+                aria-hidden={!featured}
+                tabIndex={featured ? 0 : -1}
+                draggable={false}
+              >
+                <ProjectPrint
+                  project={project}
+                  featured={featured}
+                  priority={index === 0}
+                />
+              </Link>
+            );
+          })}
         </div>
         <div className="h-hero-browser" aria-label="Choose a project">
           <p className="h-hero-current" aria-live="polite">

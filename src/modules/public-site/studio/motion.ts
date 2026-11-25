@@ -36,34 +36,12 @@ export function mountStudioMotion(scope: HTMLElement): () => void {
             { y: 20, autoAlpha: 0, duration: 0.28, ease: "power2.inOut" },
             0.3
           );
+          // Scroll expansion is independent of the project wheel's slot motion.
+          // All five cards retain their DOM identity as the active index changes.
           sequence.to(
-            cinema.querySelector(".h-hero-back-first"),
-            {
-              xPercent: -30,
-              yPercent: -35,
-              rotate: -20,
-              opacity: 0,
-              duration: 0.6,
-              ease: "power2.inOut"
-            },
+            cinema.querySelector(".h-hero-work"),
+            { "--hero-open": 1, duration: 0.9, ease: "power2.inOut" },
             0.3
-          );
-          sequence.to(
-            cinema.querySelector(".h-hero-back-last"),
-            {
-              xPercent: 30,
-              yPercent: 35,
-              rotate: 20,
-              opacity: 0,
-              duration: 0.6,
-              ease: "power2.inOut"
-            },
-            0.3
-          );
-          sequence.to(
-            cinema.querySelector(".h-hero-front"),
-            { rotate: 0, duration: 0.7, ease: "power2.inOut" },
-            0.45
           );
           sequence.to(
             cinema.querySelector(".h-hero-work"),
@@ -83,12 +61,12 @@ export function mountStudioMotion(scope: HTMLElement): () => void {
             0.45
           );
           sequence.to(
-            cinema.querySelector(".h-hero-front .h-hero-image"),
+            cinema.querySelectorAll(".h-hero-image"),
             { inset: "0px", duration: 0.8, ease: "power2.inOut" },
             0.45
           );
           sequence.to(
-            cinema.querySelector(".h-hero-front .h-hero-print-caption"),
+            cinema.querySelectorAll(".h-hero-print-caption"),
             { opacity: 0, duration: 0.2 },
             0.45
           );
@@ -130,34 +108,41 @@ export function mountStudioMotion(scope: HTMLElement): () => void {
               }
             }
           );
-        gsap.utils.toArray<HTMLElement>("[data-takeover]").forEach((scene) => {
+        scope.querySelectorAll<HTMLElement>("[data-takeover]").forEach((scene) => {
+          const phone = breakpoint.conditions?.["phone"];
           const film = gsap.timeline({
             scrollTrigger: {
               trigger: scene,
-              start: "top top",
+              // Start during the approach, not after the sticky stage reaches the top.
+              start: "top bottom",
               end: "bottom bottom",
-              scrub: 0.8,
+              scrub: 1,
               invalidateOnRefresh: true
             }
           });
-          film.to(
+          film.fromTo(
             scene.querySelector(".m-takeover-media"),
-            { inset: "0% 0%", borderRadius: 0, duration: 0.65, ease: "power2.inOut" },
+            {
+              clipPath: phone
+                ? "inset(16% 9% round 42px)"
+                : "inset(16% 26% round 180px)"
+            },
+            { clipPath: "inset(0% 0% round 0px)", duration: 0.76, ease: "none" },
             0
           );
           film.fromTo(
             scene.querySelector(".m-takeover-media img"),
-            { scale: 1.25 },
-            { scale: 1, duration: 1, ease: "none" },
+            { scale: 1.12 },
+            { scale: 1, duration: 0.92, ease: "none" },
             0
           );
           film.fromTo(
             scene.querySelector(".m-takeover-copy"),
-            { y: 85, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.35 },
-            0.5
+            { y: 32, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.36, ease: "none" },
+            0.56
           );
-          film.to({}, { duration: 0.25 });
+          film.to({}, { duration: 0.2 });
         });
         gsap.utils.toArray<HTMLElement>(".m-practice-reel > div").forEach((reel) =>
           gsap.fromTo(

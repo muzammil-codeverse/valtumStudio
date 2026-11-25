@@ -1,4 +1,30 @@
 /* The studio's work, arranged as a contact sheet rather than a device mockup. */
+/* Typed slot values interpolate independently of the scroll-driven expansion. */
+@property --hero-card-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --hero-card-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --hero-card-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --hero-card-scale {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+@property --hero-card-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
 .h-hero {
   position: relative;
   height: 240svh;
@@ -63,6 +89,7 @@
   gap: 14px;
 }
 .h-hero-work {
+  --hero-open: 0;
   position: absolute;
   z-index: 3;
   top: 26%;
@@ -72,25 +99,70 @@
   touch-action: pan-y;
   isolation: isolate;
 }
-.h-hero-front,
-.h-hero-back {
+.h-hero-card {
+  --hero-card-x: 0%;
+  --hero-card-y: 0%;
+  --hero-card-angle: 0deg;
+  --hero-card-scale: 1;
+  --hero-card-alpha: 1;
   position: absolute;
   inset: 0;
-  transform-origin: center;
-}
-.h-hero-front {
   display: block;
-  z-index: 3;
-  transform: rotate(-5deg);
+  transform-origin: center;
+  transform: translate(
+      calc(var(--hero-card-x) * (1 + var(--hero-open))),
+      calc(var(--hero-card-y) * (1 + var(--hero-open)))
+    )
+    rotate(calc(var(--hero-card-angle) * (1 - var(--hero-open))))
+    scale(var(--hero-card-scale));
+  opacity: var(--hero-card-alpha);
+  pointer-events: none;
+  transition:
+    --hero-card-x 720ms cubic-bezier(0.22, 0.8, 0.2, 1),
+    --hero-card-y 720ms cubic-bezier(0.22, 0.8, 0.2, 1),
+    --hero-card-angle 720ms cubic-bezier(0.22, 0.8, 0.2, 1),
+    --hero-card-scale 720ms cubic-bezier(0.22, 0.8, 0.2, 1),
+    --hero-card-alpha 620ms ease,
+    z-index 720ms linear;
+}
+.h-hero-card:not([data-slot="front"]) {
+  opacity: calc(var(--hero-card-alpha) * (1 - var(--hero-open)));
+}
+.h-hero-card[data-slot="front"] {
+  --hero-card-angle: -5deg;
+  z-index: 4;
+  pointer-events: auto;
   outline-offset: 8px;
 }
-.h-hero-back-first {
-  z-index: 1;
-  transform: translate(-7%, -9%) rotate(-11deg) scale(0.88);
-}
-.h-hero-back-last {
+.h-hero-card[data-slot="previous"] {
+  --hero-card-x: -7%;
+  --hero-card-y: -9%;
+  --hero-card-angle: -11deg;
+  --hero-card-scale: 0.88;
   z-index: 2;
-  transform: translate(15%, 13%) rotate(7deg) scale(0.85);
+}
+.h-hero-card[data-slot="next"] {
+  --hero-card-x: 15%;
+  --hero-card-y: 13%;
+  --hero-card-angle: 7deg;
+  --hero-card-scale: 0.85;
+  z-index: 3;
+}
+.h-hero-card[data-slot="far-previous"] {
+  --hero-card-x: -36%;
+  --hero-card-y: -24%;
+  --hero-card-angle: -24deg;
+  --hero-card-scale: 0.66;
+  --hero-card-alpha: 0;
+  z-index: 1;
+}
+.h-hero-card[data-slot="far-next"] {
+  --hero-card-x: 40%;
+  --hero-card-y: 23%;
+  --hero-card-angle: 24deg;
+  --hero-card-scale: 0.66;
+  --hero-card-alpha: 0;
+  z-index: 1;
 }
 .h-hero-print {
   position: absolute;
@@ -123,9 +195,6 @@
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
-}
-.h-hero-front picture {
-  animation: h-print-arrive 0.55s ease both;
 }
 .h-hero-print-caption {
   position: absolute;
@@ -196,16 +265,6 @@
 }
 .h-hero-scroll:hover span {
   transform: translateY(5px);
-}
-@keyframes h-print-arrive {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 @media (min-width: 761px) and (max-height: 730px) {
   .h-hero-copy {
@@ -310,14 +369,26 @@
     right: 31%;
     height: calc(82.23vw + 26px);
   }
-  .h-hero-back-first {
-    transform: translate(-57%, 1%) rotate(-13deg) scale(0.8);
+  .h-hero-card[data-slot="previous"] {
+    --hero-card-x: -57%;
+    --hero-card-y: 1%;
+    --hero-card-angle: -13deg;
+    --hero-card-scale: 0.8;
   }
-  .h-hero-back-last {
-    transform: translate(57%, 1%) rotate(13deg) scale(0.8);
+  .h-hero-card[data-slot="next"] {
+    --hero-card-x: 57%;
+    --hero-card-y: 1%;
+    --hero-card-angle: 13deg;
+    --hero-card-scale: 0.8;
   }
-  .h-hero-front {
-    transform: rotate(-4deg);
+  .h-hero-card[data-slot="front"] {
+    --hero-card-angle: -4deg;
+  }
+  .h-hero-card[data-slot="far-previous"] {
+    --hero-card-x: -100%;
+  }
+  .h-hero-card[data-slot="far-next"] {
+    --hero-card-x: 100%;
   }
   .h-hero-image {
     inset: 6px 6px 26px;
@@ -369,9 +440,7 @@
   .h-hero-stage {
     position: relative;
   }
-  .h-hero-front picture {
-    animation: none;
-  }
+  .h-hero-card,
   .h-hero-browser button,
   .h-hero-front .h-hero-print,
   .h-hero-scroll span {

@@ -182,7 +182,7 @@
 .m-takeover {
   height: 180svh;
   position: relative;
-  background: #dce0e7;
+  background: linear-gradient(180deg, #edeef1, #dce0e7 24%);
   isolation: isolate;
 }
 .m-takeover-stage {
@@ -196,9 +196,9 @@
 }
 .m-takeover-media {
   position: absolute;
-  inset: 22% 26%;
+  inset: 0;
   overflow: hidden;
-  border-radius: 180px;
+  clip-path: inset(0% 0% round 0px);
 }
 .m-takeover-media img {
   object-fit: cover;
@@ -900,10 +900,6 @@
   .m-takeover-stage {
     min-height: 560px;
   }
-  .m-takeover-media {
-    inset: 24% 15%;
-    border-radius: 140px;
-  }
   .m-takeover-copy {
     padding: 35px 7%;
   }
@@ -1214,8 +1210,7 @@
     min-height: 650px;
   }
   .m-takeover-media {
-    inset: 0;
-    border-radius: 0;
+    clip-path: none;
   }
   .m-takeover-copy {
     opacity: 1;
@@ -1576,10 +1571,6 @@ body:has(.x-shell) {
     min-height: 0;
   }
 
-  .m-takeover-media {
-    inset: 22% 9%;
-    border-radius: 42px;
-  }
 
   .m-takeover-copy {
     max-width: 100%;
@@ -1608,8 +1599,7 @@ body:has(.x-shell) {
   }
 
   .m-takeover-media {
-    inset: 0;
-    border-radius: 0;
+    clip-path: none;
   }
 
   .m-takeover-copy {

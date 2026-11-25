@@ -111,3 +111,78 @@ test("headings use one color and the footer excludes Fiverr", async ({ page }) =
   await page.goto("/auth/sign-in");
   await expectSingleColorHeadings();
 });
+
+test("hero cards rotate continuously through all five projects", async ({ page }) => {
+  await page.goto("/");
+  const cards = page.locator(".h-hero-card");
+  const front = page.locator('.h-hero-card[data-slot="front"]');
+  const next = page.getByRole("button", { name: "Next project" });
+  await expect(cards).toHaveCount(5);
+  await expect(front).toHaveAttribute("href", "/work/aegis-sentinel");
+  await next.click();
+  await expect(front).toHaveAttribute("href", "/work/laugh-and-lodge");
+  await expect
+    .poll(() => front.evaluate((card) => card.getAnimations().length))
+    .toBeGreaterThan(0);
+  await expect
+    .poll(() =>
+      front.evaluate((card) => getComputedStyle(card).getPropertyValue("--hero-card-x"))
+    )
+    .toBe("0%");
+
+  for (const slug of [
+    "math-intellect",
+    "kt-couriers",
+    "personality-assessor",
+    "aegis-sentinel"
+  ]) {
+    await next.click();
+    await expect(front).toHaveAttribute("href", "/work/" + slug);
+    await expect(cards).toHaveCount(5);
+  }
+  await page.getByRole("button", { name: "Previous project" }).click();
+  await expect(front).toHaveAttribute("href", "/work/personality-assessor");
+  await front.focus();
+  await front.press("ArrowRight");
+  await expect(front).toHaveAttribute("href", "/work/aegis-sentinel");
+  await expect(front).toBeFocused();
+});
+
+test("shared media takeover expands during entry and keeps its final copy", async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/services");
+  const scene = page.locator("[data-takeover]").first();
+  const media = scene.locator(".m-takeover-media");
+  const copy = scene.locator(".m-takeover-copy");
+  const mask = () =>
+    media.evaluate((element) => {
+      const value = getComputedStyle(element).clipPath;
+      return Number.parseFloat(value.replace("inset(", ""));
+    });
+  await expect.poll(mask).toBeGreaterThan(10);
+  await scene.evaluate((element) => {
+    window.scrollTo(
+      0,
+      window.scrollY + element.getBoundingClientRect().top - innerHeight * 0.4
+    );
+  });
+  await expect.poll(mask).toBeLessThan(14);
+  expect(await mask()).toBeGreaterThan(0);
+  await expect(media).toBeVisible();
+
+  await scene.evaluate((element) => {
+    window.scrollTo(
+      0,
+      window.scrollY + element.getBoundingClientRect().bottom - innerHeight
+    );
+  });
+  await expect.poll(mask).toBeLessThan(0.5);
+  await expect
+    .poll(() => copy.evaluate((element) => Number(getComputedStyle(element).opacity)))
+    .toBeGreaterThan(0.95);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(copy).toBeVisible();
+  await expect(media).toHaveCSS("clip-path", "none");
+});
