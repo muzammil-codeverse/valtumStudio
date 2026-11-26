@@ -1,7 +1,17 @@
 export default function Loading() {
   return (
-    <main aria-busy="true" aria-live="polite">
-      <p role="status">Loading…</p>
-    </main>
+    <span
+      role="status"
+      style={{
+        position: "absolute",
+        width: 1,
+        height: 1,
+        overflow: "hidden",
+        clipPath: "inset(50%)",
+        whiteSpace: "nowrap"
+      }}
+    >
+      Loading…
+    </span>
   );
 }
